@@ -1,16 +1,19 @@
 package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
 import org.usfirst.frc.team3310.robot.commands.MagicCarpetSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetRPMDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterLiftSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterMainSetRPMDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterMainSetSpeed;
+import org.usfirst.frc.team3310.robot.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -28,7 +31,11 @@ public class OI {
 		m_driverJoystickPower = new Joystick(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
 		m_driverJoystickTurn = new Joystick(RobotMap.DRIVER_JOYSTICK_2_USB_ID);
 		
-		Button magicCarpetOn10 = new InternalButton();
+        JoystickButton shiftDrivetrain = new JoystickButton(m_driverJoystickPower, 1);
+        shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
+        shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
+
+        Button magicCarpetOn10 = new InternalButton();
 		magicCarpetOn10.whenPressed(new MagicCarpetSetSpeed(1.0));
 		SmartDashboard.putData("Magic Carpet 1.0", magicCarpetOn10);
 

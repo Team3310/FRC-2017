@@ -102,8 +102,8 @@ public class Robot extends IterativeRobot {
     	
         // Schedule the autonomous command (example)
     	controlLoop.start();
-    	ballIntake.setZeroLiftPosition();
-    	ballIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
+//    	ballIntake.setZeroLiftPosition();
+//    	ballIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
     	gearIntake.setZeroLiftPosition();
     	gearIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
     	drive.endGyroCalibration();
@@ -127,8 +127,8 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
     	updateChoosers();
         controlLoop.start();
-    	ballIntake.setZeroLiftPosition();
-    	ballIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
+ //   	ballIntake.setZeroLiftPosition();
+ //   	ballIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
     	drive.endGyroCalibration();
         updateStatus();
     }

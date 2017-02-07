@@ -60,6 +60,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 
 			motorControllers.add(liftMotor);
 			mpPIDParams.iZone = 128;
+			setLiftSpeed(0.0);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the BallIntake constructor");
@@ -67,7 +68,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	}
 	
 	public void setRollerSpeed(double speed) {
-		rollerMotor.set(speed);
+		rollerMotor.set(-speed);
 	}
 	
 	public void setLiftPosition(double targetAngleDegrees) {		
@@ -108,7 +109,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		mpController = new MPTalonPIDController(periodMs, mpPIDParams, motorControllers);
 		
 		// Set the startup position to zero
-		setZeroLiftPosition();
+//		setZeroLiftPosition();
 	}
 	
 	public void updateStatus(Robot.OperationMode operationMode) {

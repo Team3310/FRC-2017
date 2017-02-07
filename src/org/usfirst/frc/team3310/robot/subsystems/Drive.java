@@ -349,8 +349,8 @@ public class Drive extends Subsystem implements ControlLoopable
 		// OI.getInstance().getDriveTrainController().getLeftYAxis();
 		// m_steerInput =
 		// OI.getInstance().getDriveTrainController().getRightXAxis();
-		m_moveInput = OI.getInstance().getDriverJoystickPower().getY();
-		m_steerInput = OI.getInstance().getDriverJoystickTurn().getX();
+		m_moveInput = -OI.getInstance().getDriverJoystickPower().getY();
+		m_steerInput = -OI.getInstance().getDriverJoystickTurn().getX();
 
 		m_moveOutput = adjustForSensitivity(m_moveScale, m_moveTrim,
 				m_moveInput, m_moveNonLinear, MOVE_NON_LINEARITY);
@@ -487,6 +487,9 @@ public class Drive extends Subsystem implements ControlLoopable
 				SmartDashboard.putNumber("Yaw Rate", getGyroRateDegPerSec());
 				SmartDashboard.putNumber("Delta PID Angle", targetPIDAngle - getGyroAngleDeg());
 				SmartDashboard.putNumber("Steer Output", m_steerOutput);
+				SmartDashboard.putNumber("Move Output", m_moveOutput);
+				SmartDashboard.putNumber("Steer Input", m_steerInput);
+				SmartDashboard.putNumber("Move Input", m_moveInput);
 			}
 			catch (Exception e) {
 				System.err.println("Drivetrain update status error");
