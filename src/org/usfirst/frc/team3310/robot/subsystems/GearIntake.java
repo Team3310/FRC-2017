@@ -23,11 +23,11 @@ public class GearIntake extends Subsystem implements ControlLoopable {
     
 	private static enum LiftControlMode { MANUAL, MP_POSITION };
 
-	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (18.0 / 16.0);  // 18/16 practice
+	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0); 
 
 	public final static double RETRACTED_POSITION_DEG = 0;
 	public final static double BALL_INTAKE_POSITION_DEG = 0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 0;
+	public final static double GEAR_INTAKE_POSITION_DEG = 128;
 	public final static double GEAR_PRESENT_POSITION_DEG = 0;
 	
 	// Motion profile max velocities and accel times

@@ -24,14 +24,14 @@ public class BallIntake extends Subsystem implements ControlLoopable {
     
 	private static enum LiftControlMode { MANUAL, MP_POSITION };
 
-	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (18.0 / 16.0);  // 18/16 practice
+	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0);  // 18/16 practice
 
 	public static final double BALL_INTAKE_LOAD_SPEED = 0.8;
 	public static final double BALL_INTAKE_EJECT_SPEED = -1.0;
 	
 	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 0;
+	public final static double BALL_INTAKE_POSITION_DEG = 101;
+	public final static double GEAR_INTAKE_POSITION_DEG = 117;
 	public final static double GEAR_PRESENT_POSITION_DEG = 0;
 	
 	// Motion profile max velocities and accel times
@@ -55,8 +55,8 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 			rollerMotor = new CANTalon(RobotMap.BALL_INTAKE_ROLLER_MOTOR_CAN_ID);
 
 			liftMotor = new CANTalonEncoder(RobotMap.BALL_INTAKE_LIFT_MOTOR_CAN_ID, ENCODER_TICKS_TO_WORLD, false, FeedbackDevice.QuadEncoder);
-			liftMotor.reverseSensor(false);
-			liftMotor.reverseOutput(false);
+			liftMotor.reverseSensor(true);
+			liftMotor.reverseOutput(true);
 
 			motorControllers.add(liftMotor);
 			mpPIDParams.iZone = 128;
@@ -90,7 +90,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	public void setLiftSpeed(double speed) {
 		controlMode = LiftControlMode.MANUAL;
 		liftMotor.changeControlMode(TalonControlMode.PercentVbus);
-		liftMotor.set(speed);
+		liftMotor.set(-speed);
 	}
 
 	@Override

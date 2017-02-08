@@ -1,14 +1,22 @@
 package org.usfirst.frc.team3310.robot;
 
+import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftMoveMP;
+import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
+import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
+import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftMoveMP;
+import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftResetZero;
+import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftSpeed;
 import org.usfirst.frc.team3310.robot.commands.MagicCarpetSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetRPMDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterLiftSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterMainSetRPMDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterMainSetSpeed;
+import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
+import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -115,9 +123,61 @@ public class OI {
 		intakeOn05.whenPressed(new BallIntakeRollerSetSpeed(0.5));
 		SmartDashboard.putData("Intake 0.5", intakeOn05);
 
+		Button intakeOn08 = new InternalButton();
+		intakeOn08.whenPressed(new BallIntakeRollerSetSpeed(0.8));
+		SmartDashboard.putData("Intake 0.8", intakeOn08);
+
 		Button intakeOff = new InternalButton();
 		intakeOff.whenPressed(new BallIntakeRollerSetSpeed(0.0));
 		SmartDashboard.putData("Intake Off", intakeOff);
+
+		Button ballLiftPositive = new InternalButton();
+		ballLiftPositive.whenPressed(new BallIntakeLiftSpeed(0.2));
+		ballLiftPositive.whenReleased(new BallIntakeLiftSpeed(0.0));
+		SmartDashboard.putData("Ball Lift Positive", ballLiftPositive);
+
+		Button ballLiftNegative = new InternalButton();
+		ballLiftNegative.whenPressed(new BallIntakeLiftSpeed(-0.2));
+		ballLiftNegative.whenReleased(new BallIntakeLiftSpeed(0.0));
+		SmartDashboard.putData("Ball Lift Negative", ballLiftNegative);
+
+		Button ballLiftRetractedPosition = new InternalButton();
+		ballLiftRetractedPosition.whenPressed(new BallIntakeLiftMoveMP(BallIntake.RETRACTED_POSITION_DEG));
+		SmartDashboard.putData("Ball Lift Retracted Position", ballLiftRetractedPosition);
+
+		Button ballLiftBallIntakePosition = new InternalButton();
+		ballLiftBallIntakePosition.whenPressed(new BallIntakeLiftMoveMP(BallIntake.BALL_INTAKE_POSITION_DEG));
+		SmartDashboard.putData("Ball Lift Ball Position", ballLiftBallIntakePosition);
+
+		Button ballLiftGearPosition = new InternalButton();
+		ballLiftGearPosition.whenPressed(new BallIntakeLiftMoveMP(BallIntake.GEAR_INTAKE_POSITION_DEG));
+		SmartDashboard.putData("Ball Lift Gear Position", ballLiftGearPosition);
+
+		Button ballLiftZero = new InternalButton();
+		ballLiftZero.whenPressed(new BallIntakeLiftResetZero());
+		SmartDashboard.putData("Ball Lift Reset Zero", ballLiftZero);
+
+		Button gearLiftPositive = new InternalButton();
+		gearLiftPositive.whenPressed(new GearIntakeLiftSpeed(0.2));
+		gearLiftPositive.whenReleased(new GearIntakeLiftSpeed(0.0));
+		SmartDashboard.putData("Gear Lift Positive", gearLiftPositive);
+
+		Button gearLiftNegative = new InternalButton();
+		gearLiftNegative.whenPressed(new GearIntakeLiftSpeed(-0.2));
+		gearLiftNegative.whenReleased(new GearIntakeLiftSpeed(0.0));
+		SmartDashboard.putData("Gear Lift Negative", gearLiftNegative);
+
+		Button gearLiftRetractedPosition = new InternalButton();
+		gearLiftRetractedPosition.whenPressed(new GearIntakeLiftMoveMP(GearIntake.RETRACTED_POSITION_DEG));
+		SmartDashboard.putData("Gear Lift Retracted Position", gearLiftRetractedPosition);
+
+		Button gearLiftGearPosition = new InternalButton();
+		gearLiftGearPosition.whenPressed(new GearIntakeLiftMoveMP(GearIntake.GEAR_INTAKE_POSITION_DEG));
+		SmartDashboard.putData("Gear Lift Gear Position", gearLiftGearPosition);
+
+		Button gearLiftZero = new InternalButton();
+		gearLiftZero.whenPressed(new GearIntakeLiftResetZero());
+		SmartDashboard.putData("Gear Lift Reset Zero", gearLiftZero);
 
 	}
 	
