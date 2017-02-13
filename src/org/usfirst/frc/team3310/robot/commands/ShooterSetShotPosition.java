@@ -6,11 +6,11 @@ import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterShotPosition extends Command
+public class ShooterSetShotPosition extends Command
 {
 	private ShotState state;
 	
-	public ShooterShotPosition(ShotState state) {
+	public ShooterSetShotPosition(ShotState state) {
 		requires(Robot.shooter);
 		this.state = state;
 	}

@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShooterFeedSetSpeed extends Command {
+public class ShooterStage1SetRpm extends Command {
 
-	private double speed;
+	private double rpm;
 	
 	// Constructor with speed
-    public ShooterFeedSetSpeed(double speed) {
-    	this.speed = speed;
-        requires(Robot.shooterFeed);
+    public ShooterStage1SetRpm(double rpm) {
+    	this.rpm = rpm;
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooterFeed.setSpeed(speed);
+    	Robot.shooter.setStage1Rpm(rpm);
     }
 
     // Called repeatedly when this Command is scheduled to run

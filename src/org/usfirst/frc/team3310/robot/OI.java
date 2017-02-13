@@ -14,14 +14,14 @@ import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftSpeed;
 import org.usfirst.frc.team3310.robot.commands.MagicCarpetSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOff;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOn;
-import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetRPMDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetRpmDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ShooterLiftSetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ShooterMainSetRPMDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterMainSetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetRPMDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetVBusDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterShotPosition;
+import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetRpmDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetSpeed;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetRpmDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetSpeedDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
 import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
@@ -73,69 +73,77 @@ public class OI {
 		magicCarpetOff.whenPressed(new MagicCarpetSetSpeed(0.0));
 		SmartDashboard.putData("Magic Carpet Off", magicCarpetOff);
 
-		Button shooterLiftOn10 = new InternalButton();
-		shooterLiftOn10.whenPressed(new ShooterLiftSetSpeed(1.0));
-		SmartDashboard.putData("Shooter Lift 1.0", shooterLiftOn10);
+		Button shooterFeedOn10 = new InternalButton();
+		shooterFeedOn10.whenPressed(new ShooterFeedSetSpeed(1.0));
+		SmartDashboard.putData("Shooter Feed 1.0", shooterFeedOn10);
 
-		Button shooterLiftOn05 = new InternalButton();
-		shooterLiftOn05.whenPressed(new ShooterLiftSetSpeed(0.5));
-		SmartDashboard.putData("Shooter Lift 0.5", shooterLiftOn05);
+		Button shooterFeedOn05 = new InternalButton();
+		shooterFeedOn05.whenPressed(new ShooterFeedSetSpeed(0.5));
+		SmartDashboard.putData("Shooter Feed 0.5", shooterFeedOn05);
 
-		Button shooterLiftOff = new InternalButton();
-		shooterLiftOff.whenPressed(new ShooterLiftSetSpeed(0.0));
-		SmartDashboard.putData("Shooter Lift Off", shooterLiftOff);
+		Button shooterFeedOff = new InternalButton();
+		shooterFeedOff.whenPressed(new ShooterFeedSetSpeed(0.0));
+		SmartDashboard.putData("Shooter Feed Off", shooterFeedOff);
 
-		Button shooterRPMOnDash = new InternalButton();
-		shooterRPMOnDash.whenPressed(new ShooterMainSetRPMDashboard());
-		SmartDashboard.putData("Shooter Dash RPM", shooterRPMOnDash);
+		Button shooterStage2RPMOnDash = new InternalButton();
+		shooterStage2RPMOnDash.whenPressed(new ShooterStage2SetRpmDashboard());
+		SmartDashboard.putData("Shooter Stage 2 Dash RPM", shooterStage2RPMOnDash);
 
-		Button shooter2On05 = new InternalButton();
-		shooter2On05.whenPressed(new ShooterFeedSetSpeed(0.5));
-		SmartDashboard.putData("Shooter 2 0.5", shooter2On05);
+		Button shooterStage2On10 = new InternalButton();
+		shooterStage2On10.whenPressed(new ShooterStage2SetSpeed(1.0));
+		SmartDashboard.putData("Shooter Stage 2 - 1.0", shooterStage2On10);
+
+		Button shooterStage2On09 = new InternalButton();
+		shooterStage2On09.whenPressed(new ShooterStage2SetSpeed(0.9));
+		SmartDashboard.putData("Shooter Stage 2 - 0.9", shooterStage2On09);
+
+		Button shooterStage2On08 = new InternalButton();
+		shooterStage2On08.whenPressed(new ShooterStage2SetSpeed(0.8));
+		SmartDashboard.putData("Shooter Stage 2 - 0.8", shooterStage2On08);
+
+		Button shooterStage2On07 = new InternalButton();
+		shooterStage2On07.whenPressed(new ShooterStage2SetSpeed(0.7));
+		SmartDashboard.putData("Shooter Stage 2 - 0.7", shooterStage2On07);
+
+		Button shooterStage2On06 = new InternalButton();
+		shooterStage2On06.whenPressed(new ShooterStage2SetSpeed(0.6));
+		SmartDashboard.putData("Shooter Stage 2 - 0.6", shooterStage2On06);
+
+		Button shooterStage2On05 = new InternalButton();
+		shooterStage2On05.whenPressed(new ShooterStage2SetSpeed(0.5));
+		SmartDashboard.putData("Shooter Stage 2 - 0.5", shooterStage2On05);
+
+		Button shooterStage2Off = new InternalButton();
+		shooterStage2Off.whenPressed(new ShooterStage2SetSpeed(0.0));
+		SmartDashboard.putData("Shooter Stage 2 - Off", shooterStage2Off);
 		
-		Button shooter2RPMOnDash = new InternalButton();
-		shooter2RPMOnDash.whenPressed(new ShooterFeedSetRPMDashboard());
-		SmartDashboard.putData("Shooter 2 Dash RPM", shooter2RPMOnDash);
+		Button shooterStage1RPMOnDash = new InternalButton();
+		shooterStage1RPMOnDash.whenPressed(new ShooterStage1SetRpmDashboard());
+		SmartDashboard.putData("Shooter Stage 1 Dash RPM", shooterStage1RPMOnDash);
 
+		Button shooterStage1On05 = new InternalButton();
+		shooterStage1On05.whenPressed(new ShooterStage1SetSpeed(0.5));
+		SmartDashboard.putData("Shooter Stage 1 - 0.5", shooterStage1On05);
+		
+		Button shooterStage1Off = new InternalButton();
+		shooterStage1Off.whenPressed(new ShooterStage1SetSpeed(0.0));
+		SmartDashboard.putData("Shooter Stage 1 - Off", shooterStage1Off);
+		
 		Button shooterBothRPMOnDash = new InternalButton();
-		shooterBothRPMOnDash.whenPressed(new ShooterSetRPMDashboard());
+		shooterBothRPMOnDash.whenPressed(new ShooterSetRpmDashboard());
 		SmartDashboard.putData("Shooter Both Dash RPM", shooterBothRPMOnDash);
 
 		Button shooterBothVBusOnDash = new InternalButton();
-		shooterBothVBusOnDash.whenPressed(new ShooterSetVBusDashboard());
-		SmartDashboard.putData("Shooter Both VBus RPM", shooterBothVBusOnDash);
+		shooterBothVBusOnDash.whenPressed(new ShooterSetSpeedDashboard());
+		SmartDashboard.putData("Shooter Both Dash VBus", shooterBothVBusOnDash);
 
-		Button shooterOn10 = new InternalButton();
-		shooterOn10.whenPressed(new ShooterMainSetSpeed(1.0));
-		SmartDashboard.putData("Shooter 1.0", shooterOn10);
-
-		Button shooterOn09 = new InternalButton();
-		shooterOn09.whenPressed(new ShooterMainSetSpeed(0.9));
-		SmartDashboard.putData("Shooter 0.9", shooterOn09);
-
-		Button shooterOn08 = new InternalButton();
-		shooterOn08.whenPressed(new ShooterMainSetSpeed(0.8));
-		SmartDashboard.putData("Shooter 0.8", shooterOn08);
-
-		Button shooterOn07 = new InternalButton();
-		shooterOn07.whenPressed(new ShooterMainSetSpeed(0.7));
-		SmartDashboard.putData("Shooter 0.7", shooterOn07);
-
-		Button shooterOn06 = new InternalButton();
-		shooterOn06.whenPressed(new ShooterMainSetSpeed(0.6));
-		SmartDashboard.putData("Shooter 0.6", shooterOn06);
-
-		Button shooterOn05 = new InternalButton();
-		shooterOn05.whenPressed(new ShooterMainSetSpeed(0.5));
-		SmartDashboard.putData("Shooter 0.5", shooterOn05);
-
-		Button shooterOff = new InternalButton();
-		shooterOff.whenPressed(new ShooterMainSetSpeed(0.0));
-		SmartDashboard.putData("Shooter Off", shooterOff);
+		Button allButLiftOff = new InternalButton();
+		allButLiftOff.whenPressed(new ShooterAllOff());
+		SmartDashboard.putData("Shooter All Off", allButLiftOff);
 		
-		Button shooter2Off = new InternalButton();
-		shooter2Off.whenPressed(new ShooterFeedSetSpeed(0.0));
-		SmartDashboard.putData("Shooter 2 Off", shooter2Off);
+		Button allButLiftOn = new InternalButton();
+		allButLiftOn.whenPressed(new ShooterAllOn());
+		SmartDashboard.putData("Shooter All On", allButLiftOn);
 
 		Button intakeOn10 = new InternalButton();
 		intakeOn10.whenPressed(new BallIntakeRollerSetSpeed(1.0));
@@ -214,11 +222,11 @@ public class OI {
 		SmartDashboard.putData("Gear Lift Present", gearPresent);
 
 		Button shooterShotPositionClose = new InternalButton();
-		shooterShotPositionClose.whenPressed(new ShooterShotPosition(Shooter.ShotState.CLOSE));
+		shooterShotPositionClose.whenPressed(new ShooterSetShotPosition(Shooter.ShotState.CLOSE));
 		SmartDashboard.putData("Shooter Close Shot", shooterShotPositionClose);
 		
 		Button shooterShotPositionFar = new InternalButton();
-		shooterShotPositionFar.whenPressed(new ShooterShotPosition(Shooter.ShotState.FAR));
+		shooterShotPositionFar.whenPressed(new ShooterSetShotPosition(Shooter.ShotState.FAR));
 		SmartDashboard.putData("Shooter Far Shot", shooterShotPositionFar);
 		
 		Button climberOn08 = new InternalButton();
@@ -237,15 +245,6 @@ public class OI {
 		Button climberDoorPositionDown = new InternalButton();
 		climberDoorPositionDown.whenPressed(new ClimberDoorPosition (Climber.DoorOpenState.DOWN));
 		SmartDashboard.putData("Climber Door Down", climberDoorPositionDown);
-		
-		Button allButLiftOff = new InternalButton();
-		allButLiftOff.whenPressed(new ShooterAllOff());
-		SmartDashboard.putData("Shooter All Off", allButLiftOff);
-		
-		Button allButLiftOn = new InternalButton();
-		allButLiftOn.whenPressed(new ShooterAllOn());
-
-		
 	}
 	
 	public Joystick getDriverJoystickPower() {

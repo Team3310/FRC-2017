@@ -20,6 +20,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -129,30 +130,44 @@ public class Drive extends Subsystem implements ControlLoopable
 			rightDrive2 = new CANTalon(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID);
 			rightDrive3 = new CANTalon(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID);
 			
+			leftDrive1.clearStickyFaults();
 			leftDrive1.reverseSensor(true);
 			leftDrive1.reverseOutput(false);
 			leftDrive1.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+			leftDrive1.setSafetyEnabled(false);
 			leftDrive1.enableBrakeMode(true);
+//	        if (leftDrive1.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	            DriverStation.reportError("Could not detect left drive encoder encoder!", false);
+//	        }
 			
 			leftDrive2.changeControlMode(TalonControlMode.Follower);
 			leftDrive2.set(leftDrive1.getDeviceID());
+			leftDrive2.setSafetyEnabled(false);
 			leftDrive2.enableBrakeMode(true);
 
 			leftDrive3.changeControlMode(TalonControlMode.Follower);
 			leftDrive3.set(leftDrive1.getDeviceID());
+			leftDrive3.setSafetyEnabled(false);
 			leftDrive3.enableBrakeMode(true);
 			
+			rightDrive1.clearStickyFaults();
 			rightDrive1.reverseSensor(false);
 			rightDrive1.reverseOutput(true);
 			rightDrive1.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+			rightDrive1.setSafetyEnabled(false);
 			rightDrive1.enableBrakeMode(true);
+//	        if (rightDrive1.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	            DriverStation.reportError("Could not detect right drive encoder encoder!", false);
+//	        }
 			
 			rightDrive2.changeControlMode(TalonControlMode.Follower);
 			rightDrive2.set(rightDrive1.getDeviceID());
+			rightDrive2.setSafetyEnabled(false);
 			rightDrive2.enableBrakeMode(true);
 
 			rightDrive3.changeControlMode(TalonControlMode.Follower);
 			rightDrive3.set(rightDrive1.getDeviceID());
+			rightDrive3.setSafetyEnabled(false);
 			rightDrive3.enableBrakeMode(true);
 							
 			motorControllers.add(leftDrive1);

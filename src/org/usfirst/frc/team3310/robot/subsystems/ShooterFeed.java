@@ -12,13 +12,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ShooterLift extends Subsystem {
+public class ShooterFeed extends Subsystem {
     
 	private CANTalon roller;
 	
-	public ShooterLift() {
+	public ShooterFeed() {
 		try {
-			roller = new CANTalon(RobotMap.SHOOTER_LIFT_MOTOR_CAN_ID);
+			roller = new CANTalon(RobotMap.SHOOTER_FEED_MOTOR_CAN_ID);
+			roller.clearStickyFaults();
+			roller.setSafetyEnabled(false);
+			roller.enableBrakeMode(true);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the ShooterLiftSubsystem constructor");

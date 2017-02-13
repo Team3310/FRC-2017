@@ -14,6 +14,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -55,9 +56,14 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 			rollerMotor = new CANTalon(RobotMap.BALL_INTAKE_ROLLER_MOTOR_CAN_ID);
 
 			liftMotor = new CANTalonEncoder(RobotMap.BALL_INTAKE_LIFT_MOTOR_CAN_ID, ENCODER_TICKS_TO_WORLD, false, FeedbackDevice.QuadEncoder);
+	        liftMotor.clearStickyFaults();
+			liftMotor.setSafetyEnabled(false);
 			liftMotor.reverseSensor(true);
 			liftMotor.reverseOutput(true);
-
+//	        if (liftMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	            DriverStation.reportError("Could not detect ball intake encoder!", false);
+//	        }
+	        
 			motorControllers.add(liftMotor);
 			mpPIDParams.iZone = 128;
 			setLiftSpeed(0.0);

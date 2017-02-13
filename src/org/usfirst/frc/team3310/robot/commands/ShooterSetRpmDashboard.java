@@ -10,18 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ShooterMainSetRPMDashboard extends Command {
+public class ShooterSetRpmDashboard extends Command {
 
 	// Constructor with speed
-    public ShooterMainSetRPMDashboard() {
+    public ShooterSetRpmDashboard() {
         requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double shooterSpeed = SmartDashboard.getNumber("Shooter Main Target RPM", 0);
-    	DriverStation.reportWarning("Shooter Main RPM = " + shooterSpeed, false);
-    	Robot.shooter.setMainRPM(shooterSpeed);
+    	double shooterSpeed = SmartDashboard.getNumber("Shooter Target RPM", 0);
+     	Robot.shooter.setStage2Rpm(shooterSpeed);
+    	Robot.shooter.setStage1Rpm(shooterSpeed);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -3,25 +3,24 @@ package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ShooterFeedSetRPMDashboard extends Command {
+public class ShooterStage2SetSpeed extends Command {
 
+	private double speed;
+	
 	// Constructor with speed
-    public ShooterFeedSetRPMDashboard() {
+    public ShooterStage2SetSpeed(double speed) {
+    	this.speed = speed;
         requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double shooterSpeed = SmartDashboard.getNumber("Shooter Feed Target RPM", 0);
-    	DriverStation.reportWarning("Shooter Feed RPM = " + shooterSpeed, false);
-    	Robot.shooter.setFeedRPM(shooterSpeed);
+    	Robot.shooter.setStage2Speed(speed);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -26,6 +26,8 @@ public class MagicCarpet extends Subsystem {
 	public MagicCarpet() {
 		try {
 			roller = new CANTalon(RobotMap.MAGIC_CARPET_ROLLER_MOTOR_CAN_ID);
+			roller.clearStickyFaults();
+			roller.setSafetyEnabled(false);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the MagicCarpet constructor");

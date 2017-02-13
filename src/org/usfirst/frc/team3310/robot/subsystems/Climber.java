@@ -27,6 +27,8 @@ public class Climber extends Subsystem {
 	public Climber() {
 		try {
 			roller = new CANTalon(RobotMap.CLIMBER_MOTOR_CAN_ID);
+			roller.clearStickyFaults();
+			roller.setSafetyEnabled(false);
 			doorPosition = new DoubleSolenoid(RobotMap.CLIMBER_DOOR_POSITION_1_PCM_ID,RobotMap.CLIMBER_DOOR_POSITION_2_PCM_ID);
 			
 		} 

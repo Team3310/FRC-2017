@@ -10,6 +10,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,62 +21,72 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
     
 	public static enum ShotState { CLOSE, FAR };
-	public static final int ENCODER_TICKS_PER_REV = 4096/4;
+	public static final int ENCODER_TICKS_PER_REV = 1024;
 
-	private CANTalon shooterMainLeft;
-	private CANTalon shooterMainRight;
-	private CANTalon shooterFeedLeft;
-	private CANTalon shooterFeedRight;
+	private CANTalon shooterStage2Left;
+	private CANTalon shooterStage2Right;
+	private CANTalon shooterStage1Left;
+	private CANTalon shooterStage1Right;
 
 	private Solenoid shotPosition;
 	
 	public Shooter() {
 		try {
-			shooterMainLeft = new CANTalon(RobotMap.SHOOTER_MAIN_LEFT_MOTOR_CAN_ID);
-			shooterMainLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-			shooterMainLeft.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
-			shooterMainLeft.changeControlMode(TalonControlMode.PercentVbus);
-			shooterMainLeft.setSafetyEnabled(false);
-			shooterMainLeft.enableBrakeMode(false);
-			shooterMainLeft.setProfile(0);
-			shooterMainLeft.setF(0.034);
-			shooterMainLeft.setP(0.0);
-			shooterMainLeft.setI(0.0005);
-			shooterMainLeft.setIZone(2000);
-			shooterMainLeft.setD(0);
-			shooterMainLeft.setVoltageCompensationRampRate(96.0);
-			shooterMainLeft.configNominalOutputVoltage(0.0,0.0);
-			shooterMainLeft.configPeakOutputVoltage(12.0, 0);
+			shooterStage2Left = new CANTalon(RobotMap.SHOOTER_STAGE_2_LEFT_MOTOR_CAN_ID);
+			shooterStage2Left.clearStickyFaults();
+			shooterStage2Left.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			shooterStage2Left.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
+			shooterStage2Left.changeControlMode(TalonControlMode.PercentVbus);
+			shooterStage2Left.setSafetyEnabled(false);
+			shooterStage2Left.enableBrakeMode(false);
+			shooterStage2Left.setProfile(0);
+			shooterStage2Left.setF(0.034);
+			shooterStage2Left.setP(0.0);
+			shooterStage2Left.setI(0.0005);
+			shooterStage2Left.setIZone(2000);
+			shooterStage2Left.setD(0);
+			shooterStage2Left.setVoltageCompensationRampRate(96.0);
+			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
+			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
+			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
+//	        if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	            DriverStation.reportError("Could not detect shooter stage 2 encoder!", false);
+//	        }
 			
-			shooterMainRight = new CANTalon(RobotMap.SHOOTER_MAIN_RIGHT_MOTOR_CAN_ID);
-			shooterMainRight.changeControlMode(TalonControlMode.Follower);
-			shooterMainRight.set(shooterMainLeft.getDeviceID());
-			shooterMainRight.enableBrakeMode(false);
-			shooterMainRight.setSafetyEnabled(false);
-			shooterMainRight.reverseOutput(true);
+			shooterStage2Right = new CANTalon(RobotMap.SHOOTER_STAGE_2_RIGHT_MOTOR_CAN_ID);
+			shooterStage2Right.changeControlMode(TalonControlMode.Follower);
+			shooterStage2Right.set(shooterStage2Left.getDeviceID());
+			shooterStage2Right.setSafetyEnabled(false);
+			shooterStage2Right.enableBrakeMode(false);
+			shooterStage2Right.reverseOutput(true);
 			
-			shooterFeedLeft = new CANTalon(RobotMap.SHOOTER_FEED_LEFT_MOTOR_CAN_ID);
-			shooterFeedLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-			shooterFeedLeft.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
-			shooterFeedLeft.changeControlMode(TalonControlMode.PercentVbus);
-			shooterFeedLeft.setSafetyEnabled(false);
-			shooterFeedLeft.enableBrakeMode(false);
-			shooterFeedLeft.setProfile(0);
-			shooterFeedLeft.setF(0.038);
-			shooterFeedLeft.setP(0.0);
-			shooterFeedLeft.setI(0.0005);
-			shooterFeedLeft.setIZone(2000);
-			shooterFeedLeft.setD(0);
-			shooterFeedLeft.setVoltageCompensationRampRate(96.0);
-			shooterFeedLeft.configNominalOutputVoltage(0.0,0.0);
-			shooterFeedLeft.configPeakOutputVoltage(12.0, 0);
+			shooterStage1Left = new CANTalon(RobotMap.SHOOTER_STAGE_1_LEFT_MOTOR_CAN_ID);
+			shooterStage1Left.clearStickyFaults();
+			shooterStage1Left.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			shooterStage1Left.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
+			shooterStage1Left.changeControlMode(TalonControlMode.PercentVbus);
+			shooterStage1Left.setSafetyEnabled(false);
+			shooterStage1Left.enableBrakeMode(false);
+			shooterStage1Left.setProfile(0);
+			shooterStage1Left.setF(0.038);
+			shooterStage1Left.setP(0.0);
+			shooterStage1Left.setI(0.0005);
+			shooterStage1Left.setIZone(2000);
+			shooterStage1Left.setD(0);
+			shooterStage1Left.setVoltageCompensationRampRate(96.0);
+			shooterStage1Left.configNominalOutputVoltage(0.0,0.0);
+			shooterStage1Left.configPeakOutputVoltage(12.0, 0);
+			shooterStage1Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
+//	        if (shooterStage1Left.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	            DriverStation.reportError("Could not detect shooter stage 1 encoder!", false);
+//	        }
 
-			shooterFeedRight = new CANTalon(RobotMap.SHOOTER_FEED_RIGHT_MOTOR_CAN_ID);
-			shooterFeedRight.changeControlMode(TalonControlMode.Follower);
-			shooterFeedRight.set(shooterFeedLeft.getDeviceID());
-			shooterFeedRight.enableBrakeMode(false);
-			shooterFeedRight.setSafetyEnabled(false);			
-			shooterFeedRight.reverseOutput(true);
+			shooterStage1Right = new CANTalon(RobotMap.SHOOTER_STAGE_1_RIGHT_MOTOR_CAN_ID);
+			shooterStage1Right.changeControlMode(TalonControlMode.Follower);
+			shooterStage1Right.set(shooterStage1Left.getDeviceID());
+			shooterStage1Right.setSafetyEnabled(false);			
+			shooterStage1Right.enableBrakeMode(false);
+			shooterStage1Right.reverseOutput(true);
 
 			shotPosition = new Solenoid(RobotMap.SHOOTER_SHOT_POSITION_PCM_ID);
 		} 
@@ -84,24 +95,24 @@ public class Shooter extends Subsystem {
 		}
 	}
 	
-	public void setMainSpeed(double vbus) {
-		shooterMainLeft.changeControlMode(TalonControlMode.PercentVbus);
-		shooterMainLeft.set(vbus);
+	public void setStage2Speed(double vbus) {
+		shooterStage2Left.changeControlMode(TalonControlMode.PercentVbus);
+		shooterStage2Left.set(vbus);
 	}
 	
-	public void setFeedSpeed(double vbus) {
-		shooterFeedLeft.changeControlMode(TalonControlMode.PercentVbus);
-		shooterFeedLeft.set(vbus);
+	public void setStage1Speed(double vbus) {
+		shooterStage1Left.changeControlMode(TalonControlMode.PercentVbus);
+		shooterStage1Left.set(vbus);
 	}
 	
-	public void setMainRPM(double rpm) {
-		shooterMainLeft.changeControlMode(TalonControlMode.Speed);
-		shooterMainLeft.set(rpm);
+	public void setStage2Rpm(double rpm) {
+		shooterStage2Left.changeControlMode(TalonControlMode.Speed);
+		shooterStage2Left.set(rpm);
 	}
 	
-	public void setFeedRPM(double rpm) {
-		shooterFeedLeft.changeControlMode(TalonControlMode.Speed);
-		shooterFeedLeft.set(rpm);
+	public void setStage1Rpm(double rpm) {
+		shooterStage1Left.changeControlMode(TalonControlMode.Speed);
+		shooterStage1Left.set(rpm);
 	}
 	
 	public void setShotPosition(ShotState state) {
@@ -117,21 +128,21 @@ public class Shooter extends Subsystem {
     }
     
 	public void updateStatus(Robot.OperationMode operationMode) {
-//		SmartDashboard.putNumber("Shooter Main Closed Loop Error", shooterMainLeft.getClosedLoopError());
-//		SmartDashboard.putNumber("Shooter Main Motor Output", shooterMainLeft.getOutputVoltage()/shooterMainLeft.getBusVoltage());
-//		SmartDashboard.putNumber("Shooter Main Output Voltage", shooterMainLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter Main Actual RPM", shooterMainLeft.getSpeed());
-		SmartDashboard.putNumber("Shooter Main Plot RPM", shooterMainLeft.getSpeed());
-//		SmartDashboard.putNumber("Shooter Main Amps Left", shooterMainLeft.getOutputCurrent());
-//		SmartDashboard.putNumber("Shooter Main Amps Right", shooterMainRight.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter Stage 2 Closed Loop Error", shooterStage2Left.getClosedLoopError());
+		SmartDashboard.putNumber("Shooter Stage 2 Motor Output", shooterStage2Left.getOutputVoltage()/shooterStage2Left.getBusVoltage());
+		SmartDashboard.putNumber("Shooter Stage 2 Output Voltage", shooterStage2Left.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter Stage 2 Actual RPM", shooterStage2Left.getSpeed());
+		SmartDashboard.putNumber("Shooter Stage 2 Plot RPM", shooterStage2Left.getSpeed());
+		SmartDashboard.putNumber("Shooter Stage 2 Amps Left", shooterStage2Left.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter Stage 2 Amps Right", shooterStage2Right.getOutputCurrent());
 
-//		SmartDashboard.putNumber("Shooter Feed Closed Loop Error", shooterFeedLeft.getClosedLoopError());
-//		SmartDashboard.putNumber("Shooter Feed Motor Output", shooterFeedLeft.getOutputVoltage()/shooterFeedLeft.getBusVoltage());
-//		SmartDashboard.putNumber("Shooter Feed Output Voltage", shooterFeedLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter Feed Actual RPM", shooterFeedLeft.getSpeed());
-		SmartDashboard.putNumber("Shooter Feed Plot RPM", shooterFeedLeft.getSpeed());
-//		SmartDashboard.putNumber("Shooter Feed Amps Left", shooterFeedLeft.getOutputCurrent());
-//		SmartDashboard.putNumber("Shooter Feed Amps Right", shooterFeedRight.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter Stage 1 Closed Loop Error", shooterStage1Left.getClosedLoopError());
+		SmartDashboard.putNumber("Shooter Stage 1 Motor Output", shooterStage1Left.getOutputVoltage()/shooterStage1Left.getBusVoltage());
+		SmartDashboard.putNumber("Shooter Stage 1 Output Voltage", shooterStage1Left.getOutputVoltage());
+		SmartDashboard.putNumber("Shooter Stage 1 Actual RPM", shooterStage1Left.getSpeed());
+		SmartDashboard.putNumber("Shooter Stage 1 Plot RPM", shooterStage1Left.getSpeed());
+		SmartDashboard.putNumber("Shooter Stage 1 Amps Left", shooterStage1Left.getOutputCurrent());
+		SmartDashboard.putNumber("Shooter Stage 1 Amps Right", shooterStage1Left.getOutputCurrent());
     }
 }
 

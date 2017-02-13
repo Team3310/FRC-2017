@@ -10,9 +10,11 @@ import org.usfirst.frc.team3310.utility.ControlLoopable;
 import org.usfirst.frc.team3310.utility.MPTalonPIDController;
 import org.usfirst.frc.team3310.utility.PIDParams;
 
+import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -48,8 +50,13 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	public GearIntake() {
 		try {
 			liftMotor = new CANTalonEncoder(RobotMap.GEAR_INTAKE_LIFT_MOTOR_CAN_ID, ENCODER_TICKS_TO_WORLD, false, FeedbackDevice.QuadEncoder);
+			liftMotor.setSafetyEnabled(false);
 			liftMotor.reverseSensor(false);
 			liftMotor.reverseOutput(false);
+	        liftMotor.clearStickyFaults();
+//	        if (liftMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	            DriverStation.reportError("Could not detect gear intake encoder!", false);
+//	        }
 
 			motorControllers.add(liftMotor);
 			mpPIDParams.iZone = 128;

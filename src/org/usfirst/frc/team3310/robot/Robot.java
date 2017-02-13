@@ -8,7 +8,7 @@ import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
-import org.usfirst.frc.team3310.robot.subsystems.ShooterLift;
+import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 	
 	public static final Drive drive = new Drive();
 	public static final Shooter shooter = new Shooter();
-	public static final ShooterLift shooterLift = new ShooterLift();
+	public static final ShooterFeed shooterFeed = new ShooterFeed();
 	public static final BallIntake ballIntake = new BallIntake();
 	public static final GearIntake gearIntake = new GearIntake();
 	public static final MagicCarpet magicCarpet = new MagicCarpet();
@@ -42,10 +42,10 @@ public class Robot extends IterativeRobot {
 	public static final ControlLooper controlLoop = new ControlLooper("Main control loop", 10);
 	public static final PowerDistributionPanel pdp = new PowerDistributionPanel();
 
-	public static double shooterMainSpeed = 2950;
-	public static double shooterFeedSpeed = 2950;
-	public static double shooterSpeed = 2700;
-	public static double shooterVBus = 0.7;
+	public static double shooterStage2RpmDashboard = 2950;
+	public static double shooterStage1RpmDashboard = 2950;
+	public static double shooterBothRpmDashboard = 2700;
+	public static double shooterBothVBusDashboard = 0.7;
 
 	public static enum OperationMode { TEST, COMPETITION };
 	public static OperationMode operationMode = OperationMode.TEST;
@@ -74,10 +74,10 @@ public class Robot extends IterativeRobot {
 		autonTaskChooser = new SendableChooser<Command>();
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 
-		SmartDashboard.putNumber("Shooter Main Target RPM", shooterMainSpeed);
-		SmartDashboard.putNumber("Shooter Feed Target RPM", shooterFeedSpeed);
-		SmartDashboard.putNumber("Shooter Target RPM", shooterSpeed);
-		SmartDashboard.putNumber("Shooter Target VBus", shooterVBus);
+		SmartDashboard.putNumber("Shooter Stage 2 Target RPM", shooterStage2RpmDashboard);
+		SmartDashboard.putNumber("Shooter Stage 1 Target RPM", shooterStage1RpmDashboard);
+		SmartDashboard.putNumber("Shooter Target RPM", shooterBothRpmDashboard);
+		SmartDashboard.putNumber("Shooter Target VBus", shooterBothVBusDashboard);
     }
 	
 	/**

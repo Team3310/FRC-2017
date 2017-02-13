@@ -8,10 +8,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShooterAllOn extends CommandGroup {
 
     public ShooterAllOn() {
-        // Add Commands here:
-        addSequential(new ShooterMainSetRPMDashboard());
-        addSequential(new ShooterFeedSetRPMDashboard());
-        addSequential(new ShooterLiftSetSpeed(1.0));
+        addSequential(new ShooterStage2SetRpmDashboard());
+        addSequential(new ShooterStage1SetRpmDashboard());
+        addSequential(new ShooterFeedSetSpeed(1.0));
         addSequential(new MagicCarpetSetSpeed(1.0));
 
     }
