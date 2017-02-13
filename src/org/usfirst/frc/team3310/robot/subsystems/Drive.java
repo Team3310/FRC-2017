@@ -112,7 +112,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams pidTurnPIDParams = new PIDParams(0.05, 0.007, .3, 0, 0, 0.0, 5);
 	private double targetPIDAngle;
 
-	private BHR_ADSXRS453_Gyro gyro = new BHR_ADSXRS453_Gyro();
+//	private BHR_ADSXRS453_Gyro gyro = new BHR_ADSXRS453_Gyro();
 	private boolean useGyroLock;
 	private double gyroLockAngleDeg;
 	private double kPGyro = 0.04;
@@ -175,24 +175,24 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 	
 	public double getGyroAngleDeg() {
-		return gyro.getAngle() + gyroOffsetDeg;
+		return 0; // gyro.getAngle() + gyroOffsetDeg;
 	}
 	
 	public double getGyroRateDegPerSec() {
-		return gyro.getRate();
+		return 0; // gyro.getRate();
 	}
 	
 	public void resetGyro() {
-		gyro.reset();
+		//gyro.reset();
 	}
 	
 	public void calibrateGyro() {
-		gyro.calibrate();
+		//gyro.calibrate();
 	}
 	
 	public void endGyroCalibration() {
 		if (isCalibrating == true) {
-			gyro.endCalibration();
+			//gyro.endCalibration();
 			isCalibrating = false;
 		}
 	}

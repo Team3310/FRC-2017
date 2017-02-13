@@ -3,6 +3,7 @@ package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
+import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	public static final BallIntake ballIntake = new BallIntake();
 	public static final GearIntake gearIntake = new GearIntake();
 	public static final MagicCarpet magicCarpet = new MagicCarpet();
+	public static final Climber climber = new Climber();
 	public static final Camera camera = new Camera();
 	
 	public static final ControlLooper controlLoop = new ControlLooper("Main control loop", 10);
@@ -42,6 +44,8 @@ public class Robot extends IterativeRobot {
 
 	public static double shooterMainSpeed = 2950;
 	public static double shooterFeedSpeed = 2950;
+	public static double shooterSpeed = 2700;
+	public static double shooterVBus = 0.7;
 
 	public static enum OperationMode { TEST, COMPETITION };
 	public static OperationMode operationMode = OperationMode.TEST;
@@ -72,6 +76,8 @@ public class Robot extends IterativeRobot {
 
 		SmartDashboard.putNumber("Shooter Main Target RPM", shooterMainSpeed);
 		SmartDashboard.putNumber("Shooter Feed Target RPM", shooterFeedSpeed);
+		SmartDashboard.putNumber("Shooter Target RPM", shooterSpeed);
+		SmartDashboard.putNumber("Shooter Target VBus", shooterVBus);
     }
 	
 	/**
@@ -155,12 +161,13 @@ public class Robot extends IterativeRobot {
     }
     
     public void updateStatus() {
-    	drive.updateStatus(operationMode);
-    	ballIntake.updateStatus(operationMode);
-    	gearIntake.updateStatus(operationMode);
+ //   	drive.updateStatus(operationMode);
+ //   	ballIntake.updateStatus(operationMode);
+ //   	gearIntake.updateStatus(operationMode);
     	shooter.updateStatus(operationMode);
-    	shooterLift.updateStatus(operationMode);
-    	magicCarpet.updateStatus(operationMode);
+ //   	shooterLift.updateStatus(operationMode);
+ //   	magicCarpet.updateStatus(operationMode);
+ //   	climber.updateStatus(operationMode);
    }
 
 }

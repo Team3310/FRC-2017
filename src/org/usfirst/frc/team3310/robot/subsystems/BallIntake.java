@@ -30,9 +30,9 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	public static final double BALL_INTAKE_EJECT_SPEED = -1.0;
 	
 	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 101;
-	public final static double GEAR_INTAKE_POSITION_DEG = 117;
-	public final static double GEAR_PRESENT_POSITION_DEG = 0;
+	public final static double BALL_INTAKE_POSITION_DEG = 54; //101;
+	public final static double GEAR_INTAKE_POSITION_DEG = 71; //117;
+	public final static double GEAR_PRESENT_POSITION_DEG = 0; //0;
 	
 	// Motion profile max velocities and accel times
 	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 650;

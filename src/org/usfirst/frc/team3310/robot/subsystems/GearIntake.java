@@ -26,9 +26,9 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0); 
 
 	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 128;
-	public final static double GEAR_PRESENT_POSITION_DEG = 0;
+	public final static double BALL_INTAKE_POSITION_DEG = 68.4;
+	public final static double GEAR_INTAKE_POSITION_DEG = 68.4; //128;
+	public final static double GEAR_PRESENT_POSITION_DEG = 13; //0;
 	
 	// Motion profile max velocities and accel times
 	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 650;

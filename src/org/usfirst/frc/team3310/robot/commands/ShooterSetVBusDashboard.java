@@ -1,0 +1,45 @@
+
+package org.usfirst.frc.team3310.robot.commands;
+
+import org.usfirst.frc.team3310.robot.Robot;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+/**
+ *
+ */
+public class ShooterSetVBusDashboard extends Command {
+
+	// Constructor with speed
+    public ShooterSetVBusDashboard() {
+        requires(Robot.shooter);
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	double shooterSpeed = SmartDashboard.getNumber("Shooter Target VBus", 0);
+    	DriverStation.reportWarning("Shooter Main Vbus = " + shooterSpeed, false);
+    	Robot.shooter.setMainSpeed(shooterSpeed);
+    	Robot.shooter.setFeedSpeed(shooterSpeed);
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return true;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    }
+}
