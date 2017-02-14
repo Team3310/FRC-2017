@@ -9,6 +9,7 @@ import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -34,25 +35,27 @@ public class Shooter extends Subsystem {
 		try {
 			shooterStage2Left = new CANTalon(RobotMap.SHOOTER_STAGE_2_LEFT_MOTOR_CAN_ID);
 			shooterStage2Left.clearStickyFaults();
-			shooterStage2Left.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-			shooterStage2Left.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
+			shooterStage2Left.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+//			shooterStage2Left.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
 			shooterStage2Left.changeControlMode(TalonControlMode.PercentVbus);
 			shooterStage2Left.setSafetyEnabled(false);
 			shooterStage2Left.enableBrakeMode(false);
 			shooterStage2Left.setProfile(0);
-			shooterStage2Left.setF(0.034);
-			shooterStage2Left.setP(0.0);
-			shooterStage2Left.setI(0.0005);
+			shooterStage2Left.setF(0.0315);
+			shooterStage2Left.setP(0.04);
+			shooterStage2Left.setI(0.0);
 			shooterStage2Left.setIZone(2000);
 			shooterStage2Left.setD(0);
-			shooterStage2Left.setVoltageCompensationRampRate(96.0);
+//			shooterStage2Left.setNominalClosedLoopVoltage(12.0);
 			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
 			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
-			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
-//	        if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 100);
+//	        if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect shooter stage 2 encoder!", false);
-//	        }
-			
+//       }
+	        shooterStage2Left.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
+	        shooterStage2Left.SetVelocityMeasurementWindow(200);
+	        
 			shooterStage2Right = new CANTalon(RobotMap.SHOOTER_STAGE_2_RIGHT_MOTOR_CAN_ID);
 			shooterStage2Right.changeControlMode(TalonControlMode.Follower);
 			shooterStage2Right.set(shooterStage2Left.getDeviceID());
@@ -62,22 +65,22 @@ public class Shooter extends Subsystem {
 			
 			shooterStage1Left = new CANTalon(RobotMap.SHOOTER_STAGE_1_LEFT_MOTOR_CAN_ID);
 			shooterStage1Left.clearStickyFaults();
-			shooterStage1Left.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-			shooterStage1Left.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
+			shooterStage1Left.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+//			shooterStage1Left.configEncoderCodesPerRev(ENCODER_TICKS_PER_REV);
 			shooterStage1Left.changeControlMode(TalonControlMode.PercentVbus);
 			shooterStage1Left.setSafetyEnabled(false);
 			shooterStage1Left.enableBrakeMode(false);
 			shooterStage1Left.setProfile(0);
 			shooterStage1Left.setF(0.038);
-			shooterStage1Left.setP(0.0);
-			shooterStage1Left.setI(0.0005);
+			shooterStage1Left.setP(0.04);
+			shooterStage1Left.setI(0.0);
 			shooterStage1Left.setIZone(2000);
 			shooterStage1Left.setD(0);
-			shooterStage1Left.setVoltageCompensationRampRate(96.0);
+//			shooterStage1Left.setVoltageCompensationRampRate(96.0);
 			shooterStage1Left.configNominalOutputVoltage(0.0,0.0);
 			shooterStage1Left.configPeakOutputVoltage(12.0, 0);
-			shooterStage1Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
-//	        if (shooterStage1Left.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//			shooterStage1Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
+//	        if (shooterStage1Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect shooter stage 1 encoder!", false);
 //	        }
 
