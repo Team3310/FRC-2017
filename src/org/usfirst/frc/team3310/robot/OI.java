@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3310.robot;
 
+import org.usfirst.frc.team3310.buttons.LogitechDPadTriggerButton;
+import org.usfirst.frc.team3310.controller.LogitechController;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftMoveMP;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
@@ -11,24 +13,32 @@ import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftMoveMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftSpeed;
+import org.usfirst.frc.team3310.robot.commands.IntakeBalls;
+import org.usfirst.frc.team3310.robot.commands.IntakeBallsOff;
+import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
+import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 import org.usfirst.frc.team3310.robot.commands.MagicCarpetSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.ShootOff;
+import org.usfirst.frc.team3310.robot.commands.ShootOn;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOff;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOn;
+import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetRpmDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetSpeedDashboard;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetToggle;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetRpmDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetSpeedDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
 import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
+import org.usfirst.frc.team3310.robot.subsystems.Climber.DoorOpenState;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
+import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -42,21 +52,58 @@ public class OI {
 
 	private static OI instance;
 
-	private Joystick m_driverJoystickPower;
-	private Joystick m_driverJoystickTurn;
-
+	private LogitechController m_driverLogitech;
+	
 	private OI() {
-		m_driverJoystickPower = new Joystick(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
-		m_driverJoystickTurn = new Joystick(RobotMap.DRIVER_JOYSTICK_2_USB_ID);
-		
-        JoystickButton shiftDrivetrain = new JoystickButton(m_driverJoystickPower, 1);
+		m_driverLogitech = new LogitechController(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
+
+		//Logitech Controller
+        JoystickButton shiftDrivetrain = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LB_BUTTON);
         shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
         shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
+        
+        JoystickButton longShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RB_BUTTON);
+        longShot.whenPressed(new ShootOn(ShotState.FAR));
+        longShot.whenReleased(new ShootOff());
+        
+        JoystickButton shortShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RT_BUTTON);
+        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
+        shortShot.whenReleased(new ShootOff());
+        
+        JoystickButton ballIntake = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LT_BUTTON);
+        ballIntake.whenPressed(new IntakeBalls());
+        ballIntake.whenReleased(new IntakeBallsOff());
+        
+        JoystickButton ballIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.Y_BUTTON);
+        ballIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
+        
+        JoystickButton ballIntakeRetract = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.A_BUTTON);
+        ballIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+        
+        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.X_BUTTON);
+        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
+        
+        JoystickButton gearIntakePresent = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.B_BUTTON);
+        gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+        
+        LogitechDPadTriggerButton climberDoorOpen = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.LEFT);
+        climberDoorOpen.whenPressed(new ClimberDoorPosition(DoorOpenState.UP));
+        
+        LogitechDPadTriggerButton climberDoorClose = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.RIGHT);
+        climberDoorClose.whenPressed(new ClimberDoorPosition(DoorOpenState.DOWN));
 
-        Button magicCarpetOn10 = new InternalButton();
-		magicCarpetOn10.whenPressed(new MagicCarpetSetSpeed(1.0));
-		SmartDashboard.putData("Magic Carpet 1.0", magicCarpetOn10);
+        LogitechDPadTriggerButton climberForward = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.UP);
+        climberForward.whenPressed(new ClimberSetSpeed(1.0));
+        climberForward.whenReleased(new ClimberSetSpeed(0.0));
+        
+        LogitechDPadTriggerButton climberReverse = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.DOWN);
+        climberReverse.whenPressed(new ClimberSetSpeed(-1.0));
+        climberReverse.whenReleased(new ClimberSetSpeed(0.0));
+        
+        JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
+        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 
+        
 		Button magicCarpetOn05 = new InternalButton();
 		magicCarpetOn05.whenPressed(new MagicCarpetSetSpeed(0.5));
 		SmartDashboard.putData("Magic Carpet 0.5", magicCarpetOn05);
@@ -247,19 +294,15 @@ public class OI {
 		SmartDashboard.putData("Climber Door Down", climberDoorPositionDown);
 	}
 	
-	public Joystick getDriverJoystickPower() {
-		return m_driverJoystickPower;
-	}
-	
-	public Joystick getDriverJoystickTurn() {
-		return m_driverJoystickTurn;
-	}
-
 	public static OI getInstance() {
 		if(instance == null) {
 			instance = new OI();
 		}
 		return instance;
+	}
+
+	public LogitechController getDriverLogitech() {
+		return m_driverLogitech;
 	}
 
 }

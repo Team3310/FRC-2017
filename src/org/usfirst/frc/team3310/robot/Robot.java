@@ -162,8 +162,8 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
  //   	drive.updateStatus(operationMode);
- //   	ballIntake.updateStatus(operationMode);
- //   	gearIntake.updateStatus(operationMode);
+    	ballIntake.updateStatus(operationMode);
+    	gearIntake.updateStatus(operationMode);
     	shooter.updateStatus(operationMode);
  //   	shooterLift.updateStatus(operationMode);
  //   	magicCarpet.updateStatus(operationMode);

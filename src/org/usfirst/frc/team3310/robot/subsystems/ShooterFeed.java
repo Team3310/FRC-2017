@@ -16,6 +16,10 @@ public class ShooterFeed extends Subsystem {
     
 	private CANTalon roller;
 	
+	public static final double SHOOTER_FEED_SHOOT_SPEED = 0.5;
+	public static final double SHOOTER_FEED_BALL_INTAKE_SPEED = -0.5;
+	public static final double SHOOT_FEED_OFF_SPEED = 0.0;
+	
 	public ShooterFeed() {
 		try {
 			roller = new CANTalon(RobotMap.SHOOTER_FEED_MOTOR_CAN_ID);
@@ -29,7 +33,7 @@ public class ShooterFeed extends Subsystem {
 	}
 	
 	public void setSpeed(double speed) {
-		roller.set(speed);
+		roller.set(-speed);
 	}
 	
     public void initDefaultCommand() {

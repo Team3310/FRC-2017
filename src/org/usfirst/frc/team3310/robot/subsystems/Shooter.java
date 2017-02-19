@@ -8,6 +8,7 @@ import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.FeedbackDeviceStatus;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
@@ -24,6 +25,13 @@ public class Shooter extends Subsystem {
 	public static enum ShotState { CLOSE, FAR };
 	public static final int ENCODER_TICKS_PER_REV = 1024;
 
+	public static final double SHOOTER_STAGE1_RPM_FAR = 3050;
+	public static final double SHOOTER_STAGE2_RPM_FAR = 3050;
+	public static final double SHOOTER_STAGE1_RPM_CLOSE = 2950;
+	public static final double SHOOTER_STAGE2_RPM_CLOSE = 2950;
+	public static final double SHOOTER_STAGE1_OFF = 0.0;
+	public static final double SHOOTER_STAGE2_OFF = 0.0;
+	
 	private CANTalon shooterStage2Left;
 	private CANTalon shooterStage2Right;
 	private CANTalon shooterStage1Left;
@@ -49,10 +57,12 @@ public class Shooter extends Subsystem {
 //			shooterStage2Left.setNominalClosedLoopVoltage(12.0);
 			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
 			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
-//			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 100);
-//	        if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 100);
+//			FeedbackDeviceStatus status = shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+//			DriverStation.reportWarning("Status=" + status.toString(), false);
+//			if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect shooter stage 2 encoder!", false);
-//       }
+//	        }
 	        shooterStage2Left.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
 	        shooterStage2Left.SetVelocityMeasurementWindow(200);
 	        
@@ -103,6 +113,10 @@ public class Shooter extends Subsystem {
 		shooterStage2Left.set(vbus);
 	}
 	
+	public boolean isShooterOn() {
+		return shooterStage2Left.get() > 0.01;
+	}
+
 	public void setStage1Speed(double vbus) {
 		shooterStage1Left.changeControlMode(TalonControlMode.PercentVbus);
 		shooterStage1Left.set(vbus);

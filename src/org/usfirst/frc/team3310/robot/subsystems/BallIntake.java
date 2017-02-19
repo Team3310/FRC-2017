@@ -29,10 +29,11 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 
 	public static final double BALL_INTAKE_LOAD_SPEED = 0.8;
 	public static final double BALL_INTAKE_EJECT_SPEED = -1.0;
+	public static final double BALL_INTAKE_OFF_SPEED = 0.0;
 	
-	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 54; //101;
-	public final static double GEAR_INTAKE_POSITION_DEG = 71; //117;
+	public final static double RETRACTED_POSITION_DEG = 11.6;
+	public final static double BALL_INTAKE_POSITION_DEG = 91.8; //101;
+	public final static double GEAR_INTAKE_POSITION_DEG = 106; //117;
 	public final static double GEAR_PRESENT_POSITION_DEG = 0; //0;
 	
 	// Motion profile max velocities and accel times
@@ -74,7 +75,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	}
 	
 	public void setRollerSpeed(double speed) {
-		rollerMotor.set(-speed);
+		rollerMotor.set(speed);
 	}
 	
 	public void setLiftPosition(double targetAngleDegrees) {		
