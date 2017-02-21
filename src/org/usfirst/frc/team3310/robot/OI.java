@@ -92,12 +92,16 @@ public class OI {
         LogitechDPadTriggerButton climberDoorClose = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.RIGHT);
         climberDoorClose.whenPressed(new ClimberDoorPosition(DoorOpenState.DOWN));
 
-        LogitechDPadTriggerButton climberForward = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.UP);
-        climberForward.whenPressed(new ClimberSetSpeed(1.0));
+        JoystickButton climberForward = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LEFT_JOYSTICK_BUTTON);
+        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
         climberForward.whenReleased(new ClimberSetSpeed(0.0));
         
+        LogitechDPadTriggerButton climberForward2 = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.UP);
+        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
+        climberForward2.whenReleased(new ClimberSetSpeed(0.0));
+        
         LogitechDPadTriggerButton climberReverse = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.DOWN);
-        climberReverse.whenPressed(new ClimberSetSpeed(-1.0));
+        climberReverse.whenPressed(new ClimberSetSpeed(-0.5));
         climberReverse.whenReleased(new ClimberSetSpeed(0.0));
         
         JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
@@ -240,7 +244,7 @@ public class OI {
 
 		Button ballLiftZero = new InternalButton();
 		ballLiftZero.whenPressed(new BallIntakeLiftResetZero());
-		SmartDashboard.putData("Ball Lift Reset Zero", ballLiftZero);
+		SmartDashboard.putData("Ball Lift Reset Zero 1", ballLiftZero);
 
 		Button gearLiftPositive = new InternalButton();
 		gearLiftPositive.whenPressed(new GearIntakeLiftSpeed(0.2));
@@ -262,7 +266,7 @@ public class OI {
 
 		Button gearLiftZero = new InternalButton();
 		gearLiftZero.whenPressed(new GearIntakeLiftResetZero());
-		SmartDashboard.putData("Gear Lift Reset Zero", gearLiftZero);
+		SmartDashboard.putData("Gear Lift Reset Zero 1", gearLiftZero);
 
 		Button gearPresent = new InternalButton();
 		gearPresent.whenPressed(new GearIntakeLiftMoveMP(GearIntake.GEAR_PRESENT_POSITION_DEG));

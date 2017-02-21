@@ -14,6 +14,7 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,24 +47,33 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	private PIDParams mpPIDParams = new PIDParams(4.0, 0.0, 0, 0.0, 0.2);
 	private boolean isAtTarget = true;
 	private LiftControlMode controlMode = LiftControlMode.MANUAL;
+	private DigitalInput gearSensor;
 
 	public GearIntake() {
 		try {
 			liftMotor = new CANTalonEncoder(RobotMap.GEAR_INTAKE_LIFT_MOTOR_CAN_ID, ENCODER_TICKS_TO_WORLD, false, FeedbackDevice.QuadEncoder);
+			liftMotor.clearStickyFaults();
+
 			liftMotor.setSafetyEnabled(false);
 			liftMotor.reverseSensor(false);
 			liftMotor.reverseOutput(false);
 	        liftMotor.clearStickyFaults();
-//	        if (liftMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	        if (liftMotor.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect gear intake encoder!", false);
 //	        }
 
 			motorControllers.add(liftMotor);
 			mpPIDParams.iZone = 128;
+			
+			gearSensor = new DigitalInput(RobotMap.GEAR_SENSOR_DIO_ID);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the GearIntake constructor");
 		}
+	}
+	
+	public boolean isGearPresent() {
+		return !gearSensor.get();
 	}
 	
 	public void setLiftPosition(double targetAngleDegrees) {		
@@ -75,6 +85,7 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	}
 		
 	public double getLiftPosition() {
+//		return liftMotor.getEncPosition();
 		return liftMotor.getPositionWorld();
 	}
 	
@@ -109,6 +120,8 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	
 	public void updateStatus(Robot.OperationMode operationMode) {
 		SmartDashboard.putNumber("Gear Intake Position (deg)", getLiftPosition());
+		SmartDashboard.putNumber("Gear Intake Absolute Position (deg)", liftMotor.getPulseWidthPosition());
+		SmartDashboard.putBoolean("Gear Sensor", isGearPresent());
 	}
 
 	public void initDefaultCommand() {

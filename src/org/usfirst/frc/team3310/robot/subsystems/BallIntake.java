@@ -32,7 +32,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	public static final double BALL_INTAKE_OFF_SPEED = 0.0;
 	
 	public final static double RETRACTED_POSITION_DEG = 11.6;
-	public final static double BALL_INTAKE_POSITION_DEG = 91.8; //101;
+	public final static double BALL_INTAKE_POSITION_DEG = 89.0; //101;
 	public final static double GEAR_INTAKE_POSITION_DEG = 106; //117;
 	public final static double GEAR_PRESENT_POSITION_DEG = 0; //0;
 	
@@ -61,7 +61,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 			liftMotor.setSafetyEnabled(false);
 			liftMotor.reverseSensor(true);
 			liftMotor.reverseOutput(true);
-//	        if (liftMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
+//	        if (liftMotor.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect ball intake encoder!", false);
 //	        }
 	        
@@ -121,6 +121,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	
 	public void updateStatus(Robot.OperationMode operationMode) {
 		SmartDashboard.putNumber("Ball Intake Position (deg)", getLiftPosition());
+		SmartDashboard.putNumber("Ball Intake Absolute Position (deg)", liftMotor.getPulseWidthPosition());
 	}
 
 	public void initDefaultCommand() {

@@ -25,10 +25,10 @@ public class Shooter extends Subsystem {
 	public static enum ShotState { CLOSE, FAR };
 	public static final int ENCODER_TICKS_PER_REV = 1024;
 
-	public static final double SHOOTER_STAGE1_RPM_FAR = 3050;
-	public static final double SHOOTER_STAGE2_RPM_FAR = 3050;
-	public static final double SHOOTER_STAGE1_RPM_CLOSE = 2950;
-	public static final double SHOOTER_STAGE2_RPM_CLOSE = 2950;
+	public static final double SHOOTER_STAGE1_RPM_FAR = 3165;
+	public static final double SHOOTER_STAGE2_RPM_FAR = 3165;
+	public static final double SHOOTER_STAGE1_RPM_CLOSE = 3100;
+	public static final double SHOOTER_STAGE2_RPM_CLOSE = 3100;
 	public static final double SHOOTER_STAGE1_OFF = 0.0;
 	public static final double SHOOTER_STAGE2_OFF = 0.0;
 	
@@ -50,21 +50,21 @@ public class Shooter extends Subsystem {
 			shooterStage2Left.enableBrakeMode(false);
 			shooterStage2Left.setProfile(0);
 			shooterStage2Left.setF(0.0315);
-			shooterStage2Left.setP(0.04);
+			shooterStage2Left.setP(0.02);
 			shooterStage2Left.setI(0.0);
 			shooterStage2Left.setIZone(2000);
 			shooterStage2Left.setD(0);
 //			shooterStage2Left.setNominalClosedLoopVoltage(12.0);
 			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
 			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
-			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 100);
+			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
 //			FeedbackDeviceStatus status = shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 //			DriverStation.reportWarning("Status=" + status.toString(), false);
 //			if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect shooter stage 2 encoder!", false);
 //	        }
 	        shooterStage2Left.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
-	        shooterStage2Left.SetVelocityMeasurementWindow(200);
+	        shooterStage2Left.SetVelocityMeasurementWindow(64);
 	        
 			shooterStage2Right = new CANTalon(RobotMap.SHOOTER_STAGE_2_RIGHT_MOTOR_CAN_ID);
 			shooterStage2Right.changeControlMode(TalonControlMode.Follower);

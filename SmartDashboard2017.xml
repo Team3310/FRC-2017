@@ -1,10 +1,109 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Gear Intake AnalogInPosition" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="124" y="0"/>
+	</widget>
+	<widget field="Gear Intake PulseWidthRiseToFallUs" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="84" y="546"/>
+	</widget>
+	<widget field="Gear Lift Reset Zero" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="0" y="424"/>
+	</widget>
+	<widget field="Ball Lift Reset Zero" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field="Delta PID Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="416" y="326"/>
+	</widget>
+	<widget field="Left 3 Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="381" y="179"/>
+	</widget>
+	<widget field="Move Input" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="660"/>
+	</widget>
+	<widget field="Gyro Offset" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="639"/>
+	</widget>
+	<widget field="Right Vel Ft-Sec" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="618"/>
+	</widget>
+	<widget field="Gear Intake Absolute Position (deg)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="657" y="539"/>
+	</widget>
+	<widget field="Ball Intake Absolute Position (deg)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="400" y="541"/>
+	</widget>
+	<widget field="Left 1 Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="383" y="136"/>
+	</widget>
+	<widget field="Right 2 Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="529" y="157"/>
+	</widget>
+	<widget field="Steer Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="248" y="432"/>
+	</widget>
+	<widget field="Magic Carpet Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="348"/>
+	</widget>
+	<widget field="Move Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="327"/>
+	</widget>
+	<widget field="Steer Input" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="264"/>
+	</widget>
+	<widget field="Climber Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="230" y="69"/>
+	</widget>
+	<widget field="Left 2 Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="384" y="157"/>
+	</widget>
+	<widget field="Gear Lift Reset Zero 1" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="699" y="571"/>
+	</widget>
+	<widget field="Ball Lift Reset Zero 1" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="449" y="563"/>
+	</widget>
+	<widget field="Lift Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="21" y="693"/>
+	</widget>
+	<widget field="Right 3 Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="527" y="180"/>
+	</widget>
+	<widget field="Left Pos Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="525"/>
+	</widget>
+	<widget field="Yaw Rate" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="504"/>
+	</widget>
+	<widget field="Gear Sensor" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="403"/>
+	</widget>
+	<widget field="Yaw Angle Deg" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="382"/>
+	</widget>
+	<widget field="Gyro Calibrating" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="361"/>
+	</widget>
+	<widget field="Left Vel Ft-Sec" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="340"/>
+	</widget>
+	<widget field="Gyro Delta" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="319"/>
+	</widget>
+	<widget field="Right Pos Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="298"/>
+	</widget>
+	<widget field="Right 1 Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="530" y="137"/>
+	</widget>
+	<widget field="Drive Hold" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="165"/>
+	</widget>
 	<widget field="Gear Intake Position (deg)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="372" y="145"/>
+		<location x="657" y="516"/>
 	</widget>
 	<widget field="Ball Intake Position (deg)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="399" y="184"/>
+		<location x="435" y="517"/>
 	</widget>
 	<widget field="Shooter Stage 1 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
 		<location x="855" y="374"/>
@@ -85,43 +184,37 @@
 		<location x="230" y="192"/>
 	</widget>
 	<widget field="Gear Lift Present" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="116" y="72"/>
-	</widget>
-	<widget field="Gear Lift Reset Zero" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="230" y="168"/>
+		<location x="686" y="649"/>
 	</widget>
 	<widget field="Gear Lift Gear Position" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="230" y="144"/>
+		<location x="659" y="694"/>
 	</widget>
 	<widget field="Gear Lift Retracted Position" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="230" y="120"/>
+		<location x="663" y="674"/>
 	</widget>
 	<widget field="Gear Lift Negative" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="230" y="96"/>
+		<location x="679" y="600"/>
 	</widget>
 	<widget field="Gear Lift Positive" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="116" y="48"/>
-	</widget>
-	<widget field="Ball Lift Reset Zero" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="426" y="281"/>
+		<location x="692" y="624"/>
 	</widget>
 	<widget field="Ball Present" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="116" y="24"/>
 	</widget>
 	<widget field="Ball Lift Gear Position" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="408" y="253"/>
+		<location x="449" y="676"/>
 	</widget>
 	<widget field="Ball Lift Ball Position" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="403" y="230"/>
+		<location x="455" y="650"/>
 	</widget>
 	<widget field="Ball Lift Retracted Position" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="395" y="208"/>
+		<location x="443" y="629"/>
 	</widget>
 	<widget field="Ball Lift Negative" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="116" y="0"/>
+		<location x="451" y="584"/>
 	</widget>
 	<widget field="Ball Lift Positive" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="178" y="540"/>
+		<location x="451" y="607"/>
 	</widget>
 	<widget field="Intake Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="0" y="648"/>
@@ -142,7 +235,7 @@
 		<location x="299" y="594"/>
 	</widget>
 	<widget field="Shooter All Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="402" y="593"/>
+		<location x="340" y="568"/>
 	</widget>
 	<widget field="Shooter Both Dash VBus" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="0" y="480"/>
@@ -204,10 +297,8 @@
 	<widget field="Magic Carpet 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="0" y="24"/>
 	</widget>
-	<widget field="Magic Carpet 1.0" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="0" y="0"/>
-	</widget>
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="Ball Intake Relative Position (deg)"/>
 </xml>
