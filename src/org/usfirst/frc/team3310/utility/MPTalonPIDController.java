@@ -104,6 +104,12 @@ public class MPTalonPIDController
 		}
 	}
 
+	public void resetZeroPosition() {
+		for (CANTalonEncoder motorController : motorControllers) {
+			motorController.setPosition(0);
+		}
+	}
+
 	public boolean controlLoopUpdate() {
 		return controlLoopUpdate(0);
 	}

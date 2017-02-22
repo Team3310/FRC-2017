@@ -31,17 +31,17 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	public static final double BALL_INTAKE_EJECT_SPEED = -1.0;
 	public static final double BALL_INTAKE_OFF_SPEED = 0.0;
 	
-	public final static double RETRACTED_POSITION_DEG = 11.6;
-	public final static double BALL_INTAKE_POSITION_DEG = 89.0; //101;
-	public final static double GEAR_INTAKE_POSITION_DEG = 106; //117;
-	public final static double GEAR_PRESENT_POSITION_DEG = 0; //0;
+	public final static double RETRACTED_POSITION_DEG = 0;
+	public final static double BALL_INTAKE_POSITION_DEG = 93; // Roxanne 99.0;
+	public final static double GEAR_INTAKE_POSITION_DEG = 110; // Roxanne 120.0;
+	public final static double GEAR_PRESENT_POSITION_DEG = 10; //0;
 	
 	// Motion profile max velocities and accel times
-	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 650;
-	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 650;
+	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 250;
+	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 100;
 	
-	public static final double MP_T1 = 200;
-	public static final double MP_T2 = 100;
+	public static final double MP_T1 = 400;
+	public static final double MP_T2 = 200;
 
 	private CANTalon rollerMotor;
 	private CANTalonEncoder liftMotor;
@@ -75,7 +75,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	}
 	
 	public void setRollerSpeed(double speed) {
-		rollerMotor.set(speed);
+		rollerMotor.set(-speed);
 	}
 	
 	public void setLiftPosition(double targetAngleDegrees) {		
@@ -91,7 +91,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	}
 	
 	public void setZeroLiftPosition() {
-		mpController.setZeroPosition();
+		mpController.resetZeroPosition();
 	}
 	
 	public void setLiftSpeed(double speed) {
@@ -116,7 +116,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		mpController = new MPTalonPIDController(periodMs, mpPIDParams, motorControllers);
 		
 		// Set the startup position to zero
-//		setZeroLiftPosition();
+		setZeroLiftPosition();
 	}
 	
 	public void updateStatus(Robot.OperationMode operationMode) {
