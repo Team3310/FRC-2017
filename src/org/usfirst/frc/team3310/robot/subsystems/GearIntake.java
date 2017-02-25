@@ -29,16 +29,16 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0); 
 
 	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 127.7; // Roxanne 127.7; 
-	public final static double GEAR_INTAKE_POSITION_DEG = 127.7; // Roxanne 127.7; 
-	public final static double GEAR_PRESENT_POSITION_DEG = 45.0; //0;
+	public final static double BALL_INTAKE_POSITION_DEG = 135.0; // Roxanne 127.7; 
+	public final static double GEAR_INTAKE_POSITION_DEG = 135.0; // Roxanne 127.7; 
+	public final static double GEAR_PRESENT_POSITION_DEG = 35.0; //0;
 	
 	// Motion profile max velocities and accel times
-	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 100;
-	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 250;
+	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 400;
+	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 450;
 	
-	public static final double MP_T1 = 400;
-	public static final double MP_T2 = 200;
+	public static final double MP_T1 = 360;
+	public static final double MP_T2 = 180;
 
 	private CANTalonEncoder liftMotor;
 	private ArrayList<CANTalonEncoder> motorControllers = new ArrayList<CANTalonEncoder>();	

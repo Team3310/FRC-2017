@@ -32,16 +32,16 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	public static final double BALL_INTAKE_OFF_SPEED = 0.0;
 	
 	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 93; // Roxanne 99.0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 110; // Roxanne 120.0;
+	public final static double BALL_INTAKE_POSITION_DEG = 100.5; // Roxanne 99.0;
+	public final static double GEAR_INTAKE_POSITION_DEG = 117; // Roxanne 120.0;
 	public final static double GEAR_PRESENT_POSITION_DEG = 10; //0;
 	
 	// Motion profile max velocities and accel times
-	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 250;
-	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 100;
+	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 450;
+	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 400;
 	
-	public static final double MP_T1 = 400;
-	public static final double MP_T2 = 200;
+	public static final double MP_T1 = 300;
+	public static final double MP_T2 = 150;
 
 	private CANTalon rollerMotor;
 	private CANTalonEncoder liftMotor;
