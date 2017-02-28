@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3310.buttons;
 
 import org.usfirst.frc.team3310.controller.LogitechController;
-import org.usfirst.frc.team3310.controller.XboxController;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 

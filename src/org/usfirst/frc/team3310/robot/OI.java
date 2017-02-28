@@ -13,6 +13,7 @@ import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ClimberDoorPosition;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetMaxAmps;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftMoveMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftResetZero;
@@ -363,6 +364,10 @@ public class OI {
 		Button climberDoorPositionDown = new InternalButton();
 		climberDoorPositionDown.whenPressed(new ClimberDoorPosition (Climber.DoorOpenState.DOWN));
 		SmartDashboard.putData("Climber Door Down", climberDoorPositionDown);
+
+		Button gyroReset = new InternalButton();
+		gyroReset.whenPressed(new DriveGyroReset());
+		SmartDashboard.putData("Gyro Reset", gyroReset);
 	}
 	
 	public static OI getInstance() {

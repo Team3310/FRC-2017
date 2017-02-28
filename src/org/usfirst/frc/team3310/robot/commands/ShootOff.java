@@ -2,7 +2,6 @@ package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
-import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

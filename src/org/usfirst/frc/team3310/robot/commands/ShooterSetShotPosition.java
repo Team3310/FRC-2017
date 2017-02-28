@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
-import org.usfirst.frc.team3310.robot.subsystems.Drive.SpeedShiftState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 
 import edu.wpi.first.wpilibj.command.Command;

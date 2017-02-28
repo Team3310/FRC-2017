@@ -2,7 +2,6 @@ package org.usfirst.frc.team3310.robot.subsystems;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team3310.controller.LogitechController;
 import org.usfirst.frc.team3310.robot.OI;
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
@@ -20,8 +19,9 @@ import org.usfirst.frc.team3310.utility.SoftwarePIDController;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.PigeonImu;
+import com.ctre.PigeonImu.CalibrationMode;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -114,7 +114,9 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams pidTurnPIDParams = new PIDParams(0.05, 0.007, .3, 0, 0, 0.0, 5);
 	private double targetPIDAngle;
 
-//	private BHR_ADSXRS453_Gyro gyro = new BHR_ADSXRS453_Gyro();
+	private PigeonImu gyroPigeon;
+	private double[] yprPigeon = new double[3];
+	private BHR_ADSXRS453_Gyro gyro = new BHR_ADSXRS453_Gyro();
 	private boolean useGyroLock;
 	private double gyroLockAngleDeg;
 	private double kPGyro = 0.04;
@@ -130,6 +132,8 @@ public class Drive extends Subsystem implements ControlLoopable
 			rightDrive1 = new CANTalonEncoder(RobotMap.DRIVETRAIN_RIGHT_MOTOR1_CAN_ID, ENCODER_TICKS_TO_INCHES, true, FeedbackDevice.QuadEncoder);
 			rightDrive2 = new CANTalon(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID);
 			rightDrive3 = new CANTalon(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID);
+			
+			gyroPigeon = new PigeonImu(leftDrive2);
 			
 			leftDrive1.clearStickyFaults();
 			leftDrive1.reverseSensor(true);
@@ -191,24 +195,34 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 	
 	public double getGyroAngleDeg() {
-		return 0; // gyro.getAngle() + gyroOffsetDeg;
+		return gyro.getAngle() + gyroOffsetDeg;
+	}
+	
+	public double getGyroPigeonAngleDeg() {
+		gyroPigeon.GetYawPitchRoll(yprPigeon);
+		return -yprPigeon[0] + gyroOffsetDeg;
 	}
 	
 	public double getGyroRateDegPerSec() {
-		return 0; // gyro.getRate();
+		return gyro.getRate();
 	}
 	
 	public void resetGyro() {
-		//gyro.reset();
+		gyro.reset();
+	}
+	
+	public void resetGyroPigeon() {
+		gyroPigeon.SetYaw(0);
 	}
 	
 	public void calibrateGyro() {
-		//gyro.calibrate();
+		gyro.calibrate();
+		gyroPigeon.EnterCalibrationMode(CalibrationMode.Temperature);
 	}
 	
 	public void endGyroCalibration() {
 		if (isCalibrating == true) {
-			//gyro.endCalibration();
+			gyro.endCalibration();
 			isCalibrating = false;
 		}
 	}
@@ -481,7 +495,6 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 	
 	public void updateStatus(Robot.OperationMode operationMode) {
-		SmartDashboard.putNumber("Yaw Angle Deg", getGyroAngleDeg());
 		if (operationMode == Robot.OperationMode.TEST) {
 			try {
 				SmartDashboard.putNumber("Right Pos Inches", rightDrive1.getPositionWorld());
@@ -495,6 +508,8 @@ public class Drive extends Subsystem implements ControlLoopable
 				SmartDashboard.putNumber("Right 2 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID));
 				SmartDashboard.putNumber("Right 3 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID));
 				SmartDashboard.putBoolean("Drive Hold", controlMode == DriveControlMode.HOLD);
+				SmartDashboard.putNumber("Yaw Angle Deg", getGyroAngleDeg());
+				SmartDashboard.putNumber("Yaw Angle Pigeon Deg", getGyroPigeonAngleDeg());
 				MotionProfilePoint mpPoint = mpTurnController.getCurrentPoint(); 
 				double delta = mpPoint != null ? getGyroAngleDeg() - mpTurnController.getCurrentPoint().position : 0;
 				SmartDashboard.putNumber("Gyro Delta", delta);

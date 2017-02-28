@@ -3,16 +3,12 @@ package org.usfirst.frc.team3310.robot.subsystems;
 
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
-import org.usfirst.frc.team3310.robot.subsystems.Drive.SpeedShiftState;
-import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.FeedbackDeviceStatus;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.VelocityMeasurementPeriod;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,22 +45,22 @@ public class Shooter extends Subsystem {
 			shooterStage2Left.setSafetyEnabled(false);
 			shooterStage2Left.enableBrakeMode(false);
 			shooterStage2Left.setProfile(0);
-			shooterStage2Left.setF(0.0315);
-			shooterStage2Left.setP(0.02);
-			shooterStage2Left.setI(0.0);
+			shooterStage2Left.setF(0.0345);
+			shooterStage2Left.setP(0.012); //0.12 alone
+			shooterStage2Left.setI(0.000); // 0.0001 alone
 			shooterStage2Left.setIZone(2000);
 			shooterStage2Left.setD(0);
-//			shooterStage2Left.setNominalClosedLoopVoltage(12.0);
-			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
-			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
-			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
+			shooterStage2Left.setNominalClosedLoopVoltage(12.0);
+//			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
+//			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
+//			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
 //			FeedbackDeviceStatus status = shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 //			DriverStation.reportWarning("Status=" + status.toString(), false);
 //			if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect shooter stage 2 encoder!", false);
 //	        }
 	        shooterStage2Left.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
-	        shooterStage2Left.SetVelocityMeasurementWindow(64);
+//	        shooterStage2Left.SetVelocityMeasurementWindow(64);
 	        
 			shooterStage2Right = new CANTalon(RobotMap.SHOOTER_STAGE_2_RIGHT_MOTOR_CAN_ID);
 			shooterStage2Right.changeControlMode(TalonControlMode.Follower);
@@ -81,14 +77,15 @@ public class Shooter extends Subsystem {
 			shooterStage1Left.setSafetyEnabled(false);
 			shooterStage1Left.enableBrakeMode(false);
 			shooterStage1Left.setProfile(0);
-			shooterStage1Left.setF(0.038);
-			shooterStage1Left.setP(0.04);
-			shooterStage1Left.setI(0.0);
+			shooterStage1Left.setF(0.035);
+			shooterStage1Left.setP(0.08); // 0.08 alone
+			shooterStage1Left.setI(0.000); //0.0001 alone
 			shooterStage1Left.setIZone(2000);
 			shooterStage1Left.setD(0);
-//			shooterStage1Left.setVoltageCompensationRampRate(96.0);
-			shooterStage1Left.configNominalOutputVoltage(0.0,0.0);
-			shooterStage1Left.configPeakOutputVoltage(12.0, 0);
+			shooterStage1Left.setNominalClosedLoopVoltage(12.0);
+//	        shooterStage1Left.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
+//			shooterStage1Left.configNominalOutputVoltage(0.0,0.0);
+//			shooterStage1Left.configPeakOutputVoltage(12.0, 0);
 //			shooterStage1Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
 //	        if (shooterStage1Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect shooter stage 1 encoder!", false);

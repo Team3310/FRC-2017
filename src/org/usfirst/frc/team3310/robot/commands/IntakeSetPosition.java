@@ -4,7 +4,6 @@ import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
