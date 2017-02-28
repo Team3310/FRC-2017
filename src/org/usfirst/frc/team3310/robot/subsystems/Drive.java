@@ -365,8 +365,8 @@ public class Drive extends Subsystem implements ControlLoopable
 		// OI.getInstance().getDriveTrainController().getLeftYAxis();
 		// m_steerInput =
 		// OI.getInstance().getDriveTrainController().getRightXAxis();
-		m_moveInput = -OI.getInstance().getDriverLogitech().getLeftYAxis();
-		m_steerInput = -OI.getInstance().getDriverLogitech().getRightXAxis();
+		m_moveInput = -OI.getInstance().getDriverController().getLeftYAxis();
+		m_steerInput = -OI.getInstance().getDriverController().getRightXAxis();
 
 		m_moveOutput = adjustForSensitivity(m_moveScale, m_moveTrim,
 				m_moveInput, m_moveNonLinear, MOVE_NON_LINEARITY);

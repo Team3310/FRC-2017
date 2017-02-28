@@ -1,7 +1,11 @@
 package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.buttons.LogitechDPadTriggerButton;
+import org.usfirst.frc.team3310.buttons.XBoxDPadTriggerButton;
+import org.usfirst.frc.team3310.buttons.XBoxTriggerButton;
+import org.usfirst.frc.team3310.controller.IHandController;
 import org.usfirst.frc.team3310.controller.LogitechController;
+import org.usfirst.frc.team3310.controller.XboxController;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftMoveMP;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
@@ -52,62 +56,125 @@ public class OI {
 
 	private static OI instance;
 
+	private enum ControllerType {XBOX, LOGITECH};
+	private ControllerType controllerType = ControllerType.XBOX;
+	
 	private LogitechController m_driverLogitech;
+	private XboxController m_driverXbox;
+	private IHandController m_controller;
 	
 	private OI() {
-		m_driverLogitech = new LogitechController(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
-
-		//Logitech Controller
-        JoystickButton shiftDrivetrain = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LB_BUTTON);
-        shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
-        shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
-        
-        JoystickButton longShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RB_BUTTON);
-        longShot.whenPressed(new ShootOn(ShotState.FAR));
-        longShot.whenReleased(new ShootOff());
-        
-        JoystickButton shortShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RT_BUTTON);
-        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
-        shortShot.whenReleased(new ShootOff());
-        
-        JoystickButton ballIntake = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LT_BUTTON);
-        ballIntake.whenPressed(new IntakeBalls());
-        ballIntake.whenReleased(new IntakeBallsOff());
-        
-        JoystickButton ballIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.Y_BUTTON);
-        ballIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
-        
-        JoystickButton ballIntakeRetract = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.A_BUTTON);
-        ballIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
-        
-        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.X_BUTTON);
-        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
-        
-        JoystickButton gearIntakePresent = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.B_BUTTON);
-        gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
-        
-        LogitechDPadTriggerButton climberDoorOpen = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.LEFT);
-        climberDoorOpen.whenPressed(new ClimberDoorPosition(DoorOpenState.UP));
-        
-        LogitechDPadTriggerButton climberDoorClose = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.RIGHT);
-        climberDoorClose.whenPressed(new ClimberDoorPosition(DoorOpenState.DOWN));
-
-        JoystickButton climberForward = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LEFT_JOYSTICK_BUTTON);
-        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-        climberForward.whenReleased(new ClimberSetSpeed(0.0));
-        
-        LogitechDPadTriggerButton climberForward2 = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.UP);
-        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-        climberForward2.whenReleased(new ClimberSetSpeed(0.0));
-        
-        LogitechDPadTriggerButton climberReverse = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.DOWN);
-        climberReverse.whenPressed(new ClimberSetSpeed(-0.5));
-        climberReverse.whenReleased(new ClimberSetSpeed(0.0));
-        
-        JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
-        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
-
-        
+		
+		if (controllerType == ControllerType.LOGITECH) {
+			m_driverLogitech = new LogitechController(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
+			m_controller = m_driverLogitech;
+	
+			//Logitech Controller
+	        JoystickButton shiftDrivetrain = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LB_BUTTON);
+	        shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
+	        shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
+	        
+	        JoystickButton longShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RB_BUTTON);
+	        longShot.whenPressed(new ShootOn(ShotState.FAR));
+	        longShot.whenReleased(new ShootOff());
+	        
+	        JoystickButton shortShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RT_BUTTON);
+	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
+	        shortShot.whenReleased(new ShootOff());
+	        
+	        JoystickButton ballIntake = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LT_BUTTON);
+	        ballIntake.whenPressed(new IntakeBalls());
+	        ballIntake.whenReleased(new IntakeBallsOff());
+	        
+	        JoystickButton ballIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.Y_BUTTON);
+	        ballIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
+	        
+	        JoystickButton ballIntakeRetract = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.A_BUTTON);
+	        ballIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+	        
+	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.X_BUTTON);
+	        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
+	        
+	        JoystickButton gearIntakePresent = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.B_BUTTON);
+	        gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+	        
+	        LogitechDPadTriggerButton climberDoorOpen = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.LEFT);
+	        climberDoorOpen.whenPressed(new ClimberDoorPosition(DoorOpenState.UP));
+	        
+	        LogitechDPadTriggerButton climberDoorClose = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.RIGHT);
+	        climberDoorClose.whenPressed(new ClimberDoorPosition(DoorOpenState.DOWN));
+	
+	        JoystickButton climberForward = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LEFT_JOYSTICK_BUTTON);
+	        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
+	        climberForward.whenReleased(new ClimberSetSpeed(0.0));
+	        
+	        LogitechDPadTriggerButton climberForward2 = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.UP);
+	        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
+	        climberForward2.whenReleased(new ClimberSetSpeed(0.0));
+	        
+	        LogitechDPadTriggerButton climberReverse = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.DOWN);
+	        climberReverse.whenPressed(new ClimberSetSpeed(-0.5));
+	        climberReverse.whenReleased(new ClimberSetSpeed(0.0));
+	        
+	        JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
+	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
+		}
+		
+		else if (controllerType == ControllerType.XBOX) {
+			m_driverXbox = new XboxController(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
+			m_controller = m_driverXbox;
+	
+			//Logitech Controller
+	        JoystickButton shiftDrivetrain = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.LEFT_BUMPER_BUTTON);
+	        shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
+	        shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
+	        
+	        JoystickButton longShot = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.RIGHT_BUMPER_BUTTON);
+	        longShot.whenPressed(new ShootOn(ShotState.FAR));
+	        longShot.whenReleased(new ShootOff());
+	        
+	        XBoxTriggerButton shortShot = new XBoxTriggerButton(m_driverXbox, XBoxTriggerButton.RIGHT_TRIGGER);
+	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
+	        shortShot.whenReleased(new ShootOff());
+	        
+	        XBoxTriggerButton ballIntake = new XBoxTriggerButton(m_driverXbox, XBoxTriggerButton.LEFT_TRIGGER);
+	        ballIntake.whenPressed(new IntakeBalls());
+	        ballIntake.whenReleased(new IntakeBallsOff());
+	        
+	        JoystickButton ballIntakeDeploy = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.Y_BUTTON);
+	        ballIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
+	        
+	        JoystickButton ballIntakeRetract = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.A_BUTTON);
+	        ballIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+	        
+	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.X_BUTTON);
+	        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
+	        
+	        JoystickButton gearIntakePresent = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.B_BUTTON);
+	        gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+	        
+	        XBoxDPadTriggerButton climberDoorOpen = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.LEFT);
+	        climberDoorOpen.whenPressed(new ClimberDoorPosition(DoorOpenState.UP));
+	        
+	        XBoxDPadTriggerButton climberDoorClose = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.RIGHT);
+	        climberDoorClose.whenPressed(new ClimberDoorPosition(DoorOpenState.DOWN));
+	
+	        JoystickButton climberForward = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.LEFT_JOYSTICK_BUTTON);
+	        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
+	        climberForward.whenReleased(new ClimberSetSpeed(0.0));
+	        
+	        XBoxDPadTriggerButton climberForward2 = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.UP);
+	        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
+	        climberForward2.whenReleased(new ClimberSetSpeed(0.0));
+	        
+	        XBoxDPadTriggerButton climberReverse = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.DOWN);
+	        climberReverse.whenPressed(new ClimberSetSpeed(-0.5));
+	        climberReverse.whenReleased(new ClimberSetSpeed(0.0));
+	        
+	        JoystickButton toggleShooter = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.START_BUTTON);
+	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
+		}
+       
 		Button magicCarpetOn05 = new InternalButton();
 		magicCarpetOn05.whenPressed(new MagicCarpetSetSpeed(0.5));
 		SmartDashboard.putData("Magic Carpet 0.5", magicCarpetOn05);
@@ -305,8 +372,8 @@ public class OI {
 		return instance;
 	}
 
-	public LogitechController getDriverLogitech() {
-		return m_driverLogitech;
+	public IHandController getDriverController() {
+		return m_controller;
 	}
 
 }

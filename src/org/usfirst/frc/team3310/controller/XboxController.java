@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * controller.
  * @author frc1675
  */
-public class XboxController
+public class XboxController implements IHandController
 {
 	public static final int LEFT_X_AXIS = 0;
 	public static final int LEFT_Y_AXIS = 1;
