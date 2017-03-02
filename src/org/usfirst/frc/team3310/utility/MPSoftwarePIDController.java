@@ -76,7 +76,7 @@ public class MPSoftwarePIDController
 		// Update the controllers set point.
 		if (turnType == MPSoftwareTurnType.TANK) {
 			for (CANTalonEncoder motorController : motorControllers) {
-				motorController.set(-output);
+				motorController.set(output);
 			}
 		}
 		else if (turnType == MPSoftwareTurnType.LEFT_SIDE_ONLY) {
@@ -85,14 +85,14 @@ public class MPSoftwarePIDController
 					motorController.set(0);
 				}
 				else {
-					motorController.set(-2.0 * output);					
+					motorController.set(2.0 * output);					
 				}
 			}
 		}
 		else if (turnType == MPSoftwareTurnType.RIGHT_SIDE_ONLY) {
 			for (CANTalonEncoder motorController : motorControllers) {
 				if (motorController.isRight()) {
-					motorController.set(-2.0 * output);
+					motorController.set(2.0 * output);
 				}
 				else {
 					motorController.set(0);					

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class IntakeSetPosition extends CommandGroup {
 
-	public static enum IntakePosition { RETRACT, BALL_INTAKE, GEAR_INTAKE, GEAR_PRESENT };
+	public static enum IntakePosition { RETRACT, BALL_INTAKE, GEAR_INTAKE, GEAR_PRESENT, SHOOT };
 
     public IntakeSetPosition(IntakePosition intakePosition) {
     	if (intakePosition == IntakePosition.RETRACT) {
@@ -27,6 +27,10 @@ public class IntakeSetPosition extends CommandGroup {
     	}
     	else if (intakePosition == IntakePosition.GEAR_PRESENT) {
     		addSequential(new BallIntakeLiftMoveMP(BallIntake.GEAR_PRESENT_POSITION_DEG));
+    		addSequential(new GearIntakeLiftMoveMP(GearIntake.GEAR_PRESENT_POSITION_DEG));
+    	}
+    	else if (intakePosition == IntakePosition.SHOOT) {
+    		addSequential(new BallIntakeLiftMoveMP(BallIntake.SHOOT_POSITION_DEG));
     		addSequential(new GearIntakeLiftMoveMP(GearIntake.GEAR_PRESENT_POSITION_DEG));
     	}
    }

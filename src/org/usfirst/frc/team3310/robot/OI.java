@@ -13,8 +13,11 @@ import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ClimberDoorPosition;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetMaxAmps;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
+import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
+import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftMoveMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftSpeed;
@@ -43,6 +46,7 @@ import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
+import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
@@ -176,6 +180,18 @@ public class OI {
 	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 		}
        
+		Button driveMP = new InternalButton();
+		driveMP.whenPressed(new DriveStraightMP(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
+		SmartDashboard.putData("Drive Straight", driveMP);
+		
+		Button turnRelativeMP = new InternalButton();
+		turnRelativeMP.whenPressed(new DriveRelativeTurnMP(90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+		SmartDashboard.putData("Turn Relative 90", turnRelativeMP);
+		
+		Button turnAbsoluteMP = new InternalButton();
+		turnAbsoluteMP.whenPressed(new DriveAbsoluteTurnMP(90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+		SmartDashboard.putData("Turn Absolute 90", turnAbsoluteMP);
+
 		Button magicCarpetOn05 = new InternalButton();
 		magicCarpetOn05.whenPressed(new MagicCarpetSetSpeed(0.5));
 		SmartDashboard.putData("Magic Carpet 0.5", magicCarpetOn05);

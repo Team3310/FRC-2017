@@ -21,8 +21,8 @@ public class Shooter extends Subsystem {
 	public static enum ShotState { CLOSE, FAR };
 	public static final int ENCODER_TICKS_PER_REV = 1024;
 
-	public static final double SHOOTER_STAGE1_RPM_FAR = 3165;
-	public static final double SHOOTER_STAGE2_RPM_FAR = 3165;
+	public static final double SHOOTER_STAGE1_RPM_FAR = 3065;
+	public static final double SHOOTER_STAGE2_RPM_FAR = 3065;
 	public static final double SHOOTER_STAGE1_RPM_CLOSE = 3050;
 	public static final double SHOOTER_STAGE2_RPM_CLOSE = 3050;
 	public static final double SHOOTER_STAGE1_OFF = 0.0;
@@ -46,8 +46,8 @@ public class Shooter extends Subsystem {
 			shooterStage2Left.enableBrakeMode(false);
 			shooterStage2Left.setProfile(0);
 			shooterStage2Left.setF(0.0345);
-			shooterStage2Left.setP(0.012); //0.12 alone
-			shooterStage2Left.setI(0.000); // 0.0001 alone
+			shooterStage2Left.setP(0.0); //0.12 alone
+			shooterStage2Left.setI(0.0001); // 0.0001 alone
 			shooterStage2Left.setIZone(2000);
 			shooterStage2Left.setD(0);
 			shooterStage2Left.setNominalClosedLoopVoltage(12.0);
@@ -78,8 +78,8 @@ public class Shooter extends Subsystem {
 			shooterStage1Left.enableBrakeMode(false);
 			shooterStage1Left.setProfile(0);
 			shooterStage1Left.setF(0.035);
-			shooterStage1Left.setP(0.08); // 0.08 alone
-			shooterStage1Left.setI(0.000); //0.0001 alone
+			shooterStage1Left.setP(0.0); // 0.08 alone
+			shooterStage1Left.setI(0.0001); //0.0001 alone
 			shooterStage1Left.setIZone(2000);
 			shooterStage1Left.setD(0);
 			shooterStage1Left.setNominalClosedLoopVoltage(12.0);

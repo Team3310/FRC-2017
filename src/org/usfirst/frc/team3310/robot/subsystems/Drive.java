@@ -22,6 +22,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.PigeonImu;
 import com.ctre.PigeonImu.CalibrationMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -34,9 +35,9 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
 	public static final double TRACK_WIDTH_INCHES = 20;
-	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.72 * Math.PI); //3.80
+	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.7 * Math.PI); //3.80
 	
-	public static final double VOLTAGE_RAMP_RATE = 96;  // Volts per second
+	public static final double VOLTAGE_RAMP_RATE = 150;  // Volts per second
 
 	// Motion profile max velocities and accel times
 	public static final double MAX_TURN_RATE_DEG_PER_SEC = 320;
@@ -107,8 +108,9 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.15); 
 	private PIDParams mpHoldPIDParams = new PIDParams(1, 0, 0, 0.0, 0.0, 0.0); 
 
-	private MPSoftwarePIDController mpTurnController;
-	private PIDParams mpTurnPIDParams = new PIDParams(0.09, 0.01, 0, 0.00025, 0.005, 0.0, 5); 
+	private MPSoftwarePIDController mpTurnController; // p    i   d     a      v      g    izone
+//	private PIDParams mpTurnPIDParams = new PIDParams(0.09, 0.01, 0, 0.00025, 0.005, 0.0, 5); 
+	private PIDParams mpTurnPIDParams = new PIDParams(0.07, 0.00002, 0.5, 0.00025, 0.008, 0.0, 100); 
 	
 	private SoftwarePIDController pidTurnController;
 	private PIDParams pidTurnPIDParams = new PIDParams(0.05, 0.007, .3, 0, 0, 0.0, 5);
@@ -137,12 +139,13 @@ public class Drive extends Subsystem implements ControlLoopable
 			
 			leftDrive1.clearStickyFaults();
 			leftDrive1.reverseSensor(true);
-			leftDrive1.reverseOutput(false);
+			leftDrive1.reverseOutput(true);
 			leftDrive1.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 			leftDrive1.setSafetyEnabled(false);
 			leftDrive1.enableBrakeMode(true);
+			leftDrive1.setNominalClosedLoopVoltage(12.0);
 //	        if (leftDrive1.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
-//	            DriverStation.reportError("Could not detect left drive encoder encoder!", false);
+//	            Driver.reportError("Could not detect left drive encoder encoder!", false);
 //	        }
 			
 			leftDrive2.changeControlMode(TalonControlMode.Follower);
@@ -157,10 +160,11 @@ public class Drive extends Subsystem implements ControlLoopable
 			
 			rightDrive1.clearStickyFaults();
 			rightDrive1.reverseSensor(false);
-			rightDrive1.reverseOutput(true);
+			rightDrive1.reverseOutput(false);
 			rightDrive1.setVoltageRampRate(VOLTAGE_RAMP_RATE);
 			rightDrive1.setSafetyEnabled(false);
 			rightDrive1.enableBrakeMode(true);
+			rightDrive1.setNominalClosedLoopVoltage(12.0);
 //	        if (rightDrive1.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
 //	            DriverStation.reportError("Could not detect right drive encoder encoder!", false);
 //	        }
@@ -194,8 +198,12 @@ public class Drive extends Subsystem implements ControlLoopable
 	public void initDefaultCommand() {
 	}
 	
-	public double getGyroAngleDeg() {
+	public double getGyroSPIAngleDeg() {
 		return gyro.getAngle() + gyroOffsetDeg;
+	}
+	
+	public double getGyroAngleDeg() {
+		return getGyroPigeonAngleDeg();
 	}
 	
 	public double getGyroPigeonAngleDeg() {
@@ -239,7 +247,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 	
 	public void setRelativeTurnMP(double relativeTurnAngleDeg, double turnRateDegPerSec, MPSoftwareTurnType turnType) {
-		mpTurnController.setMPTurnTarget(getGyroAngleDeg(), relativeTurnAngleDeg + getGyroAngleDeg(), turnRateDegPerSec, MP_TURN_T1, MP_TURN_T2, turnType, TRACK_WIDTH_INCHES);
+		double gyroDeg = getGyroAngleDeg();
+		mpTurnController.setMPTurnTarget(gyroDeg, relativeTurnAngleDeg + gyroDeg, turnRateDegPerSec, MP_TURN_T1, MP_TURN_T2, turnType, TRACK_WIDTH_INCHES);
 		setControlMode(DriveControlMode.MP_TURN);
 	}
 	
@@ -508,7 +517,7 @@ public class Drive extends Subsystem implements ControlLoopable
 				SmartDashboard.putNumber("Right 2 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID));
 				SmartDashboard.putNumber("Right 3 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID));
 				SmartDashboard.putBoolean("Drive Hold", controlMode == DriveControlMode.HOLD);
-				SmartDashboard.putNumber("Yaw Angle Deg", getGyroAngleDeg());
+				SmartDashboard.putNumber("Yaw Angle Deg", getGyroSPIAngleDeg());
 				SmartDashboard.putNumber("Yaw Angle Pigeon Deg", getGyroPigeonAngleDeg());
 				MotionProfilePoint mpPoint = mpTurnController.getCurrentPoint(); 
 				double delta = mpPoint != null ? getGyroAngleDeg() - mpTurnController.getCurrentPoint().position : 0;

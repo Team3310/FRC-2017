@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3310.robot;
 
+import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopper;
 import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
@@ -72,6 +73,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Operation Mode", operationModeChooser);
 		
 		autonTaskChooser = new SendableChooser<Command>();
+		autonTaskChooser.addDefault("Boiler Shooter From Hopper", new BoilerShooterFromHopper());
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 
 		SmartDashboard.putNumber("Shooter Stage 2 Target RPM", shooterStage2RpmDashboard);

@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
  */
 public class BHR_ADSXRS453_Gyro extends GyroBase implements Gyro, PIDSource, LiveWindowSendable {
   private static final double kSamplePeriod = 0.001;
-  private static final double kCalibrationSampleTime = 10.0;
+  private static final double kCalibrationSampleTime = 1.0;  //10.0
   private static final double kDegreePerSecondPerLSB = 0.0125;
 
 //  private static final int kRateRegister = 0x00;

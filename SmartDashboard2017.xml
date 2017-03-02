@@ -1,5 +1,20 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Turn Relative 90" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="295" y="203"/>
+	</widget>
+	<widget field="Turn Absolute 90" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="312" y="178"/>
+	</widget>
+	<widget field="Yaw Angle Pigeon Deg" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="127"/>
+	</widget>
+	<widget field="Gyro Reset" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="177" y="173"/>
+	</widget>
+	<widget field="Drive Straight" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="322" y="152"/>
+	</widget>
 	<widget field="Shooter Stage 2 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
 		<location x="7" y="410"/>
 	</widget>
