@@ -8,9 +8,7 @@ import org.usfirst.frc.team3310.vision.ImageProcessor.TargetInfo;
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.Image;
 
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
-import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.CameraServer;
@@ -19,27 +17,24 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 public class Camera extends Subsystem
 {	
     private USBCamera centerCam; 
-    private Relay flashlight;
     private ImageProcessor imageProcessor;
 	private Image currentImage = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
     private TargetInfo bestTarget;
 	private int imageCounter = 0;
 	private long processTimeMs = 0;
-	private double offsetAngleDeg = 0; //7
+	private double offsetAngleDeg = 0;
 	private boolean lastTargetValid = false;
 	private boolean alignmentFinished = false;
 
     public Camera() {
 		try {
 	    	centerCam = new USBCamera("cam0");
-	    	centerCam.setBrightness(0);
-	    	centerCam.setExposureManual(0);
+//	    	centerCam.setBrightness(0);
+//	    	centerCam.setExposureManual(0);
 	    	centerCam.updateSettings();
 	    	centerCam.startCapture();
 	    	
-	    	flashlight = new Relay(0, Direction.kForward);
-	    	flashlight.set(Value.kForward);
 	    	imageProcessor = new ImageProcessor();
 		} 
 		catch (Exception e) {
@@ -59,11 +54,11 @@ public class Camera extends Subsystem
 	
 	public void readImagePostProcessedImageToDashboard() {
     	try {
-    		NIVision.imaqReadFile(currentImage, "/home/lvuser/image" + imageCounter + ".jpg");
+    		NIVision.imaqReadFile(currentImage, "/home/lvuser/processed/image" + imageCounter + ".jpg");
     	}
     	catch (Exception e) {
     		imageCounter = 0;
-    		NIVision.imaqReadFile(currentImage, "/home/lvuser/image" + imageCounter + ".jpg");
+    		NIVision.imaqReadFile(currentImage, "/home/lvuser/processed/image" + imageCounter + ".jpg");
     	}
         bestTarget = imageProcessor.findBestTarget(currentImage, true);
         CameraServer.getInstance().setImage(currentImage);
@@ -74,16 +69,17 @@ public class Camera extends Subsystem
 	public TargetInfo readImageGetBestTarget() {
 		long startTime = System.currentTimeMillis();
     	try {
-    		NIVision.imaqReadFile(currentImage, "/home/lvuser/image" + imageCounter + ".jpg");
+    		NIVision.imaqReadFile(currentImage, "/home/lvuser/input/Image" + imageCounter + ".jpg");
     	}
     	catch (Exception e) {
-    		imageCounter = 0;
-    		NIVision.imaqReadFile(currentImage, "/home/lvuser/image" + imageCounter + ".jpg");
+    		DriverStation.reportError("Unable to load file /home/lvuser/input/Image" + imageCounter + ".jpg", false);
     	}
 		imageCounter++;
 
-		bestTarget = imageProcessor.findBestTarget(currentImage, false);
+		bestTarget = imageProcessor.findBestTarget(currentImage, true);
 		processTimeMs = System.currentTimeMillis() - startTime;
+
+		writeProcessedImage(currentImage);
 		
 		return bestTarget;
 	}
@@ -123,9 +119,14 @@ public class Camera extends Subsystem
 		getCamera().getImage(currentImage);
 
 		NIVision.RGBValue rgbValues = new NIVision.RGBValue();
-		NIVision.imaqWriteFile(currentImage, "/home/lvuser/image" + imageCounter + ".jpg", rgbValues);
+		NIVision.imaqWriteFile(currentImage, "/home/lvuser/output/image" + imageCounter + ".jpg", rgbValues);
 	
 		imageCounter++;
+	}
+	
+	public void writeProcessedImage(Image processedImage) {
+		NIVision.RGBValue rgbValues = new NIVision.RGBValue();
+		NIVision.imaqWriteFile(processedImage, "/home/lvuser/processed/image" + imageCounter + ".jpg", rgbValues);
 	}
 	
 	public void incrementAngleOffset(double deltaAngle) {

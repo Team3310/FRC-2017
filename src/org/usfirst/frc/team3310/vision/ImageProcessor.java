@@ -17,27 +17,27 @@ public class ImageProcessor {
 //    private static final int NUM_SMALL_OBJECT_EROSIONS = 2;
     
     private NIVision.Range TARGET_HUE_RANGE = new NIVision.Range(82, 137);	
-    private NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(28, 255);	
-    private NIVision.Range TARGET_LUM_RANGE = new NIVision.Range(35, 255);	
+    private NIVision.Range TARGET_SAT_RANGE = new NIVision.Range(152, 255);	
+    private NIVision.Range TARGET_LUM_RANGE = new NIVision.Range(60, 255);	
     
-    public static final double TARGET_HEIGHT_FT = 1.0;
-    public static final double TARGET_WIDTH_FT = 20.0/12.0;
+    public static final double TARGET_HEIGHT_FT = 6.0/12;
+    public static final double TARGET_WIDTH_FT = 14.0/12.0;
     public static final double TARGET_ASPECT_RATIO = TARGET_HEIGHT_FT / TARGET_WIDTH_FT;
     
     public static final double CAMERA_OFFSET_FT = 0.0;
             
-    public static final double OPTIMAL_RECT = 0.2;
+    public static final double OPTIMAL_RECT = 0.6;
     public static final double OPTIMAL_AR = TARGET_ASPECT_RATIO;
-    public static final double OPTIMAL_XX = 0.9;
-    public static final double OPTIMAL_YY = 0.11;
+    public static final double OPTIMAL_XX = 0.4;
+    public static final double OPTIMAL_YY = 0.03;
     public static final double WEIGHT_FACTOR_RECT = 1;
-    public static final double WEIGHT_FACTOR_AR = 1;
-    public static final double WEIGHT_FACTOR_XX = 10;
-    public static final double WEIGHT_FACTOR_YY = 10;
+    public static final double WEIGHT_FACTOR_AR = 3;
+    public static final double WEIGHT_FACTOR_XX = 1;
+    public static final double WEIGHT_FACTOR_YY = 1;
     
-    public static final double CAMERA_AIM_VERTICAL_ANGLE = 58;
-    public static final double CAMERA_FOV_HORIZONTAL_ANGLE = 33.565;  
-    public static final double CAMERA_FOV_VERTICAL_ANGLE = 59.695;
+    public static final double CAMERA_AIM_VERTICAL_ANGLE = 70;
+    public static final double CAMERA_FOV_HORIZONTAL_ANGLE = 70.42;  
+    public static final double CAMERA_FOV_VERTICAL_ANGLE = 43.3;
 	public static final double tanHalfFOV = Math.tan(Math.toRadians(CAMERA_FOV_HORIZONTAL_ANGLE / 2));
 	
 	public static final double MINIMUM_VALID_COMPOSITE_SCORE = 6;
@@ -65,9 +65,8 @@ public class ImageProcessor {
 //	            return null;
 //	        }
 	        
-	        // The measurements are flipped because the image is rotated 90 degrees
 	    	int bestTargetIndex = -1;
-	    	double bestCompositeScore = 0;
+	    	double bestCompositeScore = 1000;
 			int numParticles = NIVision.imaqCountParticles(processedImage, 1);
 	
 	    	// If there are no targets exit
@@ -77,14 +76,17 @@ public class ImageProcessor {
 	    	
 	    	// Find the best target
 	    	for (int particleIndex = 0; particleIndex < numParticles; particleIndex++) {     
-				double rectWidth = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
-				double rectHeight = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
+				double rectWidth = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
+				double rectHeight = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
 				double rectArea = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_AREA);
-				double rectMomentYY = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_NORM_MOMENT_OF_INERTIA_XX);
-				double rectMomentXX = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_NORM_MOMENT_OF_INERTIA_YY);
-	
+				double rectMomentXX = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_NORM_MOMENT_OF_INERTIA_XX);
+				double rectMomentYY = NIVision.imaqMeasureParticle(processedImage, particleIndex, 0, NIVision.MeasurementType.MT_NORM_MOMENT_OF_INERTIA_YY);
+				if (Math.abs(rectHeight) < 10 || Math.abs(rectWidth) < 10)
+                {
+                    continue;
+                }	
 				double currentCompositeScore = getCompositeScore(rectArea, rectWidth, rectHeight, rectMomentXX, rectMomentYY);
-	            if (bestTargetIndex == -1 || currentCompositeScore < bestCompositeScore) {
+	            if (currentCompositeScore < bestCompositeScore) {
 	            	bestCompositeScore = currentCompositeScore;
 	            	bestTargetIndex = particleIndex;
 	            }
@@ -96,13 +98,13 @@ public class ImageProcessor {
 	    	}
 	        
 	    	// Calculate the distances and angle to target
-			double rectTop = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
-			double rectLeft = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
-			double rectWidth = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
-			double rectHeight = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
+			double rectTop = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
+			double rectLeft = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+			double rectWidth = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
+			double rectHeight = NIVision.imaqMeasureParticle(processedImage, bestTargetIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
 			NIVision.GetImageSizeResult imageSize;
 			imageSize = NIVision.imaqGetImageSize(processedImage);
-			int imageWidth = imageSize.height;
+			int imageWidth = imageSize.width;
 	               
 	    	// Account for targets off center
 	        double widthOffsetPixels = ((rectLeft + rectWidth / 2) - (double)imageWidth / 2);
@@ -117,12 +119,12 @@ public class ImageProcessor {
 	        double angleToTargetDeg = Math.atan2(targetOffsetFt, cameraDistanceWidthFt) * 180.0 / Math.PI;
 	
 	        if (includeOverlays) {
-		        NIVision.Rect rect = new NIVision.Rect((int)rectLeft, (int)rectTop, (int)rectWidth, (int)rectHeight);
+		        NIVision.Rect rect = new NIVision.Rect((int)rectTop, (int)rectLeft, (int)rectHeight, (int)rectWidth);
 		        NIVision.imaqDrawShapeOnImage(cameraImage, cameraImage, rect, DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 65000);
 		        
-		        int targetYCoord = (int)(rectLeft + rectWidth / 2);
-		        NIVision.Point startPoint = new NIVision.Point(0, targetYCoord);
-		        NIVision.Point endPoint = new NIVision.Point(imageSize.width, targetYCoord);
+		        int targetXCoord = (int)(rectLeft + rectWidth / 2);
+		        NIVision.Point startPoint = new NIVision.Point(targetXCoord, 0);
+		        NIVision.Point endPoint = new NIVision.Point(targetXCoord, imageSize.height);
 		        NIVision.imaqDrawLineOnImage(cameraImage, cameraImage, DrawMode.DRAW_VALUE, startPoint, endPoint, 65000);
 	        }
 	                

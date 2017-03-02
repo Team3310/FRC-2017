@@ -10,6 +10,13 @@ import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftMoveMP;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.CameraOffset;
+import org.usfirst.frc.team3310.robot.commands.CameraReadAndProcessImage;
+import org.usfirst.frc.team3310.robot.commands.CameraReadImageTurnToBestTarget;
+import org.usfirst.frc.team3310.robot.commands.CameraSaveImage;
+import org.usfirst.frc.team3310.robot.commands.CameraTurnToBestTarget;
+import org.usfirst.frc.team3310.robot.commands.CameraUpdateBestTarget;
+import org.usfirst.frc.team3310.robot.commands.CameraUpdateDashboard;
 import org.usfirst.frc.team3310.robot.commands.ClimberDoorPosition;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetMaxAmps;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
@@ -61,8 +68,8 @@ public class OI {
 
 	private static OI instance;
 
-	private enum ControllerType {XBOX, LOGITECH};
-	private ControllerType controllerType = ControllerType.XBOX;
+	private enum ControllerType {XBOX, LOGITECH, TEST};
+	private ControllerType controllerType = ControllerType.TEST;
 	
 	private LogitechController m_driverLogitech;
 	private XboxController m_driverXbox;
@@ -373,17 +380,43 @@ public class OI {
 		climberSetMaxAmps.whenPressed(new ClimberSetMaxAmps(0.8, 20));
 		SmartDashboard.putData("Climber Max Amps", climberSetMaxAmps);
 
-		Button climberDoorPositionUp = new InternalButton();
-		climberDoorPositionUp.whenPressed(new ClimberDoorPosition (Climber.DoorOpenState.UP));
-		SmartDashboard.putData("Climber Door Up", climberDoorPositionUp);
-		
-		Button climberDoorPositionDown = new InternalButton();
-		climberDoorPositionDown.whenPressed(new ClimberDoorPosition (Climber.DoorOpenState.DOWN));
-		SmartDashboard.putData("Climber Door Down", climberDoorPositionDown);
-
 		Button gyroReset = new InternalButton();
 		gyroReset.whenPressed(new DriveGyroReset());
 		SmartDashboard.putData("Gyro Reset", gyroReset);
+		
+		// Camera
+		Button cameraUpdateDashboard = new InternalButton();
+		cameraUpdateDashboard.whenPressed(new CameraUpdateDashboard());
+		SmartDashboard.putData("Camera Update", cameraUpdateDashboard);
+		
+		Button cameraSaveImage = new InternalButton();
+		cameraSaveImage.whenPressed(new CameraSaveImage());
+		SmartDashboard.putData("Camera Save", cameraSaveImage);
+		
+		Button cameraReadImage = new InternalButton();
+		cameraReadImage.whenPressed(new CameraReadAndProcessImage());
+		SmartDashboard.putData("Camera Read", cameraReadImage);
+		
+		Button cameraReadImageTurnToBestTarget = new InternalButton();
+		cameraReadImageTurnToBestTarget.whenPressed(new CameraReadImageTurnToBestTarget());
+		SmartDashboard.putData("Camera Read Turn", cameraReadImageTurnToBestTarget);
+		
+		Button cameraTurnToBestTarget = new InternalButton();
+		cameraTurnToBestTarget.whenPressed(new CameraTurnToBestTarget());
+		SmartDashboard.putData("Camera Turn To Best", cameraTurnToBestTarget);
+		
+		Button cameraUpdateBestTarget = new InternalButton();
+		cameraUpdateBestTarget.whenPressed(new CameraUpdateBestTarget());
+		SmartDashboard.putData("Camera Update Best", cameraUpdateBestTarget);
+		
+		Button incrementCameraOffsetPos = new InternalButton();
+		incrementCameraOffsetPos.whenPressed(new CameraOffset(0.5));
+		SmartDashboard.putData("Camera Offset Pos", incrementCameraOffsetPos);
+		
+		Button incrementCameraOffsetNeg = new InternalButton();
+		incrementCameraOffsetNeg.whenPressed(new CameraOffset(-0.5));
+		SmartDashboard.putData("Camera Offset Neg", incrementCameraOffsetNeg);
+
 	}
 	
 	public static OI getInstance() {

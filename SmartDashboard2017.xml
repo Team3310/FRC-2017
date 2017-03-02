@@ -1,7 +1,22 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Auto Selector" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="44"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="1298" y="28"/>
+		<width>399</width>
+		<height>341</height>
+		<property name="Camera Choice" value=""/>
+		<property name="Selected Camera Path" value="http://172.22.11.2:1181/?action=stream"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="5" y="6"/>
+		<width>126</width>
+		<height>37</height>
+	</static-widget>
 	<widget field="Turn Relative 90" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="295" y="203"/>
+		<location x="196" y="203"/>
 	</widget>
 	<widget field="Turn Absolute 90" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="312" y="178"/>
@@ -16,10 +31,12 @@
 		<location x="322" y="152"/>
 	</widget>
 	<widget field="Shooter Stage 2 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
-		<location x="7" y="410"/>
+		<location x="1117" y="433"/>
+		<height>161</height>
 	</widget>
 	<widget field="Shooter Stage 1 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
-		<location x="868" y="408"/>
+		<location x="1118" y="600"/>
+		<height>140</height>
 	</widget>
 	<widget field="Shooter Feed 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="872" y="334"/>
@@ -27,9 +44,6 @@
 	</widget>
 	<widget field="Magic Carpet Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="1135" y="261"/>
-	</widget>
-	<widget field="Climber Door Down" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="664" y="273"/>
 	</widget>
 	<widget field="Shooter Stage 2 - 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="414" y="689"/>
@@ -157,9 +171,6 @@
 		<location x="471" y="230"/>
 		<height>23</height>
 	</widget>
-	<widget field="Climber Door Up" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="679" y="247"/>
-	</widget>
 	<widget field="Shooter Far Shot" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="493" y="150"/>
 	</widget>
@@ -271,7 +282,7 @@
 		<location x="425" y="54"/>
 	</widget>
 	<widget field="Left Pos Inches" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="174" y="81"/>
+		<location x="184" y="79"/>
 		<height>20</height>
 	</widget>
 	<widget field="Lift Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
@@ -281,7 +292,7 @@
 		<location x="34" y="290"/>
 	</widget>
 	<widget field="Shooter Target RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="460" y="204"/>
+		<location x="514" y="205"/>
 	</widget>
 	<widget field="Gear Sensor" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="21" y="346"/>
@@ -316,6 +327,55 @@
 	</widget>
 	<widget field="Shooter Stage 2 Target RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="441" y="377"/>
+	</widget>
+	<widget field="Camera Turn To Best" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="19" y="472"/>
+	</widget>
+	<widget field="Camera Score" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="565"/>
+	</widget>
+	<widget field="Camera Offset Neg" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="19" y="533"/>
+	</widget>
+	<widget field="Camera Offset Pos" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="150" y="533"/>
+		<height>23</height>
+	</widget>
+	<widget field="Camera Offset" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="190" y="563"/>
+	</widget>
+	<widget field="Image Counter" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="640"/>
+	</widget>
+	<widget field="Camera Read" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="20" y="388"/>
+	</widget>
+	<widget field="Camera Read Turn" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="122" y="389"/>
+	</widget>
+	<widget field="Last Target Valid" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="13" y="668"/>
+	</widget>
+	<widget field="Camera Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="693"/>
+	</widget>
+	<widget field="Camera Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="11" y="720"/>
+	</widget>
+	<widget field="Camera Update" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="21" y="414"/>
+	</widget>
+	<widget field="Camera Save" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="19" y="443"/>
+	</widget>
+	<widget field="Camera Update Best" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="20" y="499"/>
+	</widget>
+	<widget field="Camera Aligned" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="17" y="615"/>
+	</widget>
+	<widget field="Camera Time ms" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="20" y="591"/>
 	</widget>
 </dashboard>
 <live-window>
