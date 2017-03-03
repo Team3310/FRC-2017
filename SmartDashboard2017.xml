@@ -1,7 +1,13 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Climber Door Down" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="0" y="89"/>
+	</widget>
+	<widget field="Climber Door Up" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="0" y="65"/>
+	</widget>
 	<widget field="Auto Selector" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="44"/>
+		<location x="301" y="762"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
 		<location x="1298" y="28"/>
@@ -11,7 +17,7 @@
 		<property name="Selected Camera Path" value="http://172.22.11.2:1181/?action=stream"/>
 	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
-		<location x="5" y="6"/>
+		<location x="8" y="5"/>
 		<width>126</width>
 		<height>37</height>
 	</static-widget>
@@ -154,7 +160,7 @@
 		<location x="710" y="458"/>
 	</widget>
 	<widget field="Auton Task" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="224" y="189"/>
+		<location x="586" y="776"/>
 	</widget>
 	<widget field="Ball Lift Gear Position" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="1133" y="94"/>

@@ -63,7 +63,7 @@ public class OI {
 	private static OI instance;
 
 	private enum ControllerType {XBOX, LOGITECH, TEST};
-	private ControllerType controllerType = ControllerType.TEST;
+	private ControllerType controllerType = ControllerType.XBOX;
 	
 	private LogitechController m_driverLogitech;
 	private XboxController m_driverXbox;
