@@ -15,15 +15,16 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class BoilerShooterFromHopper extends CommandGroup {
     
     public BoilerShooterFromHopper() {
-    	addParallel(new IntakeSetPosition(IntakePosition.SHOOT));
-        addSequential(new DriveStraightMP(71, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));
-        addSequential(new DriveAbsoluteTurnMP(90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
-        addSequential(new DriveStraightMP(18, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 90));
+    	addSequential(new DriveGyroReset());
+        addSequential(new DriveStraightMP(-81, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));
+    	addParallel(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
+        addSequential(new DriveAbsoluteTurnMP(-90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+        addSequential(new DriveStraightMP(39, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true,-90));
         addParallel(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR));
         addSequential(new WaitCommand(2.0));
-        addSequential(new DriveStraightMP(-10, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 90));
-        addSequential(new DriveAbsoluteTurnMP(160, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+        addSequential(new DriveStraightMP(-10, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -90));
+        addSequential(new DriveAbsoluteTurnMP(-20, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addSequential(new ShootOn(ShotState.FAR));
-        
+
     }
 }
