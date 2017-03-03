@@ -108,6 +108,7 @@ public class Shooter extends Subsystem {
 	public void setStage2Speed(double vbus) {
 		shooterStage2Left.changeControlMode(TalonControlMode.PercentVbus);
 		shooterStage2Left.set(vbus);
+		Robot.ledLights.setShooterWheelsOn(vbus > 0);
 	}
 	
 	public boolean isShooterOn() {
@@ -122,6 +123,7 @@ public class Shooter extends Subsystem {
 	public void setStage2Rpm(double rpm) {
 		shooterStage2Left.changeControlMode(TalonControlMode.Speed);
 		shooterStage2Left.set(rpm);
+		Robot.ledLights.setShooterWheelsOn(rpm > 0);
 	}
 	
 	public void setStage1Rpm(double rpm) {
@@ -136,6 +138,10 @@ public class Shooter extends Subsystem {
 		else if(state == ShotState.CLOSE) {
 			shotPosition.set(false);
 		}
+	}
+	
+	public ShotState getShotPosition() {
+		return (shotPosition.get() == true) ? ShotState.FAR : ShotState.CLOSE;
 	}
 	
     public void initDefaultCommand() {

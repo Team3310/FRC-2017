@@ -27,10 +27,12 @@ public class ShooterSetToggle extends Command {
 		if (isShooterOn) {
 			Robot.shooter.setStage1Speed(0.0);
 			Robot.shooter.setStage2Speed(0.0);
+	    	Robot.ledLights.setShooterWheelsOn(false);
 		}
 		else {
 			Robot.shooter.setStage1Rpm(stage1Rpm);
 			Robot.shooter.setStage2Rpm(stage2Rpm);
+	    	Robot.ledLights.setShooterWheelsOn(true);
 		}
     }
 

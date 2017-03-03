@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
+import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,6 +22,12 @@ public class ShooterFeedSetSpeed extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.shooterFeed.setSpeed(speed);
+    	if (Robot.shooter.getShotPosition() == ShotState.FAR) {
+    		Robot.ledLights.setShootFar(speed > 0.01);
+    	}
+    	else {
+    		Robot.ledLights.setShootClose(speed > 0.01);
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run

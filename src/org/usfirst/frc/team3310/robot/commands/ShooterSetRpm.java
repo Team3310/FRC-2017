@@ -24,6 +24,7 @@ public class ShooterSetRpm extends Command {
     protected void initialize() {
     	Robot.shooter.setStage1Rpm(stage1Rpm);
     	Robot.shooter.setStage2Rpm(stage2Rpm);
+    	Robot.ledLights.setShooterWheelsOn(stage1Rpm > 0.01);
     }
 
     // Called repeatedly when this Command is scheduled to run

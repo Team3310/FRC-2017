@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
+import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 import org.usfirst.frc.team3310.utility.CANTalonEncoder;
 import org.usfirst.frc.team3310.utility.ControlLoopable;
 import org.usfirst.frc.team3310.utility.MPTalonPIDController;
@@ -26,10 +27,12 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 
 	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0); 
 
-	public final static double RETRACTED_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 135.0; // Roxanne 127.7; 
 	public final static double GEAR_INTAKE_POSITION_DEG = 135.0; // Roxanne 127.7; 
+	public final static double GEAR_DEPLOY_POSITION_DEG = GEAR_INTAKE_POSITION_DEG; 
 	public final static double GEAR_PRESENT_POSITION_DEG = 35.0; //0;
+	public final static double RETRACT_POSITION_DEG = 0;
+	public final static double BALL_INTAKE_POSITION_DEG = GEAR_INTAKE_POSITION_DEG; 
+	public final static double SHOOT_POSITION_DEG = GEAR_INTAKE_POSITION_DEG;
 	
 	// Motion profile max velocities and accel times
 	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 400;
@@ -74,7 +77,26 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 		return !gearSensor.get();
 	}
 	
-	public void setLiftPosition(double targetAngleDegrees) {		
+	public void setLiftPosition(IntakePosition position) {
+		double targetAngleDegrees = 0;
+		if (position == IntakePosition.BALL_INTAKE) {
+			targetAngleDegrees = BALL_INTAKE_POSITION_DEG;
+		}
+		else if (position == IntakePosition.GEAR_INTAKE) {
+			targetAngleDegrees = GEAR_INTAKE_POSITION_DEG;
+		}
+		else if (position == IntakePosition.GEAR_PRESENT) {
+			targetAngleDegrees = GEAR_PRESENT_POSITION_DEG;
+		}
+		else if (position == IntakePosition.GEAR_DEPLOY) {
+			targetAngleDegrees = GEAR_DEPLOY_POSITION_DEG;
+		}
+		else if (position == IntakePosition.RETRACT) {
+			targetAngleDegrees = RETRACT_POSITION_DEG;
+		}
+		else if (position == IntakePosition.SHOOT) {
+			targetAngleDegrees = SHOOT_POSITION_DEG;
+		}
 		double startAngleDegrees = getLiftPosition();
 		double maxVelocityDegreePerSec = (targetAngleDegrees > startAngleDegrees) ? DEPLOY_MAX_RATE_DEG_PER_SEC : RETRACT_MAX_RATE_DEG_PER_SEC;
 		controlMode = LiftControlMode.MP_POSITION;

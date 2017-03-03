@@ -1,14 +1,15 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
+import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GearIntakeLiftMoveMP extends Command
 {
-	private double position;
+	private IntakePosition position;
 	
-	public GearIntakeLiftMoveMP(double position) {
+	public GearIntakeLiftMoveMP(IntakePosition position) {
 		requires(Robot.gearIntake);
 		this.position = position;
 	}

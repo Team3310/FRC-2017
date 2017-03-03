@@ -7,11 +7,13 @@ import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
+import org.usfirst.frc.team3310.robot.subsystems.LedLights;
 import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public static final MagicCarpet magicCarpet = new MagicCarpet();
 	public static final Climber climber = new Climber();
 	public static final Camera camera = new Camera();
+	public static final LedLights ledLights = new LedLights();
 	
 	public static final ControlLooper controlLoop = new ControlLooper("Main control loop", 10);
 	public static final PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -81,6 +84,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter Stage 1 Target RPM", shooterStage1RpmDashboard);
 		SmartDashboard.putNumber("Shooter Target RPM", shooterBothRpmDashboard);
 		SmartDashboard.putNumber("Shooter Target VBus", shooterBothVBusDashboard);
+
+		ledLights.setAllLightsOn(false);
     }
 	
 	/**
@@ -111,10 +116,8 @@ public class Robot extends IterativeRobot {
     	
         // Schedule the autonomous command (example)
     	controlLoop.start();
-//    	ballIntake.setZeroLiftPosition();
-//    	ballIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
+    	ballIntake.setZeroLiftPosition();
     	gearIntake.setZeroLiftPosition();
-    	gearIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
     	drive.endGyroCalibration();
     	drive.resetGyro();
         if (autonomousCommand != null) autonomousCommand.start();
@@ -136,8 +139,6 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
     	updateChoosers();
         controlLoop.start();
- //   	ballIntake.setZeroLiftPosition();
- //   	ballIntake.setLiftPosition(BallIntake.RETRACTED_POSITION_DEG);
     	drive.endGyroCalibration();
         updateStatus();
     }
@@ -161,6 +162,10 @@ public class Robot extends IterativeRobot {
     private void updateChoosers() {
 		operationMode = (OperationMode)operationModeChooser.getSelected();
 		autonomousCommand = (Command)autonTaskChooser.getSelected();
+    }
+    
+    public Alliance getAlliance() {
+    	return m_ds.getAlliance();
     }
     
     public void updateStatus() {
