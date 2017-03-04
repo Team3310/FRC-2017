@@ -23,8 +23,8 @@ public class Shooter extends Subsystem {
 
 	public static final double SHOOTER_STAGE1_RPM_FAR = 3065;
 	public static final double SHOOTER_STAGE2_RPM_FAR = 3065;
-	public static final double SHOOTER_STAGE1_RPM_CLOSE = 3050;
-	public static final double SHOOTER_STAGE2_RPM_CLOSE = 3050;
+	public static final double SHOOTER_STAGE1_RPM_CLOSE = 2725;
+	public static final double SHOOTER_STAGE2_RPM_CLOSE = 2725;
 	public static final double SHOOTER_STAGE1_OFF = 0.0;
 	public static final double SHOOTER_STAGE2_OFF = 0.0;
 	

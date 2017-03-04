@@ -22,7 +22,6 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.PigeonImu;
 import com.ctre.PigeonImu.CalibrationMode;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -118,7 +117,6 @@ public class Drive extends Subsystem implements ControlLoopable
 
 	private PigeonImu gyroPigeon;
 	private double[] yprPigeon = new double[3];
-	private BHR_ADSXRS453_Gyro gyro = new BHR_ADSXRS453_Gyro();
 	private boolean useGyroLock;
 	private double gyroLockAngleDeg;
 	private double kPGyro = 0.04;
@@ -198,10 +196,6 @@ public class Drive extends Subsystem implements ControlLoopable
 	public void initDefaultCommand() {
 	}
 	
-	public double getGyroSPIAngleDeg() {
-		return gyro.getAngle() + gyroOffsetDeg;
-	}
-	
 	public double getGyroAngleDeg() {
 		return getGyroPigeonAngleDeg();
 	}
@@ -210,27 +204,17 @@ public class Drive extends Subsystem implements ControlLoopable
 		gyroPigeon.GetYawPitchRoll(yprPigeon);
 		return -yprPigeon[0] + gyroOffsetDeg;
 	}
-	
-	public double getGyroRateDegPerSec() {
-		return gyro.getRate();
-	}
-	
+			
 	public void resetGyro() {
-		gyro.reset();
-	}
-	
-	public void resetGyroPigeon() {
 		gyroPigeon.SetYaw(0);
 	}
 	
 	public void calibrateGyro() {
-		gyro.calibrate();
 		gyroPigeon.EnterCalibrationMode(CalibrationMode.Temperature);
 	}
 	
 	public void endGyroCalibration() {
 		if (isCalibrating == true) {
-			gyro.endCalibration();
 			isCalibrating = false;
 		}
 	}
@@ -517,14 +501,12 @@ public class Drive extends Subsystem implements ControlLoopable
 				SmartDashboard.putNumber("Right 2 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID));
 				SmartDashboard.putNumber("Right 3 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID));
 				SmartDashboard.putBoolean("Drive Hold", controlMode == DriveControlMode.HOLD);
-				SmartDashboard.putNumber("Yaw Angle Deg", getGyroSPIAngleDeg());
 				SmartDashboard.putNumber("Yaw Angle Pigeon Deg", getGyroPigeonAngleDeg());
 				MotionProfilePoint mpPoint = mpTurnController.getCurrentPoint(); 
 				double delta = mpPoint != null ? getGyroAngleDeg() - mpTurnController.getCurrentPoint().position : 0;
 				SmartDashboard.putNumber("Gyro Delta", delta);
 				SmartDashboard.putBoolean("Gyro Calibrating", isCalibrating);
 				SmartDashboard.putNumber("Gyro Offset", gyroOffsetDeg);
-				SmartDashboard.putNumber("Yaw Rate", getGyroRateDegPerSec());
 				SmartDashboard.putNumber("Delta PID Angle", targetPIDAngle - getGyroAngleDeg());
 				SmartDashboard.putNumber("Steer Output", m_steerOutput);
 				SmartDashboard.putNumber("Move Output", m_moveOutput);

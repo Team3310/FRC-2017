@@ -13,7 +13,6 @@ public class DriveGyroReset extends Command
 	@Override
 	protected void initialize() {
 		Robot.drive.resetGyro();
-		Robot.drive.resetGyroPigeon();
 	}
 
 	@Override

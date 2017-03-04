@@ -29,6 +29,7 @@ import org.usfirst.frc.team3310.robot.commands.IntakeBalls;
 import org.usfirst.frc.team3310.robot.commands.IntakeBallsOff;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
+import org.usfirst.frc.team3310.robot.commands.LEDLightsSet;
 import org.usfirst.frc.team3310.robot.commands.MagicCarpetSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShootOff;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;
@@ -405,6 +406,14 @@ public class OI {
 		Button incrementCameraOffsetNeg = new InternalButton();
 		incrementCameraOffsetNeg.whenPressed(new CameraOffset(-0.5));
 		SmartDashboard.putData("Camera Offset Neg", incrementCameraOffsetNeg);
+		
+		Button ledsOn = new InternalButton();
+		ledsOn.whenPressed(new LEDLightsSet(true));
+		SmartDashboard.putData("LEDs On", ledsOn);
+		
+		Button ledsOff = new InternalButton();
+		ledsOff.whenPressed(new LEDLightsSet(false));
+		SmartDashboard.putData("LEDs Off", ledsOff);
 	}
 	
 	public static OI getInstance() {

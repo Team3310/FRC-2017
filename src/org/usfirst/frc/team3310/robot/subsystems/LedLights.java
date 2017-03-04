@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class LedLights extends Subsystem {
 	
 	// Data [ startIndex, endIndex, red, green, blue]
-	private static final int[] allLights = {0, 30, 255, 255, 255};
+	private static final int[] allLights = {0, 29, 0, 255, 0};
 
-	private static final int[] intakeRollerOn = {0, 5, 0, 255, 0};
-	private static final int[] gearLoaded = {6, 10, 0, 255, 0};
-	private static final int[] shooterWheelsOn = {11, 15, 0, 255, 0};
+	private static final int[] intakeRollerOn = {0, 10, 0, 255, 0};
+	private static final int[] gearLoaded = {11, 20, 0, 255, 0};
+	private static final int[] shooterWheelsOn = {21, 25, 0, 255, 0};
 	
-	private static final int[] shootFar = {16, 20, 0, 255, 0};
-	private static final int[] shootClose = {16, 20, 255, 255, 0};
+	private static final int[] shootFar = {26, 30, 0, 255, 0};
+	private static final int[] shootClose = {26, 30, 255, 255, 0};
 	
 	private static final int[] intakePositionGear = {21, 25, 255, 0, 0};
 	private static final int[] intakePositionBall = {21, 25, 0, 255, 0};
@@ -58,19 +58,19 @@ public class LedLights extends Subsystem {
 
 	public void setIntakePosition(IntakePosition position) {
 		if (position == IntakePosition.BALL_INTAKE) {
-			setLights(true, intakePositionBall);
+//			setLights(true, intakePositionBall);
 		}
 		else if (position == IntakePosition.GEAR_INTAKE) {
-			setLights(true, intakePositionGear);
+//			setLights(true, intakePositionGear);
 		}
 		else if (position == IntakePosition.GEAR_PRESENT) {
-			setLights(true, intakePositionPresent);
+//			setLights(true, intakePositionPresent);
 		}
 		else if (position == IntakePosition.SHOOT) {
-			setLights(true, intakePositionShoot);
+//			setLights(true, intakePositionShoot);
 		}
 		else if (position == IntakePosition.RETRACT) {
-			setLights(false, null);
+//			setLights(false, null);
 		}
 	}
 

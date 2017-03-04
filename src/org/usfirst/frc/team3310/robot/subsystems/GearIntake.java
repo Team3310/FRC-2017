@@ -142,6 +142,12 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 		SmartDashboard.putNumber("Gear Intake Position (deg)", getLiftPosition());
 		SmartDashboard.putNumber("Gear Intake Absolute Position (deg)", liftMotor.getPulseWidthPosition());
 		SmartDashboard.putBoolean("Gear Sensor", isGearPresent());
+		if (isGearPresent()) {
+//			Robot.ledLights.setGearLoaded(true);
+		}
+		else {
+//			Robot.ledLights.setGearLoaded(false);
+		}
 	}
 
 	public void initDefaultCommand() {
