@@ -28,29 +28,32 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0);  // 18/16 practice
 
 	public static final double BALL_INTAKE_LOAD_SPEED = 0.8;
+	public static final double GEAR_INTAKE_LOAD_SPEED = 0.4;
 	public static final double BALL_INTAKE_EJECT_SPEED = -1.0;
 	public static final double BALL_INTAKE_OFF_SPEED = 0.0;
 	
 	public final static double RETRACT_POSITION_DEG = 0;
-	public final static double BALL_INTAKE_POSITION_DEG = 100.5; // Roxanne 99.0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 117; // Roxanne 120.0;
+	public final static double BALL_INTAKE_POSITION_DEG = 96; // Roxanne 99.0;
+	public final static double GEAR_INTAKE_POSITION_DEG = 114; // Roxanne 120.0;
 	public final static double GEAR_PRESENT_POSITION_DEG = 10; //0;
 	public final static double GEAR_DEPLOY_POSITION_DEG = GEAR_PRESENT_POSITION_DEG;
-	public final static double SHOOT_POSITION_DEG = 58;
+	public final static double SHOOT_POSITION_DEG = 30;
 	
 	// Motion profile max velocities and accel times
-	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 450;
-	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 400;
+	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 550;
+	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 100;
 	
-	public static final double MP_T1 = 300;
-	public static final double MP_T2 = 150;
+	public static final double MP_T1 = 400;
+	public static final double MP_T2 = 200;
+
+	private IntakePosition position;
 
 	private CANTalon rollerMotor;
 	private CANTalonEncoder liftMotor;
 	private ArrayList<CANTalonEncoder> motorControllers = new ArrayList<CANTalonEncoder>();	
 	
 	private MPTalonPIDController mpController;
-	private PIDParams mpPIDParams = new PIDParams(4.0, 0.0, 0, 0.0, 0.2);
+	private PIDParams mpPIDParams = new PIDParams(6.0, 0.05, 0, 0.0, 0.2);
 	private boolean isAtTarget = true;
 	private LiftControlMode controlMode = LiftControlMode.MANUAL;
 
@@ -83,6 +86,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	
 	public void setLiftPosition(IntakePosition position) {
 		double targetAngleDegrees = 0;
+		this.position = position;
 		if (position == IntakePosition.BALL_INTAKE) {
 			targetAngleDegrees = BALL_INTAKE_POSITION_DEG;
 		}
@@ -106,6 +110,10 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		controlMode = LiftControlMode.MP_POSITION;
 		mpController.setMPTarget(startAngleDegrees, targetAngleDegrees, maxVelocityDegreePerSec, MP_T1, MP_T2); 
 		isAtTarget = false;
+	}
+		
+	public IntakePosition getIntakePosition() {
+		return position;
 	}
 		
 	public double getLiftPosition() {

@@ -32,14 +32,16 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	public final static double GEAR_PRESENT_POSITION_DEG = 35.0; //0;
 	public final static double RETRACT_POSITION_DEG = 0;
 	public final static double BALL_INTAKE_POSITION_DEG = GEAR_INTAKE_POSITION_DEG; 
-	public final static double SHOOT_POSITION_DEG = GEAR_INTAKE_POSITION_DEG;
+	public final static double SHOOT_POSITION_DEG = GEAR_INTAKE_POSITION_DEG - 10;
 	
 	// Motion profile max velocities and accel times
 	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 400;
-	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 450;
+	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 650;
 	
-	public static final double MP_T1 = 360;
-	public static final double MP_T2 = 180;
+	public static final double MP_T1 = 600;
+	public static final double MP_T2 = 300;
+	
+	private IntakePosition position;
 
 	private CANTalonEncoder liftMotor;
 	private ArrayList<CANTalonEncoder> motorControllers = new ArrayList<CANTalonEncoder>();	
@@ -74,11 +76,12 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 	}
 	
 	public boolean isGearPresent() {
-		return !gearSensor.get();
+		return gearSensor.get();
 	}
 	
 	public void setLiftPosition(IntakePosition position) {
 		double targetAngleDegrees = 0;
+		this.position = position;
 		if (position == IntakePosition.BALL_INTAKE) {
 			targetAngleDegrees = BALL_INTAKE_POSITION_DEG;
 		}
@@ -102,6 +105,10 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 		controlMode = LiftControlMode.MP_POSITION;
 		mpController.setMPTarget(startAngleDegrees, targetAngleDegrees, maxVelocityDegreePerSec, MP_T1, MP_T2); 
 		isAtTarget = false;
+	}
+	
+	public IntakePosition getIntakePosition() {
+		return position;
 	}
 		
 	public double getLiftPosition() {
@@ -143,10 +150,10 @@ public class GearIntake extends Subsystem implements ControlLoopable {
 		SmartDashboard.putNumber("Gear Intake Absolute Position (deg)", liftMotor.getPulseWidthPosition());
 		SmartDashboard.putBoolean("Gear Sensor", isGearPresent());
 		if (isGearPresent()) {
-//			Robot.ledLights.setGearLoaded(true);
+			Robot.ledLights.setGearLoaded(true);
 		}
 		else {
-//			Robot.ledLights.setGearLoaded(false);
+			Robot.ledLights.setGearLoaded(false);
 		}
 	}
 

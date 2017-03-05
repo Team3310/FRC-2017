@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class LedLights extends Subsystem {
 	
 	// Data [ startIndex, endIndex, red, green, blue]
-	private static final int[] allLights = {0, 29, 0, 255, 0};
+	private static final int[] allLights = {0, 30, 0, 255, 0};
 
 	private static final int[] intakeRollerOn = {0, 10, 0, 255, 0};
 	private static final int[] gearLoaded = {11, 20, 0, 255, 0};
-	private static final int[] shooterWheelsOn = {21, 25, 0, 255, 0};
+	private static final int[] shooterWheelsOn = {21, 30, 0, 255, 0};
 	
 	private static final int[] shootFar = {26, 30, 0, 255, 0};
 	private static final int[] shootClose = {26, 30, 255, 255, 0};
@@ -49,11 +49,11 @@ public class LedLights extends Subsystem {
 	}
 
 	public void setShootFar(boolean status) {
-		setLights(status, shootFar);
+//		setLights(status, shootFar);
 	}
 
 	public void setShootClose(boolean status) {
-		setLights(status, shootClose);
+//		setLights(status, shootClose);
 	}
 
 	public void setIntakePosition(IntakePosition position) {
@@ -79,7 +79,7 @@ public class LedLights extends Subsystem {
 			lights.setLEDColors(data[0], data[1] + 1, data[2], data[3], data[4]);
 		}
 		else {
-			lights.clearColorBuffer(data[0] + 1, data[1]);
+			lights.clearColorBuffer(data[0], data[1] + 1);
 		}
 		lights.updateColors();
 	}
