@@ -3,6 +3,8 @@ package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopper;
 import org.usfirst.frc.team3310.robot.commands.GearBoilerSideAuton;
+import org.usfirst.frc.team3310.robot.commands.GearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.GearLoadingSideAuton;
 import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
@@ -70,14 +72,15 @@ public class Robot extends IterativeRobot {
 
     	controlLoop.addLoopable(drive);
     	controlLoop.addLoopable(ballIntake);
-    	controlLoop.addLoopable(gearIntake);
-
+ 
 	    operationModeChooser = new SendableChooser<OperationMode>();
 	    operationModeChooser.addDefault("Test", OperationMode.TEST);
 	    operationModeChooser.addObject("Competition", OperationMode.COMPETITION);
 		SmartDashboard.putData("Operation Mode", operationModeChooser);
 		
 		autonTaskChooser = new SendableChooser<Command>();
+		autonTaskChooser.addObject("Gear Loading Side", new GearLoadingSideAuton());
+		autonTaskChooser.addObject("Gear Center", new GearCenterAuton());
 		autonTaskChooser.addObject("Boiler Shooter From Hopper", new BoilerShooterFromHopper());
 		autonTaskChooser.addDefault("Gear Boiler Side", new GearBoilerSideAuton());
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
@@ -119,7 +122,6 @@ public class Robot extends IterativeRobot {
         // Schedule the autonomous command (example)
     	controlLoop.start();
     	ballIntake.setZeroLiftPosition();
-    	gearIntake.setZeroLiftPosition();
     	drive.endGyroCalibration();
     	drive.resetGyro();
         if (autonomousCommand != null) autonomousCommand.start();

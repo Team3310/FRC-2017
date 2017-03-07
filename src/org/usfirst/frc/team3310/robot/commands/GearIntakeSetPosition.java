@@ -5,29 +5,37 @@ import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearIntakeLiftMoveMP extends Command
+public class GearIntakeSetPosition extends Command
 {
 	private IntakePosition position;
 	
-	public GearIntakeLiftMoveMP(IntakePosition position) {
+	public GearIntakeSetPosition(IntakePosition position) {
 		requires(Robot.gearIntake);
 		this.position = position;
 	}
-	
+
+	@Override
 	protected void initialize() {
 		Robot.gearIntake.setLiftPosition(position);
 	}
 
+	@Override
 	protected void execute() {
+		
 	}
 
+	@Override
 	protected boolean isFinished() {
-		return Robot.gearIntake.isAtTarget(); 
+		return true;
 	}
 
+	@Override
 	protected void end() {
+		
 	}
 
+	@Override
 	protected void interrupted() {
+			
 	}
 }

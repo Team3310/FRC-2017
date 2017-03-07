@@ -100,12 +100,14 @@ public class Drive extends Subsystem implements ControlLoopable
 	private DriveControlMode controlMode = DriveControlMode.JOYSTICK;
 	
 	private MPTalonPIDController mpStraightController;
-	private PIDParams mpStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.15); 
+//	private PIDParams mpStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.15);  // 4 colsons
+	private PIDParams mpStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
 	private PIDParams mpHoldPIDParams = new PIDParams(1, 0, 0, 0.0, 0.0, 0.0); 
 
 	private MPSoftwarePIDController mpTurnController; // p    i   d     a      v      g    izone
 //	private PIDParams mpTurnPIDParams = new PIDParams(0.09, 0.01, 0, 0.00025, 0.005, 0.0, 5); 
-	private PIDParams mpTurnPIDParams = new PIDParams(0.07, 0.00002, 0.5, 0.00025, 0.008, 0.0, 100); 
+//	private PIDParams mpTurnPIDParams = new PIDParams(0.07, 0.00002, 0.5, 0.00025, 0.008, 0.0, 100);  // 4 colson wheels
+	private PIDParams mpTurnPIDParams = new PIDParams(0.03, 0.00002, 0.4, 0.0004, 0.0030, 0.0, 100);  // 4 omni
 	
 	private SoftwarePIDController pidTurnController;
 	private PIDParams pidTurnPIDParams = new PIDParams(0.05, 0.007, .3, 0, 0, 0.0, 5);

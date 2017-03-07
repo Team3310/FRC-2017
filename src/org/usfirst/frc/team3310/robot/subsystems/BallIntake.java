@@ -27,6 +27,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 
 	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0);  // 18/16 practice
 
+	public static final double BALL_INTAKE_GEAR_DEPLOY_SPEED = -0.3;
 	public static final double BALL_INTAKE_LOAD_SPEED = 0.8;
 	public static final double GEAR_INTAKE_LOAD_SPEED = 0.4;
 	public static final double BALL_INTAKE_EJECT_SPEED = -1.0;

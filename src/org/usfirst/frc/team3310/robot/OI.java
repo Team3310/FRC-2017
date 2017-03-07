@@ -23,8 +23,7 @@ import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
-import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftResetZero;
-import org.usfirst.frc.team3310.robot.commands.GearIntakeLiftSpeed;
+import org.usfirst.frc.team3310.robot.commands.GearIntakeSetPosition;
 import org.usfirst.frc.team3310.robot.commands.IntakeBalls;
 import org.usfirst.frc.team3310.robot.commands.IntakeBallsOff;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
@@ -340,18 +339,12 @@ public class OI {
 		SmartDashboard.putData("Ball Lift Reset Zero 1", ballLiftZero);
 
 		Button gearLiftPositive = new InternalButton();
-		gearLiftPositive.whenPressed(new GearIntakeLiftSpeed(0.2));
-		gearLiftPositive.whenReleased(new GearIntakeLiftSpeed(0.0));
-		SmartDashboard.putData("Gear Lift Positive", gearLiftPositive);
+		gearLiftPositive.whenPressed(new GearIntakeSetPosition(IntakePosition.RETRACT));
+		SmartDashboard.putData("Gear Lift Up", gearLiftPositive);
 
 		Button gearLiftNegative = new InternalButton();
-		gearLiftNegative.whenPressed(new GearIntakeLiftSpeed(-0.2));
-		gearLiftNegative.whenReleased(new GearIntakeLiftSpeed(0.0));
-		SmartDashboard.putData("Gear Lift Negative", gearLiftNegative);
-
-		Button gearLiftZero = new InternalButton();
-		gearLiftZero.whenPressed(new GearIntakeLiftResetZero());
-		SmartDashboard.putData("Gear Lift Reset Zero 1", gearLiftZero);
+		gearLiftNegative.whenPressed(new GearIntakeSetPosition(IntakePosition.GEAR_INTAKE));
+		SmartDashboard.putData("Gear Lift Down", gearLiftNegative);
 
 		Button shooterShotPositionClose = new InternalButton();
 		shooterShotPositionClose.whenPressed(new ShooterSetShotPosition(Shooter.ShotState.CLOSE));
