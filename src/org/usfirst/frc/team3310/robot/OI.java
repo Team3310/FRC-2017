@@ -105,17 +105,13 @@ public class OI {
 	        JoystickButton gearIntakePresent = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.B_BUTTON);
 	        gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
 	        
-	        JoystickButton climberForward = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LEFT_JOYSTICK_BUTTON);
-	        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-	        climberForward.whenReleased(new ClimberSetSpeed(0.0));
-	        
 	        LogitechDPadTriggerButton climberForward2 = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.UP);
-	        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-	        climberForward2.whenReleased(new ClimberSetSpeed(0.0));
+	        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, Drive.CLIMB_SPEED));
+	        climberForward2.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 	        
 	        LogitechDPadTriggerButton climberReverse = new LogitechDPadTriggerButton(m_driverLogitech, LogitechDPadTriggerButton.DOWN);
-	        climberReverse.whenPressed(new ClimberSetSpeed(-0.5));
-	        climberReverse.whenReleased(new ClimberSetSpeed(0.0));
+	        climberReverse.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, -Drive.CLIMB_SPEED));
+	        climberReverse.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 	        
 	        JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
 	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
@@ -153,17 +149,13 @@ public class OI {
 	        JoystickButton gearIntakePresent = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.B_BUTTON);
 	        gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
 	        
-	        JoystickButton climberForward = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.LEFT_JOYSTICK_BUTTON);
-	        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-	        climberForward.whenReleased(new ClimberSetSpeed(0.0));
-	        
 	        XBoxDPadTriggerButton climberForward2 = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.UP);
-	        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-	        climberForward2.whenReleased(new ClimberSetSpeed(0.0));
+	        climberForward2.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, Drive.CLIMB_SPEED));
+	        climberForward2.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 	        
 	        XBoxDPadTriggerButton climberReverse = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.DOWN);
-	        climberReverse.whenPressed(new ClimberSetSpeed(-0.5));
-	        climberReverse.whenReleased(new ClimberSetSpeed(0.0));
+	        climberReverse.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, -Drive.CLIMB_SPEED));
+	        climberReverse.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 	        
 	        JoystickButton toggleShooter = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.START_BUTTON);
 	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
@@ -196,17 +188,13 @@ public class OI {
         JoystickButton gearIntakePresentOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.B_BUTTON);
         gearIntakePresentOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
-        JoystickButton climberForwardOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.LEFT_JOYSTICK_BUTTON);
-        climberForwardOperator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-        climberForwardOperator.whenReleased(new ClimberSetSpeed(0.0));
-        
         XBoxDPadTriggerButton climberForward2Operator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.UP);
-        climberForward2Operator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED));
-        climberForward2Operator.whenReleased(new ClimberSetSpeed(0.0));
+        climberForward2Operator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, 0.0));
+        climberForward2Operator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton climberReverseOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.DOWN);
-        climberReverseOperator.whenPressed(new ClimberSetSpeed(-0.5));
-        climberReverseOperator.whenReleased(new ClimberSetSpeed(0.0));
+        climberReverseOperator.whenPressed(new ClimberSetSpeed(-0.5, 0.0));
+        climberReverseOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         JoystickButton toggleShooterOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.START_BUTTON);
         toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
@@ -355,8 +343,8 @@ public class OI {
 		SmartDashboard.putData("Shooter Far Shot", shooterShotPositionFar);
 		
 		Button climberOn08 = new InternalButton();
-		climberOn08.whenPressed(new ClimberSetSpeed(0.8));
-		climberOn08.whenReleased(new ClimberSetSpeed(0.0));
+		climberOn08.whenPressed(new ClimberSetSpeed(0.8, 0.0));
+		climberOn08.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 		SmartDashboard.putData("Climber 0.8", climberOn08);
 
 		Button climberSetMaxAmps = new InternalButton();

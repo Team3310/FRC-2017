@@ -10,17 +10,20 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ClimberSetSpeed extends Command {
 
-	private double speed;
+	private double climbSpeed;
+	private double driveSpeed;
 	
 	// Constructor with speed
-    public ClimberSetSpeed(double speed) {
-    	this.speed = speed;
+    public ClimberSetSpeed(double climbSpeed, double driveSpeed) {
+    	this.climbSpeed = climbSpeed;
+    	this.driveSpeed = driveSpeed;
         requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.climber.setSpeed(speed);
+    	Robot.climber.setSpeed(climbSpeed);
+    	Robot.drive.setClimbSpeed(driveSpeed);
     }
 
     // Called repeatedly when this Command is scheduled to run

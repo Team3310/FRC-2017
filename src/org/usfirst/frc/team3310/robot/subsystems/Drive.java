@@ -29,12 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements ControlLoopable
 {
-	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, TEST };
+	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB };
 	public static enum SpeedShiftState { HI, LO };
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
 	public static final double TRACK_WIDTH_INCHES = 20;
 	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.7 * Math.PI); //3.80
+	public static final double CLIMB_SPEED = 0.45;
 	
 	public static final double VOLTAGE_RAMP_RATE = 150;  // Volts per second
 
@@ -63,6 +64,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	private CANTalon rightDrive3;
 
 	private RobotDrive m_drive;
+	
+	private double climbSpeed;
 
 	// Pneumatics
 	private Solenoid speedShift;
@@ -265,7 +268,11 @@ public class Drive extends Subsystem implements ControlLoopable
 			leftDrive1.changeControlMode(TalonControlMode.PercentVbus);
 			rightDrive1.changeControlMode(TalonControlMode.PercentVbus);
 		}
-		else if (controlMode == DriveControlMode.TEST) {
+		else if (controlMode == DriveControlMode.MANUAL) {
+			leftDrive1.changeControlMode(TalonControlMode.PercentVbus);
+			rightDrive1.changeControlMode(TalonControlMode.PercentVbus);
+		}
+		else if (controlMode == DriveControlMode.CLIMB) {
 			leftDrive1.changeControlMode(TalonControlMode.PercentVbus);
 			rightDrive1.changeControlMode(TalonControlMode.PercentVbus);
 		}
@@ -282,7 +289,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 	
 	public void controlLoopUpdate() {
-		if (controlMode == DriveControlMode.JOYSTICK) {
+		if (controlMode == DriveControlMode.JOYSTICK || controlMode == DriveControlMode.CLIMB) {
 			driveWithJoystick();
 		}
 		else if (!isFinished) {
@@ -303,9 +310,19 @@ public class Drive extends Subsystem implements ControlLoopable
 			setControlMode(DriveControlMode.JOYSTICK);
 		}
 		else {
-			setControlMode(DriveControlMode.TEST);
-			rightDrive1.set(speed);
+			setControlMode(DriveControlMode.MANUAL);
+			rightDrive1.set(-speed);
 			leftDrive1.set(speed);
+		}
+	}
+	
+	public void setClimbSpeed(double climbSpeed) {
+		this.climbSpeed = climbSpeed;
+		if (climbSpeed == 0) {
+			setControlMode(DriveControlMode.JOYSTICK);
+		}
+		else {
+			setControlMode(DriveControlMode.CLIMB);
 		}
 	}
 	
@@ -320,7 +337,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 
 	public void driveWithJoystick() {
-		if(controlMode != DriveControlMode.JOYSTICK || m_drive == null) return;
+		if(m_drive == null) return;
 		// switch(m_controllerMode) {
 		// case CONTROLLER_JOYSTICK_ARCADE:
 		// m_moveInput = OI.getInstance().getJoystick1().getY();
@@ -373,8 +390,13 @@ public class Drive extends Subsystem implements ControlLoopable
 		m_moveInput = -OI.getInstance().getDriverController().getLeftYAxis();
 		m_steerInput = -OI.getInstance().getDriverController().getRightXAxis();
 
-		m_moveOutput = adjustForSensitivity(m_moveScale, m_moveTrim,
-				m_moveInput, m_moveNonLinear, MOVE_NON_LINEARITY);
+		if (controlMode == DriveControlMode.JOYSTICK) {
+			m_moveOutput = adjustForSensitivity(m_moveScale, m_moveTrim,
+					m_moveInput, m_moveNonLinear, MOVE_NON_LINEARITY);
+		}
+		else if (controlMode == DriveControlMode.CLIMB) {
+			m_moveOutput = climbSpeed;
+		}
 		m_steerOutput = adjustForSensitivity(m_steerScale, m_steerTrim,
 				m_steerInput, m_steerNonLinear, STEER_NON_LINEARITY);
 		
