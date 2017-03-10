@@ -17,7 +17,7 @@ public class RobotMap {
 	public static final int SHOOTER_STAGE_1_LEFT_MOTOR_CAN_ID = 3;
 	public static final int SHOOTER_STAGE_2_LEFT_MOTOR_CAN_ID = 4;
 	public static final int BALL_INTAKE_LIFT_MOTOR_CAN_ID = 5;
-	public static final int GEAR_INTAKE_LIFT_MOTOR_CAN_ID = 6;
+	public static final int CLIMBER_MOTOR_RIGHT_CAN_ID = 6;
 	public static final int MAGIC_CARPET_ROLLER_MOTOR_CAN_ID = 7;
 
 	public static final int DRIVETRAIN_RIGHT_MOTOR1_CAN_ID = 15;
@@ -26,7 +26,7 @@ public class RobotMap {
 	public static final int SHOOTER_STAGE_1_RIGHT_MOTOR_CAN_ID = 12;	
 	public static final int SHOOTER_STAGE_2_RIGHT_MOTOR_CAN_ID = 11;
 	public static final int SHOOTER_FEED_MOTOR_CAN_ID = 10;
-	public static final int CLIMBER_MOTOR_CAN_ID = 9;
+	public static final int CLIMBER_MOTOR_lEFT_CAN_ID = 9;
 	public static final int BALL_INTAKE_ROLLER_MOTOR_CAN_ID = 8;
 	
 	// Pneumatics

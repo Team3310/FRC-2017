@@ -163,7 +163,10 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("Shooter Stage 1 Plot RPM", shooterStage1Left.getSpeed());
 		SmartDashboard.putNumber("Shooter Stage 1 Amps Left", shooterStage1Left.getOutputCurrent());
 		SmartDashboard.putNumber("Shooter Stage 1 Amps Right", shooterStage1Left.getOutputCurrent());
+
+		if (operationMode == Robot.OperationMode.TEST) {
 		SmartDashboard.putBoolean("Shooter On", isShooterOn());
     }
+	}
 }
 

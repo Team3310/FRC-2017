@@ -18,32 +18,45 @@ public class Climber extends Subsystem {
     
 	public static final double CLIMB_SPEED = 0.8;
 	
-	private CANTalon roller;
+	private CANTalon rollerLeft;
+	private CANTalon rollerRight;
 
 	public Climber() {
 		try {
-			roller = new CANTalon(RobotMap.CLIMBER_MOTOR_CAN_ID);
-			roller.clearStickyFaults();
-			roller.setSafetyEnabled(false);
-		} 
+			rollerLeft = new CANTalon(RobotMap.CLIMBER_MOTOR_lEFT_CAN_ID);
+			rollerLeft.clearStickyFaults();
+			rollerLeft.setSafetyEnabled(false);
+
+			rollerRight = new CANTalon(RobotMap.CLIMBER_MOTOR_RIGHT_CAN_ID);
+			rollerRight.clearStickyFaults();
+			rollerRight.setSafetyEnabled(false);
+} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the Climber constructor");
 		}
 	}
 	
 	public void setSpeed(double speed) {
-		roller.set(speed);
+		rollerLeft.set(speed);
+		rollerRight.set(-speed);
 	}
 
-	public double getAmps() {
-		return roller.getOutputCurrent();
+	public double getLeftAmps() {
+		return rollerLeft.getOutputCurrent();
 	}
-	
+
+	public double getRightAmps() {
+		return rollerRight.getOutputCurrent();
+	}
+
     public void initDefaultCommand() {
     }
     
 	public void updateStatus(Robot.OperationMode operationMode) {
-		SmartDashboard.putNumber("Climber Amps", roller.getOutputCurrent());
+		if (operationMode == Robot.OperationMode.TEST) {
+		SmartDashboard.putNumber("Left Climber Amps", rollerLeft.getOutputCurrent());
+		SmartDashboard.putNumber("Right Climber Amps", rollerRight.getOutputCurrent());
     }
+	}
 }
 
