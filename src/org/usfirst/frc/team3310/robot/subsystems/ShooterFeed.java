@@ -40,8 +40,9 @@ public class ShooterFeed extends Subsystem {
     }
     
 	public void updateStatus(Robot.OperationMode operationMode) {
+		if (operationMode == Robot.OperationMode.TEST) {
 		SmartDashboard.putNumber("Lift Amps", roller.getOutputCurrent());
     }
-
+	}
 }
 

@@ -32,7 +32,7 @@ public class ClimberSetMaxAmps extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.climber.getAmps() > this.maxAmps;
+        return Robot.climber.getLeftAmps() > this.maxAmps;
     }
 
     // Called once after isFinished returns true
