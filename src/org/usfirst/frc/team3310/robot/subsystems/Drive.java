@@ -12,6 +12,7 @@ import org.usfirst.frc.team3310.utility.ControlLoopable;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 import org.usfirst.frc.team3310.utility.MPTalonPIDController;
+import org.usfirst.frc.team3310.utility.MotionProfileBoxCar;
 import org.usfirst.frc.team3310.utility.MotionProfilePoint;
 import org.usfirst.frc.team3310.utility.PIDParams;
 import org.usfirst.frc.team3310.utility.SoftwarePIDController;
@@ -34,7 +35,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
 	public static final double TRACK_WIDTH_INCHES = 20;
-	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.7 * Math.PI); //3.80
+	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.24 * Math.PI); //3.70
 	public static final double CLIMB_SPEED = 0.45;
 	
 	public static final double VOLTAGE_RAMP_RATE = 150;  // Volts per second
@@ -66,6 +67,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	private RobotDrive m_drive;
 	
 	private double climbSpeed;
+	
+	private boolean isRed = true;
 
 	// Pneumatics
 	private Solenoid speedShift;
@@ -85,7 +88,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static final double STICK_DEADBAND = 0.02;
 
 	private int m_moveNonLinear = 0;
-	private int m_steerNonLinear = 3;
+	private int m_steerNonLinear = -3;
 
 	private double m_moveScale = 1.0;
 	private double m_steerScale = 1.0;
@@ -442,7 +445,7 @@ public class Drive extends Subsystem implements ControlLoopable
 		return inDeadZone;
 	}
 
-	private double adjustForSensitivity(double scale, double trim,
+	public double adjustForSensitivity(double scale, double trim,
 			double steer, int nonLinearFactor, double wheelNonLinearity) {
 		if (inDeadZone(steer))
 			return 0;
@@ -507,6 +510,14 @@ public class Drive extends Subsystem implements ControlLoopable
 		pidTurnController = new SoftwarePIDController(pidTurnPIDParams, motorControllers);
 	}
 	
+	public boolean isRed() {
+		return isRed;
+	}
+	
+	public void setIsRed(boolean status) {
+		isRed = status;
+	}
+	
 	public void updateStatus(Robot.OperationMode operationMode) {
 		if (operationMode == Robot.OperationMode.TEST) {
 			try {
@@ -537,5 +548,10 @@ public class Drive extends Subsystem implements ControlLoopable
 				System.err.println("Drivetrain update status error");
 			}
 		}
+		else {
+			
+		}
 	}	
+	
+
 }

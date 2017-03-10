@@ -35,14 +35,14 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	
 	public final static double RETRACT_POSITION_DEG = 0;
 	public final static double BALL_INTAKE_POSITION_DEG = 96; // Roxanne 99.0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 114; // Roxanne 120.0;
+	public final static double GEAR_INTAKE_POSITION_DEG = 112; // Roxanne 120.0;
 	public final static double GEAR_PRESENT_POSITION_DEG = 10; //0;
 	public final static double GEAR_DEPLOY_POSITION_DEG = GEAR_PRESENT_POSITION_DEG;
 	public final static double SHOOT_POSITION_DEG = 30;
 	
 	// Motion profile max velocities and accel times
 	public static final double RETRACT_MAX_RATE_DEG_PER_SEC = 550;
-	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 100;
+	public static final double DEPLOY_MAX_RATE_DEG_PER_SEC = 300;
 	
 	public static final double MP_T1 = 400;
 	public static final double MP_T2 = 200;
@@ -152,7 +152,6 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	
 	public void updateStatus(Robot.OperationMode operationMode) {
 		SmartDashboard.putNumber("Ball Intake Position (deg)", getLiftPosition());
-		SmartDashboard.putNumber("Ball Intake Absolute Position (deg)", liftMotor.getPulseWidthPosition());
 	}
 
 	public void initDefaultCommand() {

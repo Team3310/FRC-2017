@@ -1,6 +1,10 @@
 
 package org.usfirst.frc.team3310.robot;
 
+import org.usfirst.frc.team3310.robot.commands.BlueBoilerShooterFromHopper;
+import org.usfirst.frc.team3310.robot.commands.BlueGearBoilerSideAuton;
+import org.usfirst.frc.team3310.robot.commands.BlueGearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.BlueGearLoadingSideAuton;
 import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopper;
 import org.usfirst.frc.team3310.robot.commands.GearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.GearCenterAuton;
@@ -79,10 +83,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Operation Mode", operationModeChooser);
 		
 		autonTaskChooser = new SendableChooser<Command>();
-		autonTaskChooser.addObject("Gear Loading Side", new GearLoadingSideAuton());
-		autonTaskChooser.addObject("Gear Center", new GearCenterAuton());
-		autonTaskChooser.addObject("Boiler Shooter From Hopper", new BoilerShooterFromHopper());
-		autonTaskChooser.addDefault("Gear Boiler Side", new GearBoilerSideAuton());
+		autonTaskChooser.addObject("Red Gear Loading Side", new GearLoadingSideAuton());
+		autonTaskChooser.addObject("Blue Gear Loading Side", new BlueGearLoadingSideAuton());
+		autonTaskChooser.addObject("Red Gear Center", new GearCenterAuton());
+		autonTaskChooser.addObject("Blue Gear Center", new BlueGearCenterAuton());
+		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
+		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
+		autonTaskChooser.addDefault("Red Gear Boiler Side", new GearBoilerSideAuton());
+		autonTaskChooser.addObject("Blue Gear Boiler Side", new BlueGearBoilerSideAuton());
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 
 		SmartDashboard.putNumber("Shooter Stage 2 Target RPM", shooterStage2RpmDashboard);
@@ -124,6 +132,7 @@ public class Robot extends IterativeRobot {
     	ballIntake.setZeroLiftPosition();
     	drive.endGyroCalibration();
     	drive.resetGyro();
+    	drive.setIsRed(getAlliance().equals(Alliance.Red));
         if (autonomousCommand != null) autonomousCommand.start();
     }
 

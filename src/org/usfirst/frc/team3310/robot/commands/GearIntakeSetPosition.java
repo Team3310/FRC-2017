@@ -16,7 +16,12 @@ public class GearIntakeSetPosition extends Command
 
 	@Override
 	protected void initialize() {
-		Robot.gearIntake.setLiftPosition(position);
+		if (position == IntakePosition.GEAR_PRESENT) {
+			setTimeout(0.3);
+		}
+		else {
+			Robot.gearIntake.setLiftPosition(position);
+		}
 	}
 
 	@Override
@@ -26,6 +31,15 @@ public class GearIntakeSetPosition extends Command
 
 	@Override
 	protected boolean isFinished() {
+		if (position == IntakePosition.GEAR_PRESENT) {
+			if (isTimedOut()) {
+				Robot.gearIntake.setLiftPosition(position);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
 		return true;
 	}
 

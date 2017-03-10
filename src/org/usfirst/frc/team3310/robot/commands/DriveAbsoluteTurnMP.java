@@ -19,6 +19,9 @@ public class DriveAbsoluteTurnMP extends Command
 	}
 
 	protected void initialize() {
+//		if (Robot.drive.isRed() == false) {
+//			absoluteTurnAngleDeg = absoluteTurnAngleDeg * -1;
+//		}
 		Robot.drive.setAbsoluteTurnMP(absoluteTurnAngleDeg, maxTurnRateDegPerSec, turnType);
 	}
 

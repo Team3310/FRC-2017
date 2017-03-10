@@ -43,7 +43,9 @@ public class MagicCarpet extends Subsystem {
     }
     
 	public void updateStatus(Robot.OperationMode operationMode) {
-		SmartDashboard.putNumber("Magic Carpet Amps", roller.getOutputCurrent());
+		if (operationMode == Robot.OperationMode.TEST) {
+			SmartDashboard.putNumber("Magic Carpet Amps", roller.getOutputCurrent());
+		}
     }
 
 }
