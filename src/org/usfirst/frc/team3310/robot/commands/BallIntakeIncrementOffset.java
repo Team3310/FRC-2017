@@ -4,18 +4,18 @@ import org.usfirst.frc.team3310.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CameraOffset extends Command
+public class BallIntakeIncrementOffset extends Command
 {
 	private double deltaAngle;
 	
-	public CameraOffset(double deltaAngle) {
-		requires(Robot.camera);
+	public BallIntakeIncrementOffset(double deltaAngle) {
+		requires(Robot.ballIntake);
 		this.deltaAngle = deltaAngle;
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.camera.incrementAngleOffset(deltaAngle);;
+		Robot.ballIntake.incrementOffsetAngle(deltaAngle);
 	}
 
 	@Override

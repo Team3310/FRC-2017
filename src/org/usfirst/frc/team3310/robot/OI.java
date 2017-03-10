@@ -6,10 +6,11 @@ import org.usfirst.frc.team3310.buttons.XBoxTriggerButton;
 import org.usfirst.frc.team3310.controller.IHandController;
 import org.usfirst.frc.team3310.controller.LogitechController;
 import org.usfirst.frc.team3310.controller.XboxController;
+import org.usfirst.frc.team3310.robot.commands.BallIntakeIncrementOffset;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
-import org.usfirst.frc.team3310.robot.commands.CameraOffset;
+import org.usfirst.frc.team3310.robot.commands.CameraIncrementOffset;
 import org.usfirst.frc.team3310.robot.commands.CameraReadAndProcessImage;
 import org.usfirst.frc.team3310.robot.commands.CameraReadImageTurnToBestTarget;
 import org.usfirst.frc.team3310.robot.commands.CameraSaveImage;
@@ -43,6 +44,7 @@ import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetSpeed;
+import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
@@ -176,6 +178,10 @@ public class OI {
         ballIntakeOperator.whenPressed(new IntakeBalls());
         ballIntakeOperator.whenReleased(new IntakeBallsOff());
         
+        JoystickButton ballIntakeEjectOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.LEFT_BUMPER_BUTTON);
+        ballIntakeEjectOperator.whenPressed(new BallIntakeRollerSetSpeed(BallIntake.BALL_INTAKE_EJECT_SPEED));
+        ballIntakeEjectOperator.whenReleased(new BallIntakeRollerSetSpeed(0.0));
+        
         JoystickButton ballIntakeDeployOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.Y_BUTTON);
         ballIntakeDeployOperator.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
         
@@ -188,9 +194,15 @@ public class OI {
         JoystickButton gearIntakePresentOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.B_BUTTON);
         gearIntakePresentOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
-        XBoxDPadTriggerButton climberForward2Operator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.UP);
-        climberForward2Operator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, 0.0));
-        climberForward2Operator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
+        XBoxDPadTriggerButton incrementBallIntakeZeroPositive = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.LEFT);
+        incrementBallIntakeZeroPositive.whenPressed(new BallIntakeIncrementOffset(0.5));
+        
+        XBoxDPadTriggerButton incrementBallIntakeZeroNegative = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.RIGHT);
+        incrementBallIntakeZeroNegative.whenPressed(new BallIntakeIncrementOffset(-0.5));
+        
+        XBoxDPadTriggerButton climberForwardOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.UP);
+        climberForwardOperator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, 0.0));
+        climberForwardOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton climberReverseOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.DOWN);
         climberReverseOperator.whenPressed(new ClimberSetSpeed(-0.5, 0.0));
@@ -381,11 +393,11 @@ public class OI {
 		SmartDashboard.putData("Camera Update Best", cameraUpdateBestTarget);
 		
 		Button incrementCameraOffsetPos = new InternalButton();
-		incrementCameraOffsetPos.whenPressed(new CameraOffset(0.5));
+		incrementCameraOffsetPos.whenPressed(new CameraIncrementOffset(0.5));
 		SmartDashboard.putData("Camera Offset Pos", incrementCameraOffsetPos);
 		
 		Button incrementCameraOffsetNeg = new InternalButton();
-		incrementCameraOffsetNeg.whenPressed(new CameraOffset(-0.5));
+		incrementCameraOffsetNeg.whenPressed(new CameraIncrementOffset(-0.5));
 		SmartDashboard.putData("Camera Offset Neg", incrementCameraOffsetNeg);
 		
 		Button ledsOn = new InternalButton();

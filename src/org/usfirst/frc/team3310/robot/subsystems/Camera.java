@@ -129,7 +129,7 @@ public class Camera extends Subsystem
 		NIVision.imaqWriteFile(processedImage, "/home/lvuser/processed/image" + imageCounter + ".jpg", rgbValues);
 	}
 	
-	public void incrementAngleOffset(double deltaAngle) {
+	public void incrementOffsetAngle(double deltaAngle) {
 		offsetAngleDeg += deltaAngle;
 	}
 	

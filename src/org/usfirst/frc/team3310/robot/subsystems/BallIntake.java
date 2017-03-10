@@ -57,6 +57,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	private PIDParams mpPIDParams = new PIDParams(6.0, 0.05, 0, 0.0, 0.2);
 	private boolean isAtTarget = true;
 	private LiftControlMode controlMode = LiftControlMode.MANUAL;
+	private double offsetAngleDeg = 0;
 
 	public BallIntake() {
 		try {
@@ -85,6 +86,10 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		Robot.ledLights.setIntakeRollerOn(Math.abs(speed) > 0.01);
 	}
 	
+	public void incrementOffsetAngle(double deltaAngle) {
+		offsetAngleDeg += deltaAngle;
+	}
+	
 	public void setLiftPosition(IntakePosition position) {
 		double targetAngleDegrees = 0;
 		this.position = position;
@@ -106,6 +111,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		else if (position == IntakePosition.SHOOT) {
 			targetAngleDegrees = SHOOT_POSITION_DEG;
 		}
+		targetAngleDegrees += offsetAngleDeg;
 		double startAngleDegrees = getLiftPosition();
 		double maxVelocityDegreePerSec = (targetAngleDegrees > startAngleDegrees) ? DEPLOY_MAX_RATE_DEG_PER_SEC : RETRACT_MAX_RATE_DEG_PER_SEC;
 		controlMode = LiftControlMode.MP_POSITION;
