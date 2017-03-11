@@ -23,6 +23,6 @@ public class ShootOn extends CommandGroup {
     	addSequential(new ShooterSetShotPosition(shotState));
     	addSequential(new MagicCarpetSetSpeed(MagicCarpet.MAGIC_CARPET_BALL_SHOOT_SPEED));
         addSequential(new ShooterFeedSetSpeed(ShooterFeed.SHOOTER_FEED_SHOOT_SPEED));
-        addSequential(new BallIntakeRollerSetSpeed(BallIntake.BALL_INTAKE_LOAD_SPEED));
+//        addSequential(new BallIntakeRollerSetSpeed(BallIntake.BALL_INTAKE_LOAD_SPEED));
     }
 }

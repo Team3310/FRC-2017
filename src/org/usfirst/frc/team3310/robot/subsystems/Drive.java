@@ -35,7 +35,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
 	public static final double TRACK_WIDTH_INCHES = 20;
-	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.24 * Math.PI); //3.70
+	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.70 * Math.PI); //3.70
 	public static final double CLIMB_SPEED = 0.45;
 	
 	public static final double VOLTAGE_RAMP_RATE = 150;  // Volts per second

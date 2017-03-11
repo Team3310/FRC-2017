@@ -35,7 +35,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	
 	public final static double RETRACT_POSITION_DEG = 0;
 	public final static double BALL_INTAKE_POSITION_DEG = 96; // Roxanne 99.0;
-	public final static double GEAR_INTAKE_POSITION_DEG = 112; // Roxanne 120.0;
+	public final static double GEAR_INTAKE_POSITION_DEG = 110; // Roxanne 120.0;
 	public final static double GEAR_PRESENT_POSITION_DEG = 10; //0;
 	public final static double GEAR_DEPLOY_POSITION_DEG = GEAR_PRESENT_POSITION_DEG;
 	public final static double SHOOT_POSITION_DEG = 30;
