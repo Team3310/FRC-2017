@@ -13,6 +13,5 @@ public class ShootOnDelay extends CommandGroup {
     public ShootOnDelay(ShotState shotState) {
         addSequential(new WaitCommand(0.6));
         addSequential(new ShootOn(shotState));
-
     }
 }

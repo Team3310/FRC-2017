@@ -4,29 +4,33 @@ import org.usfirst.frc.team3310.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BallIntakeLiftResetZero extends Command
-{
-	private double angle;
-	
-	public BallIntakeLiftResetZero(double angle) {
-		this.angle = angle;
-		requires(Robot.ballIntake);
+public class BallIntakeManualStart extends Command
+{	
+	public BallIntakeManualStart() {
 	}
 
+	@Override
 	protected void initialize() {
-		Robot.ballIntake.setZeroLiftPosition(angle);
+		Robot.ballIntake.setManualJoyStickMode();
 	}
 
+	@Override
 	protected void execute() {
+		
 	}
 
+	@Override
 	protected boolean isFinished() {
-		return true; 
+		return true;
 	}
 
+	@Override
 	protected void end() {
+		
 	}
 
+	@Override
 	protected void interrupted() {
+			
 	}
 }

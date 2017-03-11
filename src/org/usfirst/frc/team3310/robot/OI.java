@@ -6,9 +6,9 @@ import org.usfirst.frc.team3310.buttons.XBoxTriggerButton;
 import org.usfirst.frc.team3310.controller.IHandController;
 import org.usfirst.frc.team3310.controller.LogitechController;
 import org.usfirst.frc.team3310.controller.XboxController;
-import org.usfirst.frc.team3310.robot.commands.BallIntakeIncrementOffset;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
+import org.usfirst.frc.team3310.robot.commands.BallIntakeManualRelease;
 import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.CameraIncrementOffset;
 import org.usfirst.frc.team3310.robot.commands.CameraReadAndProcessImage;
@@ -70,14 +70,12 @@ public class OI {
 	private LogitechController m_driverLogitech;
 	private XboxController m_driverXbox;
 	private XboxController m_operatorXbox;
-	private IHandController m_controller;
 	
 	private OI() {
 		
 		//Logitech Controller
 		if (controllerType == ControllerType.LOGITECH) {
 			m_driverLogitech = new LogitechController(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
-			m_controller = m_driverLogitech;
 	
 	        JoystickButton shiftDrivetrain = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LB_BUTTON);
 	        shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
@@ -121,7 +119,6 @@ public class OI {
 		
 		else if (controllerType == ControllerType.XBOX) {
 			m_driverXbox = new XboxController(RobotMap.DRIVER_JOYSTICK_1_USB_ID);
-			m_controller = m_driverXbox;
 	
 	        JoystickButton shiftDrivetrain = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.LEFT_BUMPER_BUTTON);
 	        shiftDrivetrain.whenPressed(new DriveSpeedShift(Drive.SpeedShiftState.HI));
@@ -195,10 +192,14 @@ public class OI {
         gearIntakePresentOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
         XBoxDPadTriggerButton incrementBallIntakeZeroPositive = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.LEFT);
-        incrementBallIntakeZeroPositive.whenPressed(new BallIntakeIncrementOffset(0.5));
+        incrementBallIntakeZeroPositive.whenPressed(new BallIntakeManualRelease());
+//       incrementBallIntakeZeroPositive.whenPressed(new BallIntakeIncrementOffset(0.5));
         
         XBoxDPadTriggerButton incrementBallIntakeZeroNegative = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.RIGHT);
-        incrementBallIntakeZeroNegative.whenPressed(new BallIntakeIncrementOffset(-0.5));
+        incrementBallIntakeZeroNegative.whenPressed(new BallIntakeLiftSpeed(-0.4));
+        incrementBallIntakeZeroNegative.whenReleased(new BallIntakeLiftSpeed(0.0));
+//        incrementBallIntakeZeroNegative.whenPressed(new BallIntakeManualStart());
+//      incrementBallIntakeZeroNegative.whenPressed(new BallIntakeIncrementOffset(-0.5));
         
         XBoxDPadTriggerButton climberForwardOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.UP);
         climberForwardOperator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, 0.0));
@@ -335,7 +336,7 @@ public class OI {
 		SmartDashboard.putData("Ball Lift Negative", ballLiftNegative);
 
 		Button ballLiftZero = new InternalButton();
-		ballLiftZero.whenPressed(new BallIntakeLiftResetZero());
+		ballLiftZero.whenPressed(new BallIntakeLiftResetZero(0.0));
 		SmartDashboard.putData("Ball Lift Reset Zero 1", ballLiftZero);
 
 		Button gearLiftPositive = new InternalButton();
@@ -417,7 +418,11 @@ public class OI {
 	}
 
 	public IHandController getDriverController() {
-		return m_controller;
+		return m_driverXbox;
+	}
+
+	public IHandController getOperatorController() {
+		return m_operatorXbox;
 	}
 
 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team3310.robot.subsystems;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team3310.robot.OI;
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
@@ -23,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class BallIntake extends Subsystem implements ControlLoopable {
     
-	private static enum LiftControlMode { MANUAL, MP_POSITION };
+	private static enum LiftControlMode { MANUAL, MP_POSITION, MANUAL_JOYSTICK };
 
 	private static final double ENCODER_TICKS_TO_WORLD = (4096.0 / 360.0) * (32.0 / 18.0);  // 18/16 practice
 
@@ -58,6 +59,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	private boolean isAtTarget = true;
 	private LiftControlMode controlMode = LiftControlMode.MANUAL;
 	private double offsetAngleDeg = 0;
+	private double joystickPosition = 0;
 
 	public BallIntake() {
 		try {
@@ -127,8 +129,9 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		return liftMotor.getPositionWorld();
 	}
 	
-	public void setZeroLiftPosition() {
-		mpController.resetZeroPosition();
+	public void setZeroLiftPosition(double offsetAngle) {
+		offsetAngleDeg = offsetAngle;
+		mpController.resetZeroPosition(0.0);
 	}
 	
 	public void setLiftSpeed(double speed) {
@@ -136,10 +139,18 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		liftMotor.changeControlMode(TalonControlMode.PercentVbus);
 		liftMotor.set(-speed);
 	}
+	
+	public void setManualJoyStickMode() {
+		controlMode = LiftControlMode.MANUAL_JOYSTICK;
+	}
 
 	@Override
 	public void controlLoopUpdate() {
-		if (controlMode != LiftControlMode.MANUAL && !isAtTarget) {
+		if (controlMode == LiftControlMode.MANUAL_JOYSTICK) {
+			joystickPosition = OI.getInstance().getOperatorController().getLeftYAxis();
+			setLiftSpeed(joystickPosition);
+		}
+		else if (controlMode != LiftControlMode.MANUAL && !isAtTarget) {
 			isAtTarget = mpController.controlLoopUpdate();
 		}
 	}
@@ -153,11 +164,12 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 		mpController = new MPTalonPIDController(periodMs, mpPIDParams, motorControllers);
 		
 		// Set the startup position to zero
-		setZeroLiftPosition();
+		setZeroLiftPosition(0.0);
 	}
 	
 	public void updateStatus(Robot.OperationMode operationMode) {
 		SmartDashboard.putNumber("Ball Intake Position (deg)", getLiftPosition());
+		SmartDashboard.putNumber("Left Joystick", joystickPosition);
 	}
 
 	public void initDefaultCommand() {

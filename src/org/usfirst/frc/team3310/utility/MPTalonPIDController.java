@@ -110,6 +110,12 @@ public class MPTalonPIDController
 		}
 	}
 
+	public void resetZeroPosition(double angle) {
+		for (CANTalonEncoder motorController : motorControllers) {
+			motorController.setPosition(angle);
+		}
+	}
+
 	public boolean controlLoopUpdate() {
 		return controlLoopUpdate(0);
 	}

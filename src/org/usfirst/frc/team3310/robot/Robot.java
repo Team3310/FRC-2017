@@ -129,7 +129,7 @@ public class Robot extends IterativeRobot {
     	
         // Schedule the autonomous command (example)
     	controlLoop.start();
-    	ballIntake.setZeroLiftPosition();
+    	ballIntake.setZeroLiftPosition(0.0);
     	drive.endGyroCalibration();
     	drive.resetGyro();
     	drive.setIsRed(getAlliance().equals(Alliance.Red));

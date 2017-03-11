@@ -24,7 +24,7 @@ public class GearBoilerSideAuton extends CommandGroup {
         addSequential(new DriveStraightMP(14, Drive.MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC, true, true,-60));
 //        addSequential(new WaitCommand(0.4));
  //       addSequential(new DriveStraightMP(18, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true,-60));
-        addSequential(new DriveAbsoluteTurnMP(-45, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+        addSequential(new DriveAbsoluteTurnMP(-44, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addParallel(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE));
         addSequential(new DriveStraightMP(104, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true,-45));
         addSequential(new ShootOn(ShotState.CLOSE));
