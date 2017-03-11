@@ -54,7 +54,7 @@ public class BallIntake extends Subsystem implements ControlLoopable {
 	private ArrayList<CANTalonEncoder> motorControllers = new ArrayList<CANTalonEncoder>();	
 	
 	private MPTalonPIDController mpController;
-	private PIDParams mpPIDParams = new PIDParams(6.0, 0.05, 0, 0.0, 0.2);
+	private PIDParams mpPIDParams = new PIDParams(4.0, 0.03, 0, 0.0, 0.2);
 	private boolean isAtTarget = true;
 	private LiftControlMode controlMode = LiftControlMode.MANUAL;
 	private double offsetAngleDeg = 0;
