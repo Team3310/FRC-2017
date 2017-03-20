@@ -133,6 +133,10 @@ public class MotionProfileBoxCar
 		return point;
 	}
 
+	public double getStartDistance() {
+		return startDistance;
+	}
+
 	public double getTargetDistance() {
 		return targetDistance;
 	}
@@ -156,7 +160,7 @@ public class MotionProfileBoxCar
 	public static void main(String[] args) {
 		long startTime = System.nanoTime();
 		
-		MotionProfileBoxCar mp = new MotionProfileBoxCar(0, -71, 130, 10, 200, 100);
+		MotionProfileBoxCar mp = new MotionProfileBoxCar(0, 96, 120, 10, 600, 300);
 		System.out.println("Time, Position, Velocity, Acceleration");
 		MotionProfilePoint point = new MotionProfilePoint();
 		while(mp.getNextPoint(point) != null) {

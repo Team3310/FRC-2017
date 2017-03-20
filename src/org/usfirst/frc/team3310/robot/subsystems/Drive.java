@@ -34,7 +34,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static enum SpeedShiftState { HI, LO };
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
-	public static final double TRACK_WIDTH_INCHES = 20;
+	public static final double TRACK_WIDTH_INCHES = 26.937;
 	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.70 * Math.PI); //3.70
 	public static final double CLIMB_SPEED = 0.45;
 	
@@ -231,6 +231,13 @@ public class Drive extends Subsystem implements ControlLoopable
 		double yawAngle = useAbsolute ? BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), desiredAbsoluteAngle) : getGyroAngleDeg();
 		mpStraightController.setPID(mpStraightPIDParams);
 		mpStraightController.setMPStraightTarget(0, distanceInches, maxVelocity, MP_STRAIGHT_T1, MP_STRAIGHT_T2, useGyroLock, yawAngle, true); 
+		setControlMode(DriveControlMode.MP_STRAIGHT);
+	}
+	
+	public void setStraightMPCached(String key, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
+		double yawAngle = useAbsolute ? BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), desiredAbsoluteAngle) : getGyroAngleDeg();
+		mpStraightController.setPID(mpStraightPIDParams);
+		mpStraightController.setMPStraightTarget(key, useGyroLock, yawAngle, true); 
 		setControlMode(DriveControlMode.MP_STRAIGHT);
 	}
 	

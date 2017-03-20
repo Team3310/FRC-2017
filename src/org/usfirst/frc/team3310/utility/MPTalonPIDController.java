@@ -55,7 +55,23 @@ public class MPTalonPIDController
 			if (resetEncoder) {
 				motorController.setPosition(0);
 			}
-			motorController.set(startValue);
+			motorController.set(mp.getStartDistance());
+			motorController.changeControlMode(TalonControlMode.Position);
+		}
+	}
+	
+	public void setMPStraightTarget(String key, boolean useGyroLock, double desiredAngle, boolean resetEncoder) {
+		controlMode = MPControlMode.STRAIGHT;
+		this.startGyroAngle = desiredAngle;
+		this.useGyroLock = useGyroLock;
+		
+		// Set up the motion profile 
+		mp = MotionProfileCache.getInstance().getMP(key);
+		for (CANTalonEncoder motorController : motorControllers) {
+			if (resetEncoder) {
+				motorController.setPosition(0);
+			}
+			motorController.set(mp.getStartDistance());
 			motorController.changeControlMode(TalonControlMode.Position);
 		}
 	}
@@ -81,7 +97,7 @@ public class MPTalonPIDController
 			trackDistance = 1;
 		}
 	}
-	
+		
 	private double calcTrackDistance(double deltaAngleDeg, MPTalonTurnType turnType, double trackWidth) {
 		double trackDistance = deltaAngleDeg / 360.0 * Math.PI * trackWidth;
 		if (turnType == MPTalonTurnType.TANK) {
