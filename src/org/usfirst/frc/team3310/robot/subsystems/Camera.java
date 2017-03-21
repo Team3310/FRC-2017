@@ -31,7 +31,7 @@ public class Camera extends Subsystem
 		try {
 	    	centerCam = new USBCamera("cam0");
 //	    	centerCam.setBrightness(0);
-//	    	centerCam.setExposureManual(0);
+	    	centerCam.setExposureManual(1);
 	    	centerCam.updateSettings();
 	    	centerCam.startCapture();
 	    	
@@ -92,17 +92,14 @@ public class Camera extends Subsystem
 		lastTargetValid = false;
     	try {
 			getCamera().getImage(currentImage);        
-			bestTarget = imageProcessor.findBestTarget(currentImage, Robot.operationMode == OperationMode.TEST);
+			bestTarget = imageProcessor.findBestTarget(currentImage, true);
 			if (bestTarget != null) {
 				bestTarget.angleToTargetDeg += offsetAngleDeg;
 				if (bestTarget.compositeScore < ImageProcessor.MINIMUM_VALID_COMPOSITE_SCORE) {
 					lastTargetValid = true;
 				}
 			}
-			
-			if (Robot.operationMode == OperationMode.TEST) {
-				CameraServer.getInstance().setImage(currentImage);
-			}		
+			writeProcessedImage(currentImage);
 			
 			return bestTarget;
     	}
