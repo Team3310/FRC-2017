@@ -22,6 +22,7 @@ import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
+import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeSetPosition;
@@ -216,6 +217,10 @@ public class OI {
 		Button driveMP = new InternalButton();
 		driveMP.whenPressed(new DriveStraightMP(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
 		SmartDashboard.putData("Drive Straight", driveMP);
+		
+		Button turnRelativePID = new InternalButton();
+		turnRelativePID.whenPressed(new DriveRelativeTurnPID(10, MPSoftwareTurnType.TANK));
+		SmartDashboard.putData("Turn Relative 10 PID", turnRelativePID);
 		
 		Button turnRelativeMP = new InternalButton();
 		turnRelativeMP.whenPressed(new DriveRelativeTurnMP(90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));

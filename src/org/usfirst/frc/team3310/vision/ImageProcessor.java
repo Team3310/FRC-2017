@@ -35,7 +35,7 @@ public class ImageProcessor {
     public static final double WEIGHT_FACTOR_XX = 1;
     public static final double WEIGHT_FACTOR_YY = 1;
     
-    public static final double CAMERA_AIM_VERTICAL_ANGLE = 70;
+    public static final double CAMERA_AIM_VERTICAL_ANGLE = 20;
     public static final double CAMERA_FOV_HORIZONTAL_ANGLE = 70.42;  
     public static final double CAMERA_FOV_VERTICAL_ANGLE = 43.3;
 	public static final double tanHalfFOV = Math.tan(Math.toRadians(CAMERA_FOV_HORIZONTAL_ANGLE / 2));

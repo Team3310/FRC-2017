@@ -6,6 +6,7 @@ import org.usfirst.frc.team3310.robot.commands.BlueGearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.BlueGearCenterAuton;
 import org.usfirst.frc.team3310.robot.commands.BlueGearLoadingSideAuton;
 import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopper;
+import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.GearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.GearCenterAuton;
 import org.usfirst.frc.team3310.robot.commands.GearLoadingSideAuton;
@@ -21,6 +22,8 @@ import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -73,6 +76,10 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = OI.getInstance();
+		
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setResolution(640, 480);
+		camera.setExposureAuto();
 
     	controlLoop.addLoopable(drive);
     	controlLoop.addLoopable(ballIntake);
@@ -89,6 +96,7 @@ public class Robot extends IterativeRobot {
 		autonTaskChooser.addObject("Blue Gear Center", new BlueGearCenterAuton());
 		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
 		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
+		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker", new BoilerShooterFromHopperBarker());
 		autonTaskChooser.addDefault("Red Gear Boiler Side", new GearBoilerSideAuton());
 		autonTaskChooser.addObject("Blue Gear Boiler Side", new BlueGearBoilerSideAuton());
 		SmartDashboard.putData("Auton Task", autonTaskChooser);

@@ -29,11 +29,12 @@ public class Camera extends Subsystem
 
     public Camera() {
 		try {
-	    	centerCam = new USBCamera("cam0");
-//	    	centerCam.setBrightness(0);
-	    	centerCam.setExposureManual(1);
-	    	centerCam.updateSettings();
-	    	centerCam.startCapture();
+//	    	centerCam = new USBCamera("cam0");
+//	    	centerCam.setBrightness(40);
+//	    	centerCam.setExposureManual(1);
+//	    	centerCam.setSize(640, 480);
+//	    	centerCam.updateSettings();
+//	    	centerCam.startCapture();
 	    	
 	    	imageProcessor = new ImageProcessor();
 		} 
@@ -100,6 +101,7 @@ public class Camera extends Subsystem
 				}
 			}
 			writeProcessedImage(currentImage);
+			imageCounter++;
 			
 			return bestTarget;
     	}

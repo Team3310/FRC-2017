@@ -116,7 +116,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpTurnPIDParams = new PIDParams(0.03, 0.00002, 0.4, 0.0004, 0.0030, 0.0, 100);  // 4 omni
 	
 	private SoftwarePIDController pidTurnController;
-	private PIDParams pidTurnPIDParams = new PIDParams(0.05, 0.007, .3, 0, 0, 0.0, 5);
+	private PIDParams pidTurnPIDParams = new PIDParams(0.04, 0.0002, 0.4, 0, 0, 0.0, 100);
 	private double targetPIDAngle;
 
 	private PigeonImu gyroPigeon;
