@@ -148,25 +148,31 @@ public class Shooter extends Subsystem {
     }
     
 	public void updateStatus(Robot.OperationMode operationMode) {
-		SmartDashboard.putNumber("Shooter Stage 2 Closed Loop Error", shooterStage2Left.getClosedLoopError());
-		SmartDashboard.putNumber("Shooter Stage 2 Motor Output", shooterStage2Left.getOutputVoltage()/shooterStage2Left.getBusVoltage());
-		SmartDashboard.putNumber("Shooter Stage 2 Output Voltage", shooterStage2Left.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter Stage 2 Actual RPM", shooterStage2Left.getSpeed());
-		SmartDashboard.putNumber("Shooter Stage 2 Plot RPM", shooterStage2Left.getSpeed());
-		SmartDashboard.putNumber("Shooter Stage 2 Amps Left", shooterStage2Left.getOutputCurrent());
-		SmartDashboard.putNumber("Shooter Stage 2 Amps Right", shooterStage2Right.getOutputCurrent());
-
-		SmartDashboard.putNumber("Shooter Stage 1 Closed Loop Error", shooterStage1Left.getClosedLoopError());
-		SmartDashboard.putNumber("Shooter Stage 1 Motor Output", shooterStage1Left.getOutputVoltage()/shooterStage1Left.getBusVoltage());
-		SmartDashboard.putNumber("Shooter Stage 1 Output Voltage", shooterStage1Left.getOutputVoltage());
-		SmartDashboard.putNumber("Shooter Stage 1 Actual RPM", shooterStage1Left.getSpeed());
-		SmartDashboard.putNumber("Shooter Stage 1 Plot RPM", shooterStage1Left.getSpeed());
-		SmartDashboard.putNumber("Shooter Stage 1 Amps Left", shooterStage1Left.getOutputCurrent());
-		SmartDashboard.putNumber("Shooter Stage 1 Amps Right", shooterStage1Left.getOutputCurrent());
-
-		if (operationMode == Robot.OperationMode.TEST) {
-		SmartDashboard.putBoolean("Shooter On", isShooterOn());
-    }
+		
+		try {
+			SmartDashboard.putNumber("Shooter Stage 2 Closed Loop Error", shooterStage2Left.getClosedLoopError());
+			SmartDashboard.putNumber("Shooter Stage 2 Motor Output", shooterStage2Left.getOutputVoltage()/shooterStage2Left.getBusVoltage());
+			SmartDashboard.putNumber("Shooter Stage 2 Output Voltage", shooterStage2Left.getOutputVoltage());
+			SmartDashboard.putNumber("Shooter Stage 2 Actual RPM", shooterStage2Left.getSpeed());
+			SmartDashboard.putNumber("Shooter Stage 2 Plot RPM", shooterStage2Left.getSpeed());
+			SmartDashboard.putNumber("Shooter Stage 2 Amps Left", shooterStage2Left.getOutputCurrent());
+			SmartDashboard.putNumber("Shooter Stage 2 Amps Right", shooterStage2Right.getOutputCurrent());
+	
+			SmartDashboard.putNumber("Shooter Stage 1 Closed Loop Error", shooterStage1Left.getClosedLoopError());
+			SmartDashboard.putNumber("Shooter Stage 1 Motor Output", shooterStage1Left.getOutputVoltage()/shooterStage1Left.getBusVoltage());
+			SmartDashboard.putNumber("Shooter Stage 1 Output Voltage", shooterStage1Left.getOutputVoltage());
+			SmartDashboard.putNumber("Shooter Stage 1 Actual RPM", shooterStage1Left.getSpeed());
+			SmartDashboard.putNumber("Shooter Stage 1 Plot RPM", shooterStage1Left.getSpeed());
+			SmartDashboard.putNumber("Shooter Stage 1 Amps Left", shooterStage1Left.getOutputCurrent());
+			SmartDashboard.putNumber("Shooter Stage 1 Amps Right", shooterStage1Left.getOutputCurrent());
+	
+			if (operationMode == Robot.OperationMode.TEST) {
+				SmartDashboard.putBoolean("Shooter On", isShooterOn());
+			}
+		}
+		catch (Exception e) {
+			
+		}
 	}
 }
 

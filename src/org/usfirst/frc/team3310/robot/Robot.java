@@ -51,8 +51,8 @@ public class Robot extends IterativeRobot {
 	public static final GearIntake gearIntake = new GearIntake();
 	public static final MagicCarpet magicCarpet = new MagicCarpet();
 	public static final Climber climber = new Climber();
-	public static final Camera camera = new Camera();
 	public static final LedLights ledLights = new LedLights();
+	public static final Camera camera = new Camera();
 	
 	public static final ControlLooper controlLoop = new ControlLooper("Main control loop", 10);
 	public static final PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -76,11 +76,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = OI.getInstance();
+		camera.initialize();
 		
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(640, 480);
-		camera.setExposureAuto();
-
     	controlLoop.addLoopable(drive);
     	controlLoop.addLoopable(ballIntake);
  

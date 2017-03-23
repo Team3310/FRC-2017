@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
+import org.usfirst.frc.team3310.robot.subsystems.Camera.ImageOutput;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,7 +14,7 @@ public class CameraUpdateBestTarget extends Command
 
 	@Override
 	protected void initialize() {
-		Robot.camera.getBestTarget();
+		Robot.camera.getBestTarget(ImageOutput.DASHBOARD);
 	}
 
 	protected void execute() {

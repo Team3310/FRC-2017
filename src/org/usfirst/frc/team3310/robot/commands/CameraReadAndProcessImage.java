@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
+import org.usfirst.frc.team3310.robot.subsystems.Camera.ImageOutput;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,7 +13,7 @@ public class CameraReadAndProcessImage extends Command
 
 	@Override
 	protected void initialize() {
-		Robot.camera.readImagePostProcessedImageToDashboard();
+		Robot.camera.readImageGetBestTarget(ImageOutput.DASHBOARD);
 	}
 
 	@Override
