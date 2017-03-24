@@ -20,6 +20,7 @@ import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.ControlLooper;
+import org.usfirst.frc.team3310.utility.MotionProfileCache;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.cscore.UsbCamera;
@@ -54,7 +55,8 @@ public class Robot extends IterativeRobot {
 	public static final LedLights ledLights = new LedLights();
 	public static final Camera camera = new Camera();
 	
-	public static final ControlLooper controlLoop = new ControlLooper("Main control loop", 10);
+	public static final long periodMS = 10;
+	public static final ControlLooper controlLoop = new ControlLooper("Main control loop", periodMS);
 	public static final PowerDistributionPanel pdp = new PowerDistributionPanel();
 
 	public static double shooterStage2RpmDashboard = 2950;
@@ -102,7 +104,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter Stage 1 Target RPM", shooterStage1RpmDashboard);
 		SmartDashboard.putNumber("Shooter Target RPM", shooterBothRpmDashboard);
 		SmartDashboard.putNumber("Shooter Target VBus", shooterBothVBusDashboard);
-
+		
 		ledLights.setAllLightsOn(false);
     }
 	
@@ -155,6 +157,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        MotionProfileCache.getInstance().release();
     	updateChoosers();
         controlLoop.start();
     	drive.endGyroCalibration();

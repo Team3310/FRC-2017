@@ -69,6 +69,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	private double climbSpeed;
 	
 	private boolean isRed = true;
+	
+	private double periodMs;
 
 	// Pneumatics
 	private Solenoid speedShift;
@@ -242,8 +244,12 @@ public class Drive extends Subsystem implements ControlLoopable
 	}
 	
 	public void setRelativeTurnMP(double relativeTurnAngleDeg, double turnRateDegPerSec, MPSoftwareTurnType turnType) {
-		double gyroDeg = getGyroAngleDeg();
-		mpTurnController.setMPTurnTarget(gyroDeg, relativeTurnAngleDeg + gyroDeg, turnRateDegPerSec, MP_TURN_T1, MP_TURN_T2, turnType, TRACK_WIDTH_INCHES);
+		mpTurnController.setMPTurnTarget(getGyroAngleDeg(), relativeTurnAngleDeg + getGyroAngleDeg(), turnRateDegPerSec, MP_TURN_T1, MP_TURN_T2, turnType, TRACK_WIDTH_INCHES);
+		setControlMode(DriveControlMode.MP_TURN);
+	}
+	
+	public void setRelativeTurnMPCached(String key, MPSoftwareTurnType turnType) {
+		mpTurnController.setMPTurnTarget(key, turnType, TRACK_WIDTH_INCHES);
 		setControlMode(DriveControlMode.MP_TURN);
 	}
 	
@@ -254,6 +260,11 @@ public class Drive extends Subsystem implements ControlLoopable
 	
 	public void setAbsoluteTurnMP(double absoluteTurnAngleDeg, double turnRateDegPerSec, MPSoftwareTurnType turnType) {
 		mpTurnController.setMPTurnTarget(getGyroAngleDeg(), BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), absoluteTurnAngleDeg), turnRateDegPerSec, MP_TURN_T1, MP_TURN_T2, turnType, TRACK_WIDTH_INCHES);
+		setControlMode(DriveControlMode.MP_TURN);
+	}
+	
+	public void setAbsoluteTurnMPCached(String key, MPSoftwareTurnType turnType) {
+		mpTurnController.setMPTurnTarget(key, turnType, TRACK_WIDTH_INCHES);
 		setControlMode(DriveControlMode.MP_TURN);
 	}
 	
@@ -515,6 +526,11 @@ public class Drive extends Subsystem implements ControlLoopable
 		mpStraightController = new MPTalonPIDController(periodMs, mpStraightPIDParams, motorControllers);
 		mpTurnController = new MPSoftwarePIDController(periodMs, mpTurnPIDParams, motorControllers);
 		pidTurnController = new SoftwarePIDController(pidTurnPIDParams, motorControllers);
+		this.periodMs = periodMs;
+	}
+	
+	public double getPeriodMs() {
+		return periodMs;
 	}
 	
 	public boolean isRed() {

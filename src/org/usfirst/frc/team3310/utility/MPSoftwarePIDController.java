@@ -48,6 +48,23 @@ public class MPSoftwarePIDController
 		totalError = 0.0;
 	}
 	
+	public void setMPTurnTarget(String key, MPSoftwareTurnType turnType, double trackWidth) {
+		this.turnType = turnType;
+		this.useGyroLock = true;
+		
+		// Set up the motion profile 
+		mp = MotionProfileCache.getInstance().getMP(key);
+		this.startGyroAngle = mp.getStartDistance();
+		this.targetGyroAngle = mp.getTargetDistance();
+		
+		for (CANTalonEncoder motorController : motorControllers) {
+			motorController.changeControlMode(TalonControlMode.PercentVbus);
+		}
+		
+		prevError = 0.0;
+		totalError = 0.0;
+	}
+	
 	public boolean controlLoopUpdate() {
 		return controlLoopUpdate(0);
 	}
