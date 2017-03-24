@@ -1,12 +1,13 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
-import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Camera.ImageOutput;
+import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Drive.DriveControlMode;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 import org.usfirst.frc.team3310.vision.ImageProcessor.TargetInfo;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CameraTurnToBestTarget extends Command
@@ -21,7 +22,7 @@ public class CameraTurnToBestTarget extends Command
 	@Override
 	protected void initialize() {
 		TargetInfo bestTarget = Robot.camera.getBestTarget(ImageOutput.DASHBOARD);
-		if (bestTarget != null && bestTarget.angleToTargetDeg > 0.5) {
+		if (bestTarget != null) {
 			if(bestTarget.angleToTargetDeg > 15) {
 				Robot.drive.setRelativeTurnMP(bestTarget.angleToTargetDeg, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK);			
 			}
@@ -32,6 +33,7 @@ public class CameraTurnToBestTarget extends Command
 		}
 		else {
 			targetFound = false;
+			DriverStation.reportError("Null target", false);
 		}
 	}
 

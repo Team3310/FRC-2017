@@ -15,8 +15,8 @@ public class PathfinderTest {
         Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, 0.01, 120, 200.0, 700.0);
         Waypoint[] points = new Waypoint[] {
                 new Waypoint(0, 0, 0),
-                new Waypoint(48, 12, Pathfinder.d2r(20)),
-                new Waypoint(96, 24, 0),
+                new Waypoint(72, 10, Pathfinder.d2r(15)),
+                new Waypoint(144, 36, Pathfinder.d2r(30)),
         };
 
         Trajectory trajectory = Pathfinder.generate(points, config);
