@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BallIntakeRollerSetSpeed extends Command {
+public class ZarkerFeedSetSpeed extends Command {
 
-	private double rollerSpeed;
+	private double speed;
 	
 	// Constructor with speed
-    public BallIntakeRollerSetSpeed(double rollerSpeed) {
-    	this.rollerSpeed = rollerSpeed;
-         requires(Robot.ballIntake);
+    public ZarkerFeedSetSpeed(double speed) {
+    	this.speed = speed;
+        requires(Robot.zarkerFeed);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.ballIntake.setRollerSpeed(rollerSpeed);
+    	Robot.zarkerFeed.setSpeed(speed);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -1,5 +1,11 @@
-package org.usfirst.frc.team3310.robot.commands;
+package org.usfirst.frc.team3310.robot.commands.auton;
 
+import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
+import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
+import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
+import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
+import org.usfirst.frc.team3310.robot.commands.ShootOnDelay;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetRpm;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;

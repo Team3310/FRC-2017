@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
     
 	public static enum ShotState { CLOSE, FAR };
+	public static enum HopperState { OPEN, CLOSE };
 	public static final int ENCODER_TICKS_PER_REV = 1024;
 
 	public static final double SHOOTER_STAGE1_RPM_FAR = 2865;
@@ -34,6 +35,7 @@ public class Shooter extends Subsystem {
 	private CANTalon shooterStage1Right;
 
 	private Solenoid shotPosition;
+	private Solenoid hopperPosition;
 	
 	public Shooter() {
 		try {
@@ -99,6 +101,7 @@ public class Shooter extends Subsystem {
 			shooterStage1Right.reverseOutput(true);
 
 			shotPosition = new Solenoid(RobotMap.SHOOTER_SHOT_POSITION_PCM_ID);
+			hopperPosition = new Solenoid(RobotMap.HOPPER_POSITION_PCM_ID);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the ShooterSubsystem constructor");
@@ -136,6 +139,15 @@ public class Shooter extends Subsystem {
 			shotPosition.set(true);
 		}
 		else if(state == ShotState.CLOSE) {
+			shotPosition.set(false);
+		}
+	}
+	
+	public void setHopperPosition(HopperState state) {
+		if(state == HopperState.OPEN) {
+			shotPosition.set(true);
+		}
+		else if(state == HopperState.CLOSE) {
 			shotPosition.set(false);
 		}
 	}

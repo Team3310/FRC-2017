@@ -1,30 +1,27 @@
 
 package org.usfirst.frc.team3310.robot;
 
-import org.usfirst.frc.team3310.robot.commands.BlueBoilerShooterFromHopper;
-import org.usfirst.frc.team3310.robot.commands.BlueGearBoilerSideAuton;
-import org.usfirst.frc.team3310.robot.commands.BlueGearCenterAuton;
-import org.usfirst.frc.team3310.robot.commands.BlueGearLoadingSideAuton;
-import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopper;
-import org.usfirst.frc.team3310.robot.commands.BoilerShooterFromHopperBarker;
-import org.usfirst.frc.team3310.robot.commands.GearBoilerSideAuton;
-import org.usfirst.frc.team3310.robot.commands.GearCenterAuton;
-import org.usfirst.frc.team3310.robot.commands.GearLoadingSideAuton;
-import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopper;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopper;
+import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
+import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.GearLoadingSideAuton;
+import org.usfirst.frc.team3310.robot.subsystems.ZarkerFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.LedLights;
-import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 import org.usfirst.frc.team3310.utility.MotionProfileCache;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -48,9 +45,8 @@ public class Robot extends IterativeRobot {
 	public static final Drive drive = new Drive();
 	public static final Shooter shooter = new Shooter();
 	public static final ShooterFeed shooterFeed = new ShooterFeed();
-	public static final BallIntake ballIntake = new BallIntake();
 	public static final GearIntake gearIntake = new GearIntake();
-	public static final MagicCarpet magicCarpet = new MagicCarpet();
+	public static final ZarkerFeed zarkerFeed = new ZarkerFeed();
 	public static final Climber climber = new Climber();
 	public static final LedLights ledLights = new LedLights();
 	public static final Camera camera = new Camera();
@@ -81,8 +77,7 @@ public class Robot extends IterativeRobot {
 		camera.initialize();
 		
     	controlLoop.addLoopable(drive);
-    	controlLoop.addLoopable(ballIntake);
- 
+  
 	    operationModeChooser = new SendableChooser<OperationMode>();
 	    operationModeChooser.addDefault("Test", OperationMode.TEST);
 	    operationModeChooser.addObject("Competition", OperationMode.COMPETITION);
@@ -136,7 +131,6 @@ public class Robot extends IterativeRobot {
     	
         // Schedule the autonomous command (example)
     	controlLoop.start();
-    	ballIntake.setZeroLiftPosition(0.0);
     	drive.endGyroCalibration();
     	drive.resetGyro();
     	drive.setIsRed(getAlliance().equals(Alliance.Red));
@@ -191,11 +185,10 @@ public class Robot extends IterativeRobot {
     
     public void updateStatus() {
     	drive.updateStatus(operationMode);
-    	ballIntake.updateStatus(operationMode);
     	gearIntake.updateStatus(operationMode);
     	shooter.updateStatus(operationMode);
     	shooterFeed.updateStatus(operationMode);
-    	magicCarpet.updateStatus(operationMode);
+    	zarkerFeed.updateStatus(operationMode);
     	climber.updateStatus(operationMode);
     	camera.updateStatus(operationMode);
    }
