@@ -6,10 +6,6 @@ import org.usfirst.frc.team3310.buttons.XBoxTriggerButton;
 import org.usfirst.frc.team3310.controller.IHandController;
 import org.usfirst.frc.team3310.controller.LogitechController;
 import org.usfirst.frc.team3310.controller.XboxController;
-import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftResetZero;
-import org.usfirst.frc.team3310.robot.commands.BallIntakeLiftSpeed;
-import org.usfirst.frc.team3310.robot.commands.BallIntakeManualRelease;
-import org.usfirst.frc.team3310.robot.commands.BallIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.CameraIncrementOffset;
 import org.usfirst.frc.team3310.robot.commands.CameraReadAndProcessImage;
 import org.usfirst.frc.team3310.robot.commands.CameraReadImageTurnToBestTarget;
@@ -25,13 +21,10 @@ import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
-import org.usfirst.frc.team3310.robot.commands.GearIntakeSetPosition;
-import org.usfirst.frc.team3310.robot.commands.IntakeBalls;
-import org.usfirst.frc.team3310.robot.commands.IntakeBallsOff;
+import org.usfirst.frc.team3310.robot.commands.GearIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 import org.usfirst.frc.team3310.robot.commands.LEDLightsSet;
-import org.usfirst.frc.team3310.robot.commands.MagicCarpetSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShootOff;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOff;
@@ -45,9 +38,10 @@ import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetSpeed;
-import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
+import org.usfirst.frc.team3310.robot.commands.ZarkerFeedSetSpeed;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
+import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
@@ -89,17 +83,7 @@ public class OI {
 	        JoystickButton shortShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RT_BUTTON);
 	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
 	        shortShot.whenReleased(new ShootOff());
-	        
-	        JoystickButton ballIntake = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.LT_BUTTON);
-	        ballIntake.whenPressed(new IntakeBalls());
-	        ballIntake.whenReleased(new IntakeBallsOff());
-	        
-	        JoystickButton ballIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.Y_BUTTON);
-	        ballIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
-	        
-	        JoystickButton ballIntakeRetract = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.A_BUTTON);
-	        ballIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
-	        
+	        	        
 	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.X_BUTTON);
 	        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
 	        
@@ -133,16 +117,6 @@ public class OI {
 	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
 	        shortShot.whenReleased(new ShootOff());
 	        
-	        XBoxTriggerButton ballIntake = new XBoxTriggerButton(m_driverXbox, XBoxTriggerButton.LEFT_TRIGGER);
-	        ballIntake.whenPressed(new IntakeBalls());
-	        ballIntake.whenReleased(new IntakeBallsOff());
-	        
-	        JoystickButton ballIntakeDeploy = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.Y_BUTTON);
-	        ballIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
-	        
-	        JoystickButton ballIntakeRetract = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.A_BUTTON);
-	        ballIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
-	        
 	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.X_BUTTON);
 	        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
 	        
@@ -171,37 +145,17 @@ public class OI {
         XBoxTriggerButton shortShotOperator = new XBoxTriggerButton(m_operatorXbox, XBoxTriggerButton.RIGHT_TRIGGER);
         shortShotOperator.whenPressed(new ShootOn(ShotState.CLOSE));
         shortShotOperator.whenReleased(new ShootOff());
-        
-        XBoxTriggerButton ballIntakeOperator = new XBoxTriggerButton(m_operatorXbox, XBoxTriggerButton.LEFT_TRIGGER);
-        ballIntakeOperator.whenPressed(new IntakeBalls());
-        ballIntakeOperator.whenReleased(new IntakeBallsOff());
-        
-        JoystickButton ballIntakeEjectOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.LEFT_BUMPER_BUTTON);
-        ballIntakeEjectOperator.whenPressed(new BallIntakeRollerSetSpeed(BallIntake.BALL_INTAKE_EJECT_SPEED));
-        ballIntakeEjectOperator.whenReleased(new BallIntakeRollerSetSpeed(0.0));
-        
-        JoystickButton ballIntakeDeployOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.Y_BUTTON);
-        ballIntakeDeployOperator.whenPressed(new IntakeSetPosition(IntakePosition.BALL_INTAKE));
-        
-        JoystickButton ballIntakeRetractOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.A_BUTTON);
-        ballIntakeRetractOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
+                
+        JoystickButton gearIntakeEjectOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.LEFT_BUMPER_BUTTON);
+        gearIntakeEjectOperator.whenPressed(new GearIntakeRollerSetSpeed(GearIntake.GEAR_INTAKE_EJECT_SPEED));
+        gearIntakeEjectOperator.whenReleased(new GearIntakeRollerSetSpeed(0.0));
         
         JoystickButton gearIntakeDeployOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.X_BUTTON);
         gearIntakeDeployOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
         
         JoystickButton gearIntakePresentOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.B_BUTTON);
         gearIntakePresentOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
-        
-        XBoxDPadTriggerButton incrementBallIntakeZeroPositive = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.LEFT);
-        incrementBallIntakeZeroPositive.whenPressed(new BallIntakeManualRelease());
-//       incrementBallIntakeZeroPositive.whenPressed(new BallIntakeIncrementOffset(0.5));
-        
-        XBoxDPadTriggerButton incrementBallIntakeZeroNegative = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.RIGHT);
-        incrementBallIntakeZeroNegative.whenPressed(new BallIntakeLiftSpeed(-0.4));
-        incrementBallIntakeZeroNegative.whenReleased(new BallIntakeLiftSpeed(0.0));
-//        incrementBallIntakeZeroNegative.whenPressed(new BallIntakeManualStart());
-//      incrementBallIntakeZeroNegative.whenPressed(new BallIntakeIncrementOffset(-0.5));
-        
+                
         XBoxDPadTriggerButton climberForwardOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.UP);
         climberForwardOperator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, 0.0));
         climberForwardOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
@@ -231,11 +185,11 @@ public class OI {
 		SmartDashboard.putData("Turn Absolute 90", turnAbsoluteMP);
 
 		Button magicCarpetOn05 = new InternalButton();
-		magicCarpetOn05.whenPressed(new MagicCarpetSetSpeed(0.5));
+		magicCarpetOn05.whenPressed(new ZarkerFeedSetSpeed(0.5));
 		SmartDashboard.putData("Magic Carpet 0.5", magicCarpetOn05);
 
 		Button magicCarpetOff = new InternalButton();
-		magicCarpetOff.whenPressed(new MagicCarpetSetSpeed(0.0));
+		magicCarpetOff.whenPressed(new ZarkerFeedSetSpeed(0.0));
 		SmartDashboard.putData("Magic Carpet Off", magicCarpetOff);
 
 		Button shooterFeedOn10 = new InternalButton();
@@ -311,46 +265,24 @@ public class OI {
 		SmartDashboard.putData("Shooter All On", allButLiftOn);
 
 		Button intakeOn10 = new InternalButton();
-		intakeOn10.whenPressed(new BallIntakeRollerSetSpeed(1.0));
+		intakeOn10.whenPressed(new GearIntakeRollerSetSpeed(1.0));
 		SmartDashboard.putData("Intake 1.0", intakeOn10);
 
 		Button intakeOn08 = new InternalButton();
-		intakeOn08.whenPressed(new BallIntakeRollerSetSpeed(0.8));
+		intakeOn08.whenPressed(new GearIntakeRollerSetSpeed(0.8));
 		SmartDashboard.putData("Intake 0.8", intakeOn08);
 
 		Button intakeOn05 = new InternalButton();
-		intakeOn05.whenPressed(new BallIntakeRollerSetSpeed(0.5));
+		intakeOn05.whenPressed(new GearIntakeRollerSetSpeed(0.5));
 		SmartDashboard.putData("Intake 0.5", intakeOn05);
 
 		Button intakeOn04 = new InternalButton();
-		intakeOn04.whenPressed(new BallIntakeRollerSetSpeed(0.4));
+		intakeOn04.whenPressed(new GearIntakeRollerSetSpeed(0.4));
 		SmartDashboard.putData("Intake 0.4", intakeOn04);
 
 		Button intakeOff = new InternalButton();
-		intakeOff.whenPressed(new BallIntakeRollerSetSpeed(0.0));
+		intakeOff.whenPressed(new GearIntakeRollerSetSpeed(0.0));
 		SmartDashboard.putData("Intake Off", intakeOff);
-
-		Button ballLiftPositive = new InternalButton();
-		ballLiftPositive.whenPressed(new BallIntakeLiftSpeed(0.2));
-		ballLiftPositive.whenReleased(new BallIntakeLiftSpeed(0.0));
-		SmartDashboard.putData("Ball Lift Positive", ballLiftPositive);
-
-		Button ballLiftNegative = new InternalButton();
-		ballLiftNegative.whenPressed(new BallIntakeLiftSpeed(-0.2));
-		ballLiftNegative.whenReleased(new BallIntakeLiftSpeed(0.0));
-		SmartDashboard.putData("Ball Lift Negative", ballLiftNegative);
-
-		Button ballLiftZero = new InternalButton();
-		ballLiftZero.whenPressed(new BallIntakeLiftResetZero(0.0));
-		SmartDashboard.putData("Ball Lift Reset Zero 1", ballLiftZero);
-
-		Button gearLiftPositive = new InternalButton();
-		gearLiftPositive.whenPressed(new GearIntakeSetPosition(IntakePosition.RETRACT));
-		SmartDashboard.putData("Gear Lift Up", gearLiftPositive);
-
-		Button gearLiftNegative = new InternalButton();
-		gearLiftNegative.whenPressed(new GearIntakeSetPosition(IntakePosition.GEAR_INTAKE));
-		SmartDashboard.putData("Gear Lift Down", gearLiftNegative);
 
 		Button shooterShotPositionClose = new InternalButton();
 		shooterShotPositionClose.whenPressed(new ShooterSetShotPosition(Shooter.ShotState.CLOSE));

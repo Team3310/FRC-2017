@@ -5,9 +5,12 @@ import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,14 +20,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class GearIntake extends Subsystem {
     
 	public static enum GearPositionState { UP, DOWN };
+	public static final double GEAR_INTAKE_LOAD_SPEED = 0.4;
+	public static final double GEAR_INTAKE_EJECT_SPEED = -0.4;
+	public static final double GEAR_INTAKE_DEPLOY_SPEED = -0.3;
 		
 	private IntakePosition position;
-	private DoubleSolenoid gearPosition;
+	private DoubleSolenoid gearInnerPosition;
+	private Solenoid gearOuterPosition;
 	private DigitalInput gearSensor;
+
+	private CANTalon rollerMotor;
 
 	public GearIntake() {
 		try {
-			gearPosition = new DoubleSolenoid(RobotMap.GEAR_POSITION_1_PCM_ID,RobotMap.GEAR_POSITION_2_PCM_ID);			
+			rollerMotor = new CANTalon(RobotMap.GEAR_INTAKE_ROLLER_MOTOR_CAN_ID);
+			gearInnerPosition = new DoubleSolenoid(RobotMap.GEAR_INNER_POSITION_1_PCM_ID,RobotMap.GEAR_INNER_POSITION_2_PCM_ID);			
+			gearOuterPosition = new Solenoid(RobotMap.GEAR_OUTER_POSITION_PCM_ID);			
 			
 			gearSensor = new DigitalInput(RobotMap.GEAR_SENSOR_DIO_ID);
 		} 
@@ -33,44 +44,62 @@ public class GearIntake extends Subsystem {
 		}
 	}
 	
+	public void setRollerSpeed(double speed) {
+		rollerMotor.set(speed);
+		Robot.ledLights.setIntakeRollerOn(Math.abs(speed) > 0.01);
+	}
+	
 	public boolean isGearPresent() {
 		return gearSensor.get();
 	}
 	
 	public void setLiftPosition(IntakePosition position) {
-		GearPositionState gearPosition = GearPositionState.UP;
+		GearPositionState gearInnerPosition = GearPositionState.UP;
+		GearPositionState gearOuterPosition = GearPositionState.UP;
 		this.position = position;
-		if (position == IntakePosition.BALL_INTAKE) {
-			gearPosition = GearPositionState.DOWN;
-		}
-		else if (position == IntakePosition.GEAR_INTAKE) {
-			gearPosition = GearPositionState.DOWN;
+		if (position == IntakePosition.GEAR_INTAKE) {
+			gearInnerPosition = GearPositionState.DOWN;
+			gearOuterPosition = GearPositionState.DOWN;
 		}
 		else if (position == IntakePosition.GEAR_PRESENT) {
-			gearPosition = GearPositionState.UP;
+			gearInnerPosition = GearPositionState.DOWN;
+			gearOuterPosition = GearPositionState.UP;
 		}
 		else if (position == IntakePosition.GEAR_DEPLOY) {
-			gearPosition = GearPositionState.DOWN;
+			gearInnerPosition = GearPositionState.DOWN;
+			gearOuterPosition = GearPositionState.DOWN;
 		}
 		else if (position == IntakePosition.RETRACT) {
-			gearPosition = GearPositionState.UP;
+			gearInnerPosition = GearPositionState.UP;
+			gearOuterPosition = GearPositionState.UP;
 		}
 		else if (position == IntakePosition.SHOOT) {
-			gearPosition = GearPositionState.UP;
+			gearInnerPosition = GearPositionState.DOWN;
+			gearOuterPosition = GearPositionState.UP;
 		}
-		setGearPosition(gearPosition);
+		setGearInnerPosition(gearInnerPosition);
+		setGearOuterPosition(gearOuterPosition);
 	}
 	
 	public IntakePosition getIntakePosition() {
 		return position;
 	}
 		
-	public void setGearPosition(GearPositionState state) {
+	public void setGearInnerPosition(GearPositionState state) {
 		if(state == GearPositionState.UP) {
-			gearPosition.set(Value.kReverse);
+			gearInnerPosition.set(Value.kReverse);
 		}
 		else if(state == GearPositionState.DOWN) {
-			gearPosition.set(Value.kForward);
+			gearInnerPosition.set(Value.kForward);
+		}
+	}
+
+	public void setGearOuterPosition(GearPositionState state) {
+		if(state == GearPositionState.UP) {
+			gearOuterPosition.set(false);
+		}
+		else if(state == GearPositionState.DOWN) {
+			gearOuterPosition.set(true);
 		}
 	}
 

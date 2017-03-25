@@ -11,7 +11,7 @@ public class ShooterAllOff extends CommandGroup {
         addSequential(new ShooterStage2SetSpeed(0.0));
         addSequential(new ShooterStage1SetSpeed(0.0));
         addSequential(new ShooterFeedSetSpeed(0.0));
-        addSequential(new MagicCarpetSetSpeed(0.0));
+        addSequential(new ZarkerFeedSetSpeed(0.0));
 
     }
 }

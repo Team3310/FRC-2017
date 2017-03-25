@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3310.robot.commands;
 
-import org.usfirst.frc.team3310.robot.subsystems.BallIntake;
-import org.usfirst.frc.team3310.robot.subsystems.MagicCarpet;
+import org.usfirst.frc.team3310.robot.subsystems.ZarkerFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
@@ -21,8 +20,7 @@ public class ShootOn extends CommandGroup {
     		addSequential(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR));
     	}
     	addSequential(new ShooterSetShotPosition(shotState));
-    	addSequential(new MagicCarpetSetSpeed(MagicCarpet.MAGIC_CARPET_BALL_SHOOT_SPEED));
+    	addSequential(new ZarkerFeedSetSpeed(ZarkerFeed.ZARKER_FEED_SHOOT_SPEED));
         addSequential(new ShooterFeedSetSpeed(ShooterFeed.SHOOTER_FEED_SHOOT_SPEED));
-//        addSequential(new BallIntakeRollerSetSpeed(BallIntake.BALL_INTAKE_LOAD_SPEED));
     }
 }

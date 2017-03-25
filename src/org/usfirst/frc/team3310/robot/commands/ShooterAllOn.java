@@ -11,7 +11,7 @@ public class ShooterAllOn extends CommandGroup {
         addSequential(new ShooterStage2SetRpmDashboard());
         addSequential(new ShooterStage1SetRpmDashboard());
         addSequential(new ShooterFeedSetSpeed(1.0));
-        addSequential(new MagicCarpetSetSpeed(1.0));
+        addSequential(new ZarkerFeedSetSpeed(1.0));
 
     }
 }

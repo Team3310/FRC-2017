@@ -1,17 +1,22 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
+import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BallIntakeManualStart extends Command
-{	
-	public BallIntakeManualStart() {
+public class ShooterSetHopperPosition extends Command
+{
+	private HopperState state;
+	
+	public ShooterSetHopperPosition(HopperState state) {
+		requires(Robot.shooter);
+		this.state = state;
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.ballIntake.setManualJoyStickMode();
+		Robot.shooter.setHopperPosition(state);
 	}
 
 	@Override
