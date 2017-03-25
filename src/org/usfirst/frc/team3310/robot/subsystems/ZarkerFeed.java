@@ -36,8 +36,8 @@ public class ZarkerFeed extends Subsystem {
 	}
 	
 	public void setSpeed(double speed) {
-		rollerLeft.set(speed);
-		rollerRight.set(-speed);
+		rollerLeft.set(-speed);
+		rollerRight.set(speed);
 	}
 	
     public void initDefaultCommand() {

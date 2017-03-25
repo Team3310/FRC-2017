@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = OI.getInstance();
-		camera.initialize();
+//		camera.initialize();
 		
     	controlLoop.addLoopable(drive);
   

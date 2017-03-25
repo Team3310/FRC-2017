@@ -38,6 +38,7 @@ public class Camera extends Subsystem
     
     public void initialize() {
 		try {
+			/*
 			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 1);
 			boilerCamera.setResolution(640, 480);
 			boilerCamera.setExposureManual(0);
@@ -57,7 +58,8 @@ public class Camera extends Subsystem
 			// Mats are very memory expensive. Lets reuse this Mat.
 			currentImageMat = new Mat();
 			
-	    	imageProcessor = new ImageProcessor();
+	    	imageProcessor = new ImageProcessor(); 
+	    	*/
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the Camera constructor");

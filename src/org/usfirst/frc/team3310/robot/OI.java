@@ -117,6 +117,13 @@ public class OI {
 	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
 	        shortShot.whenReleased(new ShootOff());
 	        
+	        XBoxTriggerButton intakeGearDriver = new XBoxTriggerButton(m_driverXbox, XBoxTriggerButton.LEFT_TRIGGER);
+	        intakeGearDriver.whenPressed(new GearIntakeRollerSetSpeed(GearIntake.GEAR_INTAKE_LOAD_SPEED));
+	        intakeGearDriver.whenReleased(new GearIntakeRollerSetSpeed(0.0));
+	                
+	        JoystickButton gearIntakeRetract = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.A_BUTTON);
+	        gearIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+	        
 	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.X_BUTTON);
 	        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
 	        
@@ -146,9 +153,16 @@ public class OI {
         shortShotOperator.whenPressed(new ShootOn(ShotState.CLOSE));
         shortShotOperator.whenReleased(new ShootOff());
                 
+        XBoxTriggerButton intakeGearOperator = new XBoxTriggerButton(m_operatorXbox, XBoxTriggerButton.LEFT_TRIGGER);
+        intakeGearOperator.whenPressed(new GearIntakeRollerSetSpeed(GearIntake.GEAR_INTAKE_LOAD_SPEED));
+        intakeGearOperator.whenReleased(new GearIntakeRollerSetSpeed(0.0));
+                
         JoystickButton gearIntakeEjectOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.LEFT_BUMPER_BUTTON);
         gearIntakeEjectOperator.whenPressed(new GearIntakeRollerSetSpeed(GearIntake.GEAR_INTAKE_EJECT_SPEED));
         gearIntakeEjectOperator.whenReleased(new GearIntakeRollerSetSpeed(0.0));
+        
+        JoystickButton gearIntakeRetractOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.A_BUTTON);
+        gearIntakeRetractOperator.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
         
         JoystickButton gearIntakeDeployOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.X_BUTTON);
         gearIntakeDeployOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));

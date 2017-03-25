@@ -32,8 +32,7 @@ public class RobotMap {
 	// Pneumatics
 	public static final int DRIVETRAIN_SPEEDSHIFT_PCM_ID = 2;
 	public static final int SHOOTER_SHOT_POSITION_PCM_ID = 3;
-	public static final int GEAR_INNER_POSITION_1_PCM_ID = 0;
-	public static final int GEAR_INNER_POSITION_2_PCM_ID = 1;
+	public static final int GEAR_INNER_POSITION_PCM_ID = 1;
 	public static final int GEAR_OUTER_POSITION_PCM_ID = 4;
 	public static final int HOPPER_POSITION_PCM_ID = 5;
 	

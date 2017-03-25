@@ -16,14 +16,11 @@ public class MotionProfileCache {
 	public String addMP(double startDistance, double targetDistance, double maxVelocity, double itp, double t1, double t2) {
 		String key = generateKey(startDistance, targetDistance, maxVelocity, itp, t1, t2);
 		
-		// For now don't share profiles because all the points are not pre-calculated
-		while (!cache.containsKey(key)) {
-			key += "1";
+		if (!cache.containsKey(key)) {
+			MotionProfileBoxCar mp = new MotionProfileBoxCar(startDistance, targetDistance, maxVelocity, itp, t1, t2);
+			this.addMP(key, mp);
 		}
 		
-		MotionProfileBoxCar mp = new MotionProfileBoxCar(startDistance, targetDistance, maxVelocity, itp, t1, t2);
-		this.addMP(key, mp);
-
 		return key;
 	}
 	

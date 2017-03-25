@@ -25,7 +25,7 @@ public class GearIntake extends Subsystem {
 	public static final double GEAR_INTAKE_DEPLOY_SPEED = -0.3;
 		
 	private IntakePosition position;
-	private DoubleSolenoid gearInnerPosition;
+	private Solenoid gearInnerPosition;
 	private Solenoid gearOuterPosition;
 	private DigitalInput gearSensor;
 
@@ -34,7 +34,7 @@ public class GearIntake extends Subsystem {
 	public GearIntake() {
 		try {
 			rollerMotor = new CANTalon(RobotMap.GEAR_INTAKE_ROLLER_MOTOR_CAN_ID);
-			gearInnerPosition = new DoubleSolenoid(RobotMap.GEAR_INNER_POSITION_1_PCM_ID,RobotMap.GEAR_INNER_POSITION_2_PCM_ID);			
+			gearInnerPosition = new Solenoid(RobotMap.GEAR_INNER_POSITION_PCM_ID);			
 			gearOuterPosition = new Solenoid(RobotMap.GEAR_OUTER_POSITION_PCM_ID);			
 			
 			gearSensor = new DigitalInput(RobotMap.GEAR_SENSOR_DIO_ID);
@@ -45,7 +45,7 @@ public class GearIntake extends Subsystem {
 	}
 	
 	public void setRollerSpeed(double speed) {
-		rollerMotor.set(speed);
+		rollerMotor.set(-speed);
 		Robot.ledLights.setIntakeRollerOn(Math.abs(speed) > 0.01);
 	}
 	
@@ -62,8 +62,8 @@ public class GearIntake extends Subsystem {
 			gearOuterPosition = GearPositionState.DOWN;
 		}
 		else if (position == IntakePosition.GEAR_PRESENT) {
-			gearInnerPosition = GearPositionState.DOWN;
-			gearOuterPosition = GearPositionState.UP;
+			gearInnerPosition = GearPositionState.UP;
+			gearOuterPosition = GearPositionState.DOWN;
 		}
 		else if (position == IntakePosition.GEAR_DEPLOY) {
 			gearInnerPosition = GearPositionState.DOWN;
@@ -74,8 +74,8 @@ public class GearIntake extends Subsystem {
 			gearOuterPosition = GearPositionState.UP;
 		}
 		else if (position == IntakePosition.SHOOT) {
-			gearInnerPosition = GearPositionState.DOWN;
-			gearOuterPosition = GearPositionState.UP;
+			gearInnerPosition = GearPositionState.UP;
+			gearOuterPosition = GearPositionState.DOWN;
 		}
 		setGearInnerPosition(gearInnerPosition);
 		setGearOuterPosition(gearOuterPosition);
@@ -87,10 +87,10 @@ public class GearIntake extends Subsystem {
 		
 	public void setGearInnerPosition(GearPositionState state) {
 		if(state == GearPositionState.UP) {
-			gearInnerPosition.set(Value.kReverse);
+			gearInnerPosition.set(false);
 		}
 		else if(state == GearPositionState.DOWN) {
-			gearInnerPosition.set(Value.kForward);
+			gearInnerPosition.set(true);
 		}
 	}
 
