@@ -6,15 +6,15 @@ import org.usfirst.frc.team3310.robot.OI;
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
 import org.usfirst.frc.team3310.utility.BHRMathUtils;
-import org.usfirst.frc.team3310.utility.BHR_ADSXRS453_Gyro;
 import org.usfirst.frc.team3310.utility.CANTalonEncoder;
 import org.usfirst.frc.team3310.utility.ControlLoopable;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 import org.usfirst.frc.team3310.utility.MPTalonPIDController;
-import org.usfirst.frc.team3310.utility.MotionProfileBoxCar;
+import org.usfirst.frc.team3310.utility.MPTalonPIDPathController;
 import org.usfirst.frc.team3310.utility.MotionProfilePoint;
 import org.usfirst.frc.team3310.utility.PIDParams;
+import org.usfirst.frc.team3310.utility.PathGenerator;
 import org.usfirst.frc.team3310.utility.SoftwarePIDController;
 
 import com.ctre.CANTalon;
@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements ControlLoopable
 {
-	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB };
+	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH };
 	public static enum SpeedShiftState { HI, LO };
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
@@ -113,13 +113,15 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpHoldPIDParams = new PIDParams(1, 0, 0, 0.0, 0.0, 0.0); 
 
 	private MPSoftwarePIDController mpTurnController; // p    i   d     a      v      g    izone
-//	private PIDParams mpTurnPIDParams = new PIDParams(0.09, 0.01, 0, 0.00025, 0.005, 0.0, 5); 
 //	private PIDParams mpTurnPIDParams = new PIDParams(0.07, 0.00002, 0.5, 0.00025, 0.008, 0.0, 100);  // 4 colson wheels
 	private PIDParams mpTurnPIDParams = new PIDParams(0.03, 0.00002, 0.4, 0.0004, 0.0030, 0.0, 100);  // 4 omni
 	
 	private SoftwarePIDController pidTurnController;
 	private PIDParams pidTurnPIDParams = new PIDParams(0.04, 0.0008, 0.4, 0, 0, 0.0, 100);
 	private double targetPIDAngle;
+
+	private MPTalonPIDPathController mpPathController;
+	private PIDParams mpPathPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
 
 	private PigeonImu gyroPigeon;
 	private double[] yprPigeon = new double[3];
@@ -274,6 +276,12 @@ public class Drive extends Subsystem implements ControlLoopable
 		setControlMode(DriveControlMode.PID_TURN);
 	}
 	
+	public void setPathMP(PathGenerator path) {
+		mpPathController.setPID(mpPathPIDParams);
+		mpPathController.setMPPathTarget(path); 
+		setControlMode(DriveControlMode.MP_PATH);
+	}
+	
 	public void setDriveHold(boolean status) {
 		if (status) {
 			setControlMode(DriveControlMode.HOLD);
@@ -322,6 +330,9 @@ public class Drive extends Subsystem implements ControlLoopable
 			}
 			else if (controlMode == DriveControlMode.PID_TURN) {
 				isFinished = pidTurnController.controlLoopUpdate(getGyroAngleDeg()); 
+			}
+			else if (controlMode == DriveControlMode.MP_PATH) {
+				isFinished = mpPathController.controlLoopUpdate(getGyroAngleDeg()); 
 			}
 		}
 	}
@@ -526,6 +537,7 @@ public class Drive extends Subsystem implements ControlLoopable
 		mpStraightController = new MPTalonPIDController(periodMs, mpStraightPIDParams, motorControllers);
 		mpTurnController = new MPSoftwarePIDController(periodMs, mpTurnPIDParams, motorControllers);
 		pidTurnController = new SoftwarePIDController(pidTurnPIDParams, motorControllers);
+		mpPathController = new MPTalonPIDPathController(periodMs, mpPathPIDParams, motorControllers);
 		this.periodMs = periodMs;
 	}
 	
