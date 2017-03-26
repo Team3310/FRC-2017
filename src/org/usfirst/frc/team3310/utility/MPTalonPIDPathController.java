@@ -36,6 +36,7 @@ public class MPTalonPIDPathController
 	
 	public void setMPPathTarget(PathGenerator path) {
 		this.path = path;
+		path.resetCounter();
 		
 		// Set up the motion profile 
 		for (CANTalonEncoder motorController : motorControllers) {

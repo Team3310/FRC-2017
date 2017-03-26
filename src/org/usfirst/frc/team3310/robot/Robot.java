@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = OI.getInstance();
-//		camera.initialize();
+		camera.initialize();
 		
     	controlLoop.addLoopable(drive);
   
@@ -132,6 +132,7 @@ public class Robot extends IterativeRobot {
         // Schedule the autonomous command (example)
     	controlLoop.start();
     	drive.endGyroCalibration();
+    	drive.resetEncoders();
     	drive.resetGyro();
     	drive.setIsRed(getAlliance().equals(Alliance.Red));
         if (autonomousCommand != null) autonomousCommand.start();
@@ -154,6 +155,7 @@ public class Robot extends IterativeRobot {
         MotionProfileCache.getInstance().release();
     	updateChoosers();
         controlLoop.start();
+    	drive.resetEncoders();
     	drive.endGyroCalibration();
         updateStatus();
     }

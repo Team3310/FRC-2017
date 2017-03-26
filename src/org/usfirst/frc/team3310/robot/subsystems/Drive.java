@@ -43,7 +43,9 @@ public class Drive extends Subsystem implements ControlLoopable
 	// Motion profile max velocities and accel times
 	public static final double MAX_TURN_RATE_DEG_PER_SEC = 320;
 	public static final double MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC =  120;  //72;
+	public static final double MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC =  200;  //72;
 	public static final double MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC =  270;
+	public static final double MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC =  400;
 	public static final double MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC = 25;
 	
 	public static final double MP_STRAIGHT_T1 = 600;
@@ -121,7 +123,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	private double targetPIDAngle;
 
 	private MPTalonPIDPathController mpPathController;
-	private PIDParams mpPathPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
+	private PIDParams mpPathPIDParams = new PIDParams(0.6, 0, 0, 0.005, 0.03, 0.3);  // 4 omni
 
 	private PigeonImu gyroPigeon;
 	private double[] yprPigeon = new double[3];
@@ -215,6 +217,10 @@ public class Drive extends Subsystem implements ControlLoopable
 			
 	public void resetGyro() {
 		gyroPigeon.SetYaw(0);
+	}
+	
+	public void resetEncoders() {
+		mpStraightController.resetZeroPosition();
 	}
 	
 	public void calibrateGyro() {

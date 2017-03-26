@@ -48,7 +48,7 @@ public class Shooter extends Subsystem {
 			shooterStage2Left.enableBrakeMode(false);
 			shooterStage2Left.setProfile(0);
 			shooterStage2Left.setF(0.0345);
-			shooterStage2Left.setP(0.0); //0.12 alone
+			shooterStage2Left.setP(0.06); //0.12 alone
 			shooterStage2Left.setI(0.0001); // 0.0001 alone
 			shooterStage2Left.setIZone(2000);
 			shooterStage2Left.setD(0);
@@ -56,6 +56,7 @@ public class Shooter extends Subsystem {
 //			shooterStage2Left.configNominalOutputVoltage(0.0,0.0);
 //			shooterStage2Left.configPeakOutputVoltage(12.0, 0);
 //			shooterStage2Left.setStatusFrameRateMs(CANTalon.StatusFrameRate.Feedback, 10);
+//	        shooterStage2Left.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
 //			FeedbackDeviceStatus status = shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
 //			DriverStation.reportWarning("Status=" + status.toString(), false);
 //			if (shooterStage2Left.isSensorPresent(CANTalon.FeedbackDevice.CtreMagEncoder_Relative) != CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) {
@@ -80,7 +81,7 @@ public class Shooter extends Subsystem {
 			shooterStage1Left.enableBrakeMode(false);
 			shooterStage1Left.setProfile(0);
 			shooterStage1Left.setF(0.035);
-			shooterStage1Left.setP(0.0); // 0.08 alone
+			shooterStage1Left.setP(0.02); // 0.08 alone
 			shooterStage1Left.setI(0.0001); //0.0001 alone
 			shooterStage1Left.setIZone(2000);
 			shooterStage1Left.setD(0);
@@ -145,10 +146,10 @@ public class Shooter extends Subsystem {
 	
 	public void setHopperPosition(HopperState state) {
 		if(state == HopperState.OPEN) {
-			shotPosition.set(true);
+			hopperPosition.set(true);
 		}
 		else if(state == HopperState.CLOSE) {
-			shotPosition.set(false);
+			hopperPosition.set(false);
 		}
 	}
 	

@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class GearIntake extends Subsystem {
     
 	public static enum GearPositionState { UP, DOWN };
-	public static final double GEAR_INTAKE_LOAD_SPEED = 0.4;
-	public static final double GEAR_INTAKE_EJECT_SPEED = -0.4;
+	public static final double GEAR_INTAKE_LOAD_SPEED = 0.8;//0.4;
+	public static final double GEAR_INTAKE_EJECT_SPEED = -0.8;//-0.4;
 	public static final double GEAR_INTAKE_DEPLOY_SPEED = -0.3;
 		
 	private IntakePosition position;

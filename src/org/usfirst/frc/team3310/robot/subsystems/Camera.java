@@ -38,17 +38,17 @@ public class Camera extends Subsystem
     
     public void initialize() {
 		try {
-			/*
-			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 1);
+			
+			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 0);
 			boilerCamera.setResolution(640, 480);
 			boilerCamera.setExposureManual(0);
-			boilerCamera.setBrightness(50);
+			boilerCamera.setBrightness(30);
 
 			Thread.sleep(1000);
 			
-			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
-			frontCamera.setResolution(640, 480);
-			frontCamera.setExposureAuto();
+//			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
+//			frontCamera.setResolution(640, 480);
+//			frontCamera.setExposureAuto();
 
 			// Get a CvSink. This will capture Mats from the camera
 			cvSink = CameraServer.getInstance().getVideo(boilerCamera);
@@ -59,7 +59,7 @@ public class Camera extends Subsystem
 			currentImageMat = new Mat();
 			
 	    	imageProcessor = new ImageProcessor(); 
-	    	*/
+	    
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the Camera constructor");

@@ -17,6 +17,7 @@ import org.usfirst.frc.team3310.robot.commands.ClimberSetMaxAmps;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
+import org.usfirst.frc.team3310.robot.commands.DrivePathMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
@@ -30,6 +31,8 @@ import org.usfirst.frc.team3310.robot.commands.ShootOn;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOff;
 import org.usfirst.frc.team3310.robot.commands.ShooterAllOn;
 import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetHopperPosition;
+import org.usfirst.frc.team3310.robot.commands.ShooterSetHopperShake;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetRpmDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetSpeedDashboard;
@@ -43,13 +46,17 @@ import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
+import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
+import org.usfirst.frc.team3310.utility.PathGenerator;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Waypoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -99,7 +106,7 @@ public class OI {
 	        climberReverse.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 	        
 	        JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
-	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
+	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR)); 
 		}
 		
 		else if (controllerType == ControllerType.XBOX) {
@@ -122,7 +129,7 @@ public class OI {
 	        intakeGearDriver.whenReleased(new GearIntakeRollerSetSpeed(0.0));
 	                
 	        JoystickButton gearIntakeRetract = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.A_BUTTON);
-	        gearIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+	        gearIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
 	        
 	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.X_BUTTON);
 	        gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
@@ -179,9 +186,17 @@ public class OI {
         climberReverseOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         JoystickButton toggleShooterOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.START_BUTTON);
-        toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
+        toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR)); 
 		
         // SmartDashboard
+		Button deployHopperPosition = new InternalButton();
+		deployHopperPosition.whenPressed(new ShooterSetHopperPosition(HopperState.OPEN));
+		SmartDashboard.putData("Hopper Open", deployHopperPosition);
+
+		Button retractHopperPosition = new InternalButton();
+		retractHopperPosition.whenPressed(new ShooterSetHopperPosition(HopperState.CLOSE));
+		SmartDashboard.putData("Hopper Closed", retractHopperPosition);
+		
 		Button driveMP = new InternalButton();
 		driveMP.whenPressed(new DriveStraightMP(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
 		SmartDashboard.putData("Drive Straight", driveMP);
@@ -278,6 +293,10 @@ public class OI {
 		allButLiftOn.whenPressed(new ShooterAllOn());
 		SmartDashboard.putData("Shooter All On", allButLiftOn);
 
+		Button hopperShake = new InternalButton();
+		hopperShake.whenPressed(new ShooterSetHopperShake(2, 10, 1));
+		SmartDashboard.putData("Hopper Shake Button", hopperShake);
+
 		Button intakeOn10 = new InternalButton();
 		intakeOn10.whenPressed(new GearIntakeRollerSetSpeed(1.0));
 		SmartDashboard.putData("Intake 1.0", intakeOn10);
@@ -314,11 +333,22 @@ public class OI {
 		Button climberSetMaxAmps = new InternalButton();
 		climberSetMaxAmps.whenPressed(new ClimberSetMaxAmps(0.8, 20));
 		SmartDashboard.putData("Climber Max Amps", climberSetMaxAmps);
-
+		
 		Button gyroReset = new InternalButton();
 		gyroReset.whenPressed(new DriveGyroReset());
 		SmartDashboard.putData("Gyro Reset", gyroReset);
+
+        Waypoint[] points = new Waypoint[] {
+                new Waypoint(0, 0, 0),
+                new Waypoint(75, 16, Pathfinder.d2r(32))
+        };
+
+        PathGenerator path = new PathGenerator(points, 0.01, 120, 200.0, 700.0);		
 		
+		Button pathTest = new InternalButton();
+		pathTest.whenPressed(new DrivePathMP(path));
+		SmartDashboard.putData("Path Test", pathTest);
+
 		// Camera
 		Button cameraUpdateDashboard = new InternalButton();
 		cameraUpdateDashboard.whenPressed(new CameraUpdateDashboard());
@@ -359,6 +389,14 @@ public class OI {
 		Button ledsOff = new InternalButton();
 		ledsOff.whenPressed(new LEDLightsSet(false));
 		SmartDashboard.putData("LEDs Off", ledsOff);
+		
+        Button intakeGearRoller = new InternalButton();
+        intakeGearRoller.whenPressed(new GearIntakeRollerSetSpeed(0.3));
+		SmartDashboard.putData("Gear Intake Clean Speed", intakeGearRoller);
+
+        Button intakeGearStopRoller = new InternalButton();
+        intakeGearStopRoller.whenPressed(new GearIntakeRollerSetSpeed(0.0));
+		SmartDashboard.putData("Gear Intake Clean Off Speed", intakeGearStopRoller);
 	}
 	
 	public static OI getInstance() {
