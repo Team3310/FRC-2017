@@ -1,12 +1,13 @@
 package org.usfirst.frc.team3310.utility;
 
-import java.util.ArrayList;
-
 import jaci.pathfinder.Trajectory.Segment;
 
 public class TankModifier2 {
 	
-	public ArrayList<Segment[]> modify(Segment[] original, double wheelbase_width) {
+	private Segment[] left_traj;
+    private Segment[] right_traj;
+	
+	public void modify(Segment[] original, double wheelbase_width) {
 	    double w = wheelbase_width / 2;
 	    
 	    Segment[] left_traj = new Segment[original.length];
@@ -54,12 +55,14 @@ public class TankModifier2 {
 	        
 	        left_traj[i] = left;
 	        right_traj[i] = right;
-	    }
-	    
-	    ArrayList<Segment[]> output = new ArrayList<Segment[]>();
-	    output.add(left_traj);
-	    output.add(right_traj);
-	    
-	    return output; 
+	    }	    
+	}
+	
+	public Segment[] getLeftSegments() {
+		return left_traj;
+	}
+	
+	public Segment[] getRightSegments() {
+		return right_traj;
 	}
 }

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3310.utility;
 
 import java.awt.Color;
-import java.io.File;
 
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 
@@ -19,12 +18,43 @@ public class PathGenerator {
 	private int curIndex = 0;
 	
 	public PathGenerator(Waypoint[] points, double timeStep, double maxVelocity, double maxAccel, double maxJerk) {
+
+		boolean negativeFlag = false;
+		for (int i = 0; i < points.length; i++) {
+        	if (points[i].x < 0) {
+        		negativeFlag = true;
+        	}
+        }
+		if (negativeFlag == true) {
+			for (int i = 0; i < points.length; i++) {
+	        	points[i].x = -(points[i].x);
+	        }
+		}
+		
         Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, timeStep, maxVelocity, maxAccel, maxJerk);
         Trajectory trajectory = Pathfinder.generate(points, config);
-        TankModifier modifier = new TankModifier(trajectory).modify( Drive.TRACK_WIDTH_INCHES);
         centerPoints = trajectory.segments;
+        
+//        TankModifier2 modifier2 = new TankModifier2();
+//        modifier2.modify(centerPoints, Drive.TRACK_WIDTH_INCHES);
+//        leftPoints = modifier2.getLeftSegments();
+//        rightPoints = modifier2.getRightSegments();
+
+		if (negativeFlag == true) {
+			for (int i = 0; i < centerPoints.length; i++) {
+				Segment curSeg = centerPoints[i];
+				curSeg.x = -(curSeg.x);
+				curSeg.jerk = -(curSeg.jerk);
+				curSeg.acceleration = -(curSeg.acceleration);
+				curSeg.velocity = -(curSeg.velocity);
+				curSeg.position = -(curSeg.position);
+				curSeg.heading = -(curSeg.heading);
+			}
+		}
+		
+        TankModifier modifier = new TankModifier(trajectory).modify(Drive.TRACK_WIDTH_INCHES);
         leftPoints = modifier.getLeftTrajectory().segments;
-        rightPoints = modifier.getRightTrajectory().segments;
+        rightPoints = modifier.getRightTrajectory().segments; 
 	}
 	
 	public Segment getLeftPoint() {
@@ -35,8 +65,22 @@ public class PathGenerator {
 		return (curIndex < rightPoints.length) ? rightPoints[curIndex] : null;
 	}
 	
+	public Segment getCenterPoint() {
+		return (curIndex < centerPoints.length) ? centerPoints[curIndex] : null;
+	}
+	
 	public Double getHeading() {
-		return (curIndex < centerPoints.length) ? centerPoints[curIndex].heading : null;
+		if (curIndex < centerPoints.length) {
+			double heading = Math.toDegrees(centerPoints[curIndex].heading);
+			if (heading > 180) {
+				heading -= 360;
+			}
+			else if (heading < -180) {
+				heading += 360;
+			}
+			return heading;
+		}
+		return null;
 	}
 	
 	public void incrementCounter() {
@@ -62,7 +106,7 @@ public class PathGenerator {
     public static void main(String[] args) {
         Waypoint[] points = new Waypoint[] {
                 new Waypoint(0, 0, 0),
-                new Waypoint(75, 16, Pathfinder.d2r(32))
+                new Waypoint(-75, 16, Pathfinder.d2r(32))
         };
 
         PathGenerator path = new PathGenerator(points, 0.01, 120, 200.0, 700.0);
@@ -86,26 +130,26 @@ public class PathGenerator {
         double[] rightAccel = new double[rightSegments.length];
         double[] rightVelocity = new double[rightSegments.length];
         double[] rightPosition = new double[rightSegments.length];
+        
+        path.resetCounter();
         for (int i = 0; i < centerSegments.length; i++) {
-        	heading[i] = Math.toDegrees(centerSegments[i].heading);
-        	if (heading[i] > 180) {
-        		heading[i] -= 360;
-        	}
-        	centerX[i] = centerSegments[i].x;
-        	centerY[i] = centerSegments[i].y;
-        	centerAccel[i] = centerSegments[i].acceleration;
-        	centerVelocity[i] = centerSegments[i].velocity;
-        	centerPosition[i] = centerSegments[i].position;
-        	leftX[i] = leftSegments[i].x;
-        	leftY[i] = leftSegments[i].y;
-        	leftAccel[i] = leftSegments[i].acceleration;
-        	leftVelocity[i] = leftSegments[i].velocity;
-        	leftPosition[i] = leftSegments[i].position;
-        	rightX[i] = rightSegments[i].x;
-        	rightY[i] = rightSegments[i].y;
-        	rightAccel[i] = rightSegments[i].acceleration;
-        	rightVelocity[i] = rightSegments[i].velocity;
-        	rightPosition[i] = rightSegments[i].position;
+        	heading[i] = path.getHeading();
+        	centerX[i] = path.getCenterPoint().x;
+        	centerY[i] = path.getCenterPoint().y;
+        	centerAccel[i] = path.getCenterPoint().acceleration;
+        	centerVelocity[i] = path.getCenterPoint().velocity;
+        	centerPosition[i] = path.getCenterPoint().position;
+        	leftX[i] = path.getLeftPoint().x;
+        	leftY[i] = path.getLeftPoint().y;
+        	leftAccel[i] = path.getLeftPoint().acceleration;
+        	leftVelocity[i] = path.getLeftPoint().velocity;
+        	leftPosition[i] = path.getLeftPoint().position;
+        	rightX[i] = path.getRightPoint().x;
+        	rightY[i] = path.getRightPoint().y;
+        	rightAccel[i] = path.getRightPoint().acceleration;
+        	rightVelocity[i] = path.getRightPoint().velocity;
+        	rightPosition[i] = path.getRightPoint().position;
+        	path.incrementCounter();
         }
         
 		FalconLinePlot fig4 = new FalconLinePlot(centerX);
