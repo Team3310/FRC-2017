@@ -9,6 +9,7 @@ import org.usfirst.frc.team3310.robot.commands.ShooterSetRpm;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
+import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 
@@ -33,7 +34,7 @@ public class BoilerShooterFromHopper extends CommandGroup {
         addSequential(new WaitCommand(1.9));
         addSequential(new DriveStraightMP(-10, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -90));
         addParallel(new DriveAbsoluteTurnMP(-18, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
-        addSequential(new ShootOnDelay(ShotState.FAR));
+        addSequential(new ShootOnDelay(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED));
 
     }
 }

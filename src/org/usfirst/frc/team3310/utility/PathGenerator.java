@@ -33,17 +33,33 @@ public class PathGenerator {
 		
         Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, timeStep, maxVelocity, maxAccel, maxJerk);
         Trajectory trajectory = Pathfinder.generate(points, config);
-        centerPoints = trajectory.segments;
-        
-//        TankModifier2 modifier2 = new TankModifier2();
-//        modifier2.modify(centerPoints, Drive.TRACK_WIDTH_INCHES);
-//        leftPoints = modifier2.getLeftSegments();
-//        rightPoints = modifier2.getRightSegments();
+        centerPoints = trajectory.segments;       
 
-		if (negativeFlag == true) {
+	    TankModifier modifier = new TankModifier(trajectory).modify(Drive.TRACK_WIDTH_INCHES);
+	    leftPoints = modifier.getLeftTrajectory().segments;
+	    rightPoints = modifier.getRightTrajectory().segments; 
+
+        if (negativeFlag == true) {
 			for (int i = 0; i < centerPoints.length; i++) {
 				Segment curSeg = centerPoints[i];
 				curSeg.x = -(curSeg.x);
+				curSeg.y = -(curSeg.y);
+				curSeg.jerk = -(curSeg.jerk);
+				curSeg.acceleration = -(curSeg.acceleration);
+				curSeg.velocity = -(curSeg.velocity);
+				curSeg.position = -(curSeg.position);
+				curSeg.heading = -(curSeg.heading);
+				curSeg = leftPoints[i];
+				curSeg.x = -(curSeg.x);
+				curSeg.y = -(curSeg.y);
+				curSeg.jerk = -(curSeg.jerk);
+				curSeg.acceleration = -(curSeg.acceleration);
+				curSeg.velocity = -(curSeg.velocity);
+				curSeg.position = -(curSeg.position);
+				curSeg.heading = -(curSeg.heading);
+				curSeg = rightPoints[i];
+				curSeg.x = -(curSeg.x);
+				curSeg.y = -(curSeg.y);
 				curSeg.jerk = -(curSeg.jerk);
 				curSeg.acceleration = -(curSeg.acceleration);
 				curSeg.velocity = -(curSeg.velocity);
@@ -52,9 +68,10 @@ public class PathGenerator {
 			}
 		}
 		
-        TankModifier modifier = new TankModifier(trajectory).modify(Drive.TRACK_WIDTH_INCHES);
-        leftPoints = modifier.getLeftTrajectory().segments;
-        rightPoints = modifier.getRightTrajectory().segments; 
+//      TankModifier2 modifier2 = new TankModifier2();
+//      modifier2.modify(centerPoints, Drive.TRACK_WIDTH_INCHES);
+//      leftPoints = modifier2.getLeftSegments();
+//      rightPoints = modifier2.getRightSegments();
 	}
 	
 	public Segment getLeftPoint() {
@@ -106,7 +123,7 @@ public class PathGenerator {
     public static void main(String[] args) {
         Waypoint[] points = new Waypoint[] {
                 new Waypoint(0, 0, 0),
-                new Waypoint(-75, 16, Pathfinder.d2r(32))
+                new Waypoint(78, 20, Pathfinder.d2r(32))
         };
 
         PathGenerator path = new PathGenerator(points, 0.01, 120, 200.0, 700.0);

@@ -22,12 +22,15 @@ public class Shooter extends Subsystem {
 	public static enum HopperState { OPEN, CLOSE };
 	public static final int ENCODER_TICKS_PER_REV = 1024;
 
-	public static final double SHOOTER_STAGE1_RPM_FAR = 2865;
-	public static final double SHOOTER_STAGE2_RPM_FAR = 2865;
+	public static final double SHOOTER_STAGE1_RPM_FAR = 2875;
+	public static final double SHOOTER_STAGE2_RPM_FAR = 2875;
 	public static final double SHOOTER_STAGE1_RPM_CLOSE = 2680;
 	public static final double SHOOTER_STAGE2_RPM_CLOSE = 2680;
 	public static final double SHOOTER_STAGE1_OFF = 0.0;
 	public static final double SHOOTER_STAGE2_OFF = 0.0;
+
+	public static final double AUTON_VOLTAGE_RAMP_RATE = 6.0;
+	public static final double SHOOT_VOLTAGE_RAMP_RATE = 1000.0;
 	
 	private CANTalon shooterStage2Left;
 	private CANTalon shooterStage2Right;
@@ -151,6 +154,11 @@ public class Shooter extends Subsystem {
 		else if(state == HopperState.CLOSE) {
 			hopperPosition.set(false);
 		}
+	}
+	
+	public void setVoltageRampRate(double rampRate) {
+		shooterStage1Left.setVoltageRampRate(rampRate);
+		shooterStage2Left.setVoltageRampRate(rampRate);
 	}
 	
 	public ShotState getShotPosition() {

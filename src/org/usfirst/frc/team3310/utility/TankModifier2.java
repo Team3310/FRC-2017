@@ -10,8 +10,8 @@ public class TankModifier2 {
 	public void modify(Segment[] original, double wheelbase_width) {
 	    double w = wheelbase_width / 2;
 	    
-	    Segment[] left_traj = new Segment[original.length];
-	    Segment[] right_traj = new Segment[original.length];
+	    left_traj = new Segment[original.length];
+	    right_traj = new Segment[original.length];
 	    
 	    for (int i = 0; i < original.length; i++) {
 	        Segment seg = original[i];

@@ -46,6 +46,7 @@ import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
+import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
@@ -84,11 +85,11 @@ public class OI {
 	        shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
 	        
 	        JoystickButton longShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RB_BUTTON);
-	        longShot.whenPressed(new ShootOn(ShotState.FAR));
+	        longShot.whenPressed(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED));
 	        longShot.whenReleased(new ShootOff());
 	        
 	        JoystickButton shortShot = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.RT_BUTTON);
-	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
+	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE, ShooterFeed.SHOOTER_FEED_SHOOT_CLOSE_SPEED));
 	        shortShot.whenReleased(new ShootOff());
 	        	        
 	        JoystickButton gearIntakeDeploy = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.X_BUTTON);
@@ -106,7 +107,7 @@ public class OI {
 	        climberReverse.whenReleased(new ClimberSetSpeed(0.0, 0.0));
 	        
 	        JoystickButton toggleShooter = new JoystickButton(m_driverLogitech.getJoyStick(), LogitechController.START_BUTTON);
-	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR)); 
+	        toggleShooter.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 		}
 		
 		else if (controllerType == ControllerType.XBOX) {
@@ -117,11 +118,11 @@ public class OI {
 	        shiftDrivetrain.whenReleased(new DriveSpeedShift(Drive.SpeedShiftState.LO));
 	        
 	        JoystickButton longShot = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.RIGHT_BUMPER_BUTTON);
-	        longShot.whenPressed(new ShootOn(ShotState.FAR));
+	        longShot.whenPressed(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED));
 	        longShot.whenReleased(new ShootOff());
 	        
 	        XBoxTriggerButton shortShot = new XBoxTriggerButton(m_driverXbox, XBoxTriggerButton.RIGHT_TRIGGER);
-	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE));
+	        shortShot.whenPressed(new ShootOn(ShotState.CLOSE, ShooterFeed.SHOOTER_FEED_SHOOT_CLOSE_SPEED));
 	        shortShot.whenReleased(new ShootOff());
 	        
 	        XBoxTriggerButton intakeGearDriver = new XBoxTriggerButton(m_driverXbox, XBoxTriggerButton.LEFT_TRIGGER);
@@ -153,11 +154,11 @@ public class OI {
 		m_operatorXbox = new XboxController(RobotMap.OPERATOR_JOYSTICK_1_USB_ID);
 
         JoystickButton longShotOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.RIGHT_BUMPER_BUTTON);
-        longShotOperator.whenPressed(new ShootOn(ShotState.FAR));
+        longShotOperator.whenPressed(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED));
         longShotOperator.whenReleased(new ShootOff());
         
         XBoxTriggerButton shortShotOperator = new XBoxTriggerButton(m_operatorXbox, XBoxTriggerButton.RIGHT_TRIGGER);
-        shortShotOperator.whenPressed(new ShootOn(ShotState.CLOSE));
+        shortShotOperator.whenPressed(new ShootOn(ShotState.CLOSE, ShooterFeed.SHOOTER_FEED_SHOOT_CLOSE_SPEED));
         shortShotOperator.whenReleased(new ShootOff());
                 
         XBoxTriggerButton intakeGearOperator = new XBoxTriggerButton(m_operatorXbox, XBoxTriggerButton.LEFT_TRIGGER);
@@ -186,7 +187,7 @@ public class OI {
         climberReverseOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         JoystickButton toggleShooterOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.START_BUTTON);
-        toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR)); 
+        toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 		
         // SmartDashboard
 		Button deployHopperPosition = new InternalButton();
@@ -340,10 +341,10 @@ public class OI {
 
         Waypoint[] points = new Waypoint[] {
                 new Waypoint(0, 0, 0),
-                new Waypoint(75, 16, Pathfinder.d2r(32))
+                new Waypoint(-90, -8, Pathfinder.d2r(-27))
         };
 
-        PathGenerator path = new PathGenerator(points, 0.01, 120, 200.0, 700.0);		
+        PathGenerator path = new PathGenerator(points, 0.01, 160, 200.0, 700.0);		
 		
 		Button pathTest = new InternalButton();
 		pathTest.whenPressed(new DrivePathMP(path));

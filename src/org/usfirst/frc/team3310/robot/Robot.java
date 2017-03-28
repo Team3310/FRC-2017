@@ -7,10 +7,11 @@ import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopper;
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
+import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarkerPath;
 import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAutonFarShot;
 import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.GearLoadingSideAuton;
-import org.usfirst.frc.team3310.robot.subsystems.ZarkerFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
@@ -18,8 +19,10 @@ import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.LedLights;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
+import org.usfirst.frc.team3310.robot.subsystems.ZarkerFeed;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 import org.usfirst.frc.team3310.utility.MotionProfileCache;
+import org.usfirst.frc.team3310.utility.PathGenerator;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -29,6 +32,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Waypoint;
 
 
 /**
@@ -83,6 +88,13 @@ public class Robot extends IterativeRobot {
 	    operationModeChooser.addObject("Competition", OperationMode.COMPETITION);
 		SmartDashboard.putData("Operation Mode", operationModeChooser);
 		
+        Waypoint[] points = new Waypoint[] {
+                new Waypoint(0, 0, 0),
+                new Waypoint(-95, -9, Pathfinder.d2r(-27))
+        };
+
+        PathGenerator boilerPath = new PathGenerator(points, 0.01, 120, 200.0, 700.0);		
+		
 		autonTaskChooser = new SendableChooser<Command>();
 		autonTaskChooser.addObject("Red Gear Loading Side", new GearLoadingSideAuton());
 		autonTaskChooser.addObject("Blue Gear Loading Side", new BlueGearLoadingSideAuton());
@@ -91,7 +103,9 @@ public class Robot extends IterativeRobot {
 		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
 		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
 		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker", new BoilerShooterFromHopperBarker());
+		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker Path", new BoilerShooterFromHopperBarkerPath(boilerPath));
 		autonTaskChooser.addDefault("Red Gear Boiler Side", new GearBoilerSideAuton());
+		autonTaskChooser.addDefault("Red Gear Boiler Side Far Shot", new GearBoilerSideAutonFarShot());
 		autonTaskChooser.addObject("Blue Gear Boiler Side", new BlueGearBoilerSideAuton());
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 

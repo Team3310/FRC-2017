@@ -1,14 +1,10 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Shooter Stage 2 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+	<widget field="Shooter Stage 2 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="1" y="383"/>
-		<width>1008</width>
-		<height>415</height>
 	</widget>
-	<widget field="Shooter Stage 1 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+	<widget field="Shooter Stage 1 Plot RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="-2" y="0"/>
-		<width>1012</width>
-		<height>391</height>
 	</widget>
 	<widget field="Hopper Shake Button" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="570" y="557"/>
@@ -80,7 +76,7 @@
 		<location x="317" y="411"/>
 	</widget>
 	<widget field="Auton Task" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="1344" y="52"/>
+		<location x="1350" y="28"/>
 	</widget>
 	<widget field="Camera Update" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="1177" y="461"/>

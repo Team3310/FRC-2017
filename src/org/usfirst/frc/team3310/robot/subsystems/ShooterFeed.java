@@ -16,7 +16,8 @@ public class ShooterFeed extends Subsystem {
     
 	private CANTalon roller;
 	
-	public static final double SHOOTER_FEED_SHOOT_SPEED = 0.6;
+	public static final double SHOOTER_FEED_SHOOT_FAR_SPEED = 0.7;
+	public static final double SHOOTER_FEED_SHOOT_CLOSE_SPEED = 0.6;
 	public static final double SHOOTER_FEED_BALL_INTAKE_SPEED = -0.5;
 	public static final double SHOOT_FEED_OFF_SPEED = 0.0;
 	

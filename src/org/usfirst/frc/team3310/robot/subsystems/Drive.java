@@ -47,6 +47,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static final double MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC =  270;
 	public static final double MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC =  400;
 	public static final double MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC = 25;
+	public static final double MP_GEAR_DEPLOY_FASTER_VELOCITY_INCHES_PER_SEC = 80;
 	
 	public static final double MP_STRAIGHT_T1 = 600;
 	public static final double MP_STRAIGHT_T2 = 300;
@@ -123,7 +124,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	private double targetPIDAngle;
 
 	private MPTalonPIDPathController mpPathController;
-	private PIDParams mpPathPIDParams = new PIDParams(0.6, 0, 0, 0.005, 0.03, 0.3);  // 4 omni
+	private PIDParams mpPathPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.28, 100);  // 4 omni   g=.3
 
 	private PigeonImu gyroPigeon;
 	private double[] yprPigeon = new double[3];
