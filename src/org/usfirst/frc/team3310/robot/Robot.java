@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopper;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideAuton;
@@ -83,36 +84,37 @@ public class Robot extends IterativeRobot {
 		
     	controlLoop.addLoopable(drive);
   
-	    operationModeChooser = new SendableChooser<OperationMode>();
+//		Waypoint[] points = new Waypoint[] {
+//                new Waypoint(0, 0, 0),
+//                new Waypoint(-95, -9, Pathfinder.d2r(-27))
+//        };
+//
+//        PathGenerator boilerPath = new PathGenerator(points, 0.01, 120, 200.0, 700.0);			
+
+        operationModeChooser = new SendableChooser<OperationMode>();
 	    operationModeChooser.addDefault("Test", OperationMode.TEST);
 	    operationModeChooser.addObject("Competition", OperationMode.COMPETITION);
 		SmartDashboard.putData("Operation Mode", operationModeChooser);
 		
-        Waypoint[] points = new Waypoint[] {
-                new Waypoint(0, 0, 0),
-                new Waypoint(-95, -9, Pathfinder.d2r(-27))
-        };
-
-        PathGenerator boilerPath = new PathGenerator(points, 0.01, 120, 200.0, 700.0);		
-		
 		autonTaskChooser = new SendableChooser<Command>();
-		autonTaskChooser.addObject("Red Gear Loading Side", new GearLoadingSideAuton());
-		autonTaskChooser.addObject("Blue Gear Loading Side", new BlueGearLoadingSideAuton());
+//		autonTaskChooser.addObject("Red Gear Loading Side", new GearLoadingSideAuton());
+//		autonTaskChooser.addObject("Blue Gear Loading Side", new BlueGearLoadingSideAuton());
 		autonTaskChooser.addObject("Red Gear Center", new GearCenterAuton());
 		autonTaskChooser.addObject("Blue Gear Center", new BlueGearCenterAuton());
-		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
-		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
-		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker", new BoilerShooterFromHopperBarker());
-		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker Path", new BoilerShooterFromHopperBarkerPath(boilerPath));
-		autonTaskChooser.addDefault("Red Gear Boiler Side", new GearBoilerSideAuton());
-		autonTaskChooser.addDefault("Red Gear Boiler Side Far Shot", new GearBoilerSideAutonFarShot());
+//		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
+//		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
+		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Barker", new BoilerShooterFromHopperBarker());
+		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper Barker", new BlueBoilerShooterFromHopperBarker());
+//		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker Path", new BoilerShooterFromHopperBarkerPath(boilerPath));
+		autonTaskChooser.addObject("Red Gear Boiler Side", new GearBoilerSideAuton());
+//		autonTaskChooser.addObject("Red Gear Boiler Side Far Shot", new GearBoilerSideAutonFarShot());
 		autonTaskChooser.addObject("Blue Gear Boiler Side", new BlueGearBoilerSideAuton());
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 
-		SmartDashboard.putNumber("Shooter Stage 2 Target RPM", shooterStage2RpmDashboard);
-		SmartDashboard.putNumber("Shooter Stage 1 Target RPM", shooterStage1RpmDashboard);
-		SmartDashboard.putNumber("Shooter Target RPM", shooterBothRpmDashboard);
-		SmartDashboard.putNumber("Shooter Target VBus", shooterBothVBusDashboard);
+//		SmartDashboard.putNumber("Shooter Stage 2 Target RPM", shooterStage2RpmDashboard);
+//		SmartDashboard.putNumber("Shooter Stage 1 Target RPM", shooterStage1RpmDashboard);
+//		SmartDashboard.putNumber("Shooter Target RPM", shooterBothRpmDashboard);
+//		SmartDashboard.putNumber("Shooter Target VBus", shooterBothVBusDashboard);
 		
 		ledLights.setAllLightsOn(false);
     }
