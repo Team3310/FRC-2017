@@ -2,6 +2,7 @@ package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
+import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,11 +17,12 @@ public class GearIntakeSetPosition extends Command
 
 	@Override
 	protected void initialize() {
-		if (position == IntakePosition.GEAR_PRESENT) {
-			setTimeout(0.3);
+		Robot.gearIntake.setLiftPosition(position);
+		if (position == IntakePosition.GEAR_INTAKE) {
+			Robot.gearIntake.setRollerSpeed(GearIntake.GEAR_INTAKE_LOAD_SPEED);
 		}
-		else {
-			Robot.gearIntake.setLiftPosition(position);
+		else if (position == IntakePosition.GEAR_PRESENT) {
+			Robot.gearIntake.setRollerSpeed(0.0);
 		}
 	}
 
@@ -31,15 +33,6 @@ public class GearIntakeSetPosition extends Command
 
 	@Override
 	protected boolean isFinished() {
-		if (position == IntakePosition.GEAR_PRESENT) {
-			if (isTimedOut()) {
-				Robot.gearIntake.setLiftPosition(position);
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
 		return true;
 	}
 

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3310.robot.commands.auton;
 
-import org.usfirst.frc.team3310.robot.commands.CameraTurnToBestTarget;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
@@ -12,9 +11,9 @@ import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetVoltageRampRate;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
-import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
+import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -36,8 +35,7 @@ public class BoilerShooterFromHopperBarker extends CommandGroup {
     	addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
      	addSequential(new WaitCommand(0.2));
-    	addSequential(new CameraTurnToBestTarget());
-        addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED));
+        addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, true));
      	addSequential(new WaitCommand(1.2));
         addSequential(new ShooterSetHopperShake(0, 10, 1));
     }

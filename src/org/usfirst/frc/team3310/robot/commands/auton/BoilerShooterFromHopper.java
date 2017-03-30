@@ -34,7 +34,7 @@ public class BoilerShooterFromHopper extends CommandGroup {
         addSequential(new WaitCommand(1.9));
         addSequential(new DriveStraightMP(-10, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -90));
         addParallel(new DriveAbsoluteTurnMP(-18, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
-        addSequential(new ShootOnDelay(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED));
+        addSequential(new ShootOnDelay(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, true));
 
     }
 }
