@@ -96,6 +96,9 @@ public class OI {
         JoystickButton gearIntakeDown = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.X_BUTTON);
         gearIntakeDown.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
         
+        JoystickButton gearIntakeRetract = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.Y_BUTTON);
+        gearIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+
         JoystickButton gearIntakePresent = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.B_BUTTON);
         gearIntakePresent.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         

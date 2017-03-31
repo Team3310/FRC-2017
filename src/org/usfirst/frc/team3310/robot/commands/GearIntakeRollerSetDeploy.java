@@ -49,6 +49,7 @@ public class GearIntakeRollerSetDeploy extends ExtraTimeoutCommand {
         
         if (isTimedOut() && secondTimerSet == false) {
         	startExtraTimeout(secondTimeout);
+        	secondTimerSet = true;
         	return false;
         }
         else if (isExtraTimedOut()) {
