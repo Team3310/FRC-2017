@@ -136,6 +136,9 @@ public class OI {
         gearIntakeDownOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
         gearIntakeDownOperator.whenReleased(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
+        JoystickButton gearIntakeRetractOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.Y_BUTTON);
+        gearIntakeRetractOperator.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
+
         JoystickButton gearIntakePresentOperator = new JoystickButton(m_operatorXbox.getJoyStick(), XboxController.B_BUTTON);
         gearIntakePresentOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
                 
@@ -160,8 +163,8 @@ public class OI {
         toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 		
         // Gear sensor switch 
-		GearSensorAnalogSwitch gearSwitch = new GearSensorAnalogSwitch();
-		gearSwitch.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+//		GearSensorAnalogSwitch gearSwitch = new GearSensorAnalogSwitch();
+//		gearSwitch.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
         // SmartDashboard
 		Button driveMP = new InternalButton();
