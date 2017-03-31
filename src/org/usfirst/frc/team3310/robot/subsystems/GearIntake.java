@@ -7,9 +7,7 @@ import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,7 +25,7 @@ public class GearIntake extends Subsystem {
 	private IntakePosition position;
 	private Solenoid gearInnerPosition;
 	private Solenoid gearOuterPosition;
-	private DigitalInput gearSensor;
+	private AnalogInput gearSensor;
 
 	private CANTalon rollerMotor;
 
@@ -37,7 +35,7 @@ public class GearIntake extends Subsystem {
 			gearInnerPosition = new Solenoid(RobotMap.GEAR_INNER_POSITION_PCM_ID);			
 			gearOuterPosition = new Solenoid(RobotMap.GEAR_OUTER_POSITION_PCM_ID);			
 			
-			gearSensor = new DigitalInput(RobotMap.GEAR_SENSOR_DIO_ID);
+			gearSensor = new AnalogInput(RobotMap.GEAR_SENSOR_ANALOG_ID);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the GearIntake constructor");
@@ -50,7 +48,7 @@ public class GearIntake extends Subsystem {
 	}
 	
 	public boolean isGearPresent() {
-		return gearSensor.get();
+		return gearSensor.getAverageVoltage() > 2.5;
 	}
 	
 	public void setLiftPosition(IntakePosition position) {
