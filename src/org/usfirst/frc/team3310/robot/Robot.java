@@ -21,6 +21,7 @@ import org.usfirst.frc.team3310.robot.subsystems.LedLights;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.robot.subsystems.ZarkerFeed;
+import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 import org.usfirst.frc.team3310.utility.MotionProfileCache;
 import org.usfirst.frc.team3310.utility.PathGenerator;
@@ -173,6 +174,11 @@ public class Robot extends IterativeRobot {
         controlLoop.start();
     	drive.resetEncoders();
     	drive.endGyroCalibration();
+    	shooter.setStage1Speed(0);
+    	shooter.setStage2Speed(0);
+    	shooterFeed.setSpeed(0);
+    	zarkerFeed.setSpeed(0);
+    	shooter.setHopperPosition(HopperState.CLOSE);
         updateStatus();
     }
 
