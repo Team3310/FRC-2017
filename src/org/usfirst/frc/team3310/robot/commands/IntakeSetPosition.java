@@ -11,7 +11,7 @@ public class IntakeSetPosition extends CommandGroup {
 	public static enum IntakePosition { RETRACT, BALL_INTAKE, GEAR_INTAKE, GEAR_PRESENT, GEAR_DEPLOY, SHOOT };
 
     public IntakeSetPosition(IntakePosition intakePosition) {
-    	addSequential(new GearIntakeRollerSetDeploy(1.0, 2.0, intakePosition));
+    	addParallel(new GearIntakeRollerSetDeploy(0.5, 0.0, intakePosition));
        	addSequential(new GearIntakeSetPosition(intakePosition));
      }
 }

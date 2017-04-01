@@ -32,6 +32,11 @@ public class GearIntakeRollerSetDeploy extends ExtraTimeoutCommand {
     		Robot.gearIntake.setRollerSpeed(GearIntake.GEAR_INTAKE_DEPLOY_SPEED);
     		isDeploy = true;
     	}
+    	else if (position == IntakePosition.GEAR_PRESENT) {
+        	this.setTimeout(timeout);
+    		Robot.gearIntake.setRollerSpeed(GearIntake.GEAR_INTAKE_LOAD_SPEED);
+    		isDeploy = true;
+    	}
     	else {
         	this.setTimeout(0);
     	}
@@ -47,15 +52,10 @@ public class GearIntakeRollerSetDeploy extends ExtraTimeoutCommand {
         	return true;
         }
         
-        if (isTimedOut() && secondTimerSet == false) {
-        	startExtraTimeout(secondTimeout);
-        	secondTimerSet = true;
-        	return false;
-        }
-        else if (isExtraTimedOut()) {
+        if (isTimedOut()) {
         	return true;
         }
-        
+         
         return false;
     }
 

@@ -95,7 +95,8 @@ public class OI {
                 
         JoystickButton gearIntakeDown = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.X_BUTTON);
         gearIntakeDown.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_INTAKE));
-        
+        gearIntakeDown.whenReleased(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+       
         JoystickButton gearIntakeRetract = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.Y_BUTTON);
         gearIntakeRetract.whenPressed(new IntakeSetPosition(IntakePosition.RETRACT));
 
@@ -110,7 +111,7 @@ public class OI {
         climberForward.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton climberReverse = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.DOWN);
-        climberReverse.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, -Drive.CLIMB_SPEED));
+        climberReverse.whenPressed(new ClimberSetSpeed(0.48, 0.0));
         climberReverse.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         JoystickButton toggleShooter = new JoystickButton(m_driverXbox.getJoyStick(), XboxController.START_BUTTON);
@@ -153,7 +154,7 @@ public class OI {
         climberForwardOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton climberReverseOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.DOWN);
-        climberReverseOperator.whenPressed(new ClimberSetSpeed(-0.5, 0.0));
+        climberReverseOperator.whenPressed(new ClimberSetSpeed(0.48, 0.0));
         climberReverseOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton hopperOpen = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.LEFT);
@@ -166,8 +167,8 @@ public class OI {
         toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 		
         // Gear sensor switch 
-//		GearSensorAnalogSwitch gearSwitch = new GearSensorAnalogSwitch();
-//		gearSwitch.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+		GearSensorAnalogSwitch gearSwitch = new GearSensorAnalogSwitch();
+		gearSwitch.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
         // SmartDashboard
 		Button driveMP = new InternalButton();

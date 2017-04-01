@@ -2,25 +2,22 @@ package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
-import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
+import org.usfirst.frc.team3310.robot.subsystems.GearIntake.GearPositionState;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearIntakeSetPosition extends Command
+public class GearIntakeSetInnerPosition extends Command
 {
-	private IntakePosition position;
+	private GearPositionState position;
 	
-	public GearIntakeSetPosition(IntakePosition position) {
+	public GearIntakeSetInnerPosition(GearPositionState position) {
 		requires(Robot.gearIntake);
 		this.position = position;
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.gearIntake.setLiftPosition(position);
-		if (position == IntakePosition.GEAR_INTAKE) {
-			Robot.gearIntake.setRollerSpeed(GearIntake.GEAR_INTAKE_LOAD_SPEED);
-		}
+		Robot.gearIntake.setGearInnerPosition(position);
 	}
 
 	@Override

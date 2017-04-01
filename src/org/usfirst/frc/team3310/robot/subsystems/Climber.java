@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Climber extends Subsystem {
     
-	public static final double CLIMB_SPEED = 0.8;
+	public static final double CLIMB_SPEED = 1.0;
 	
 	private CANTalon rollerLeft;
 	private CANTalon rollerRight;
