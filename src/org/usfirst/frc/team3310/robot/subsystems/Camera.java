@@ -43,6 +43,7 @@ public class Camera extends Subsystem
 			boilerCamera.setResolution(640, 480);
 			boilerCamera.setExposureManual(0);
 			boilerCamera.setBrightness(30);
+			boilerCamera.setFPS(10);
 
 			Thread.sleep(1000);
 			

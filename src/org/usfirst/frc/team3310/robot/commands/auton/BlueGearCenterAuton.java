@@ -22,7 +22,7 @@ public class BlueGearCenterAuton extends CommandGroup {
     
     public BlueGearCenterAuton() {
     	addSequential(new DriveGyroReset());
-        addSequential(new DriveStraightMPCached(-70, Drive.MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC, true, true,0));
+        addSequential(new DriveStraightMPCached(-74, Drive.MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC, true, true,0));
         addSequential(new ClimberSetSpeedTimer(0.3, 0.7));
         addSequential(new DriveStraightMPCached(50, Drive.MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC, true, true, 0));
         addSequential(new DriveAbsoluteTurnMPCached(0, 120, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
