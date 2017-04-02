@@ -167,8 +167,8 @@ public class OI {
         toggleShooterOperator.whenPressed(new ShooterSetToggle(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE)); 
 		
         // Gear sensor switch 
-		GearSensorAnalogSwitch gearSwitch = new GearSensorAnalogSwitch();
-		gearSwitch.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+//		GearSensorAnalogSwitch gearSwitch = new GearSensorAnalogSwitch();
+//		gearSwitch.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         
         // SmartDashboard
 		Button driveMP = new InternalButton();

@@ -2,6 +2,7 @@ package org.usfirst.frc.team3310.robot.commands.auton;
 
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
+import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeSetOuterPosition;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;
@@ -30,15 +31,16 @@ public class BoilerShooterFromHopperBarker extends CommandGroup {
     	addSequential(new ShooterSetVoltageRampRate(Shooter.AUTON_VOLTAGE_RAMP_RATE));
     	addSequential(new ShooterSetShotPosition(ShotState.FAR));
     	addSequential(new DriveGyroReset());
-      	addSequential(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR));
+      	addSequential(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR + 200, Shooter.SHOOTER_STAGE2_RPM_FAR + 200));
     	addSequential(new DriveStraightMP(-61, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));//greenville -61
         addSequential(new DriveAbsoluteTurnMP(-23, Drive.MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY)); //greenville -30
 //        addParallel(new GearIntakeRollerSetDeployAuton(1.0));
         addSequential(new GearIntakeSetOuterPosition(GearPositionState.DOWN));
-        addSequential(new DriveStraightMP(-25, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -23)); //greenville -23
+        addSequential(new DriveStraightMP(-26, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -23)); //greenville -23
     	addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
      	addSequential(new WaitCommand(0.2));
+        addSequential(new DriveRelativeTurnPID(-7, MPSoftwareTurnType.TANK));
         addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, true));
      	addSequential(new WaitCommand(1.2));
         addSequential(new ShooterSetHopperShake(0, 11, 5));
