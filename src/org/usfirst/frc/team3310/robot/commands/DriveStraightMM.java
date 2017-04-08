@@ -7,20 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveStraightMM extends Command
 {
-	private double distanceInches, maxVelocityInchesPerSec, desiredAbsoluteAngle;
+	private double distanceInches, maxVelocityInchesPerSec, maxAccelerationInchesPerSec2, desiredAbsoluteAngle;
 	private boolean useGyroLock, useAbsolute;
 
-	public DriveStraightMM(double distanceInches, double maxVelocityInchesPerSec, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
+	public DriveStraightMM(double distanceInches, double maxVelocityInchesPerSec, double maxAccelerationInchesPerSec2, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
 		requires(Robot.drive);
 		this.distanceInches = distanceInches;
 		this.maxVelocityInchesPerSec = maxVelocityInchesPerSec;
+		this.maxAccelerationInchesPerSec2 = maxAccelerationInchesPerSec2;
 		this.desiredAbsoluteAngle = desiredAbsoluteAngle;
 		this.useGyroLock = useGyroLock;
 		this.useAbsolute = useAbsolute;
 	}
 
 	protected void initialize() {
-		Robot.drive.setStraightMotionMagic(distanceInches, maxVelocityInchesPerSec, useGyroLock, useAbsolute, desiredAbsoluteAngle);
+		Robot.drive.setStraightMotionMagic(distanceInches, maxVelocityInchesPerSec, maxAccelerationInchesPerSec2, useGyroLock, useAbsolute, desiredAbsoluteAngle);
 	}
 
 	protected void execute() {

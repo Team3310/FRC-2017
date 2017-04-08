@@ -9,6 +9,7 @@ import org.usfirst.frc.team3310.vision.ImageProcessor.TargetInfo;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoProperty;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -44,7 +45,23 @@ public class Camera extends Subsystem
 			boilerCamera.setExposureManual(0);
 			boilerCamera.setBrightness(30);
 
-			Thread.sleep(1000);
+			// Use http://172.22.11.2:1181/ or http://roborio-3310-frc.local:1181/ to view camera settings
+			
+			// Logitech C920 auto focus on=1, off=0
+			VideoProperty autofocus = boilerCamera.getProperty("focus_auto");
+			autofocus.set(0);
+			
+			// Logitech C920 focus range 0-250.  0 = far away, 250 = very close.  
+			VideoProperty focus = boilerCamera.getProperty("focus_absolute");
+			focus.set(10);
+		
+			// Logitech C920 white balance range 2000-6000.  2000 more blue, 6000 more green.  
+			VideoProperty whiteBalanceAuto = boilerCamera.getProperty("white_balance_temperature_auto");
+			whiteBalanceAuto.set(0);
+			VideoProperty whiteBalanceTemp = boilerCamera.getProperty("white_balance_temperature");
+			whiteBalanceTemp.set(6000);
+
+//			Thread.sleep(1000);
 			
 //			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
 //			frontCamera.setResolution(640, 480);

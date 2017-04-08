@@ -8,6 +8,7 @@ import org.usfirst.frc.team3310.robot.RobotMap;
 import org.usfirst.frc.team3310.utility.BHRMathUtils;
 import org.usfirst.frc.team3310.utility.CANTalonEncoder;
 import org.usfirst.frc.team3310.utility.ControlLoopable;
+import org.usfirst.frc.team3310.utility.MMTalonPIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 import org.usfirst.frc.team3310.utility.MPTalonPIDController;
@@ -115,7 +116,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
 	private PIDParams mpHoldPIDParams = new PIDParams(1, 0, 0, 0.0, 0.0, 0.0); 
 
-	private PIDParams motionMagicStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
+	private MMTalonPIDController mmStraightController;
+	private PIDParams mmStraightPIDParams = new PIDParams(0, 0, 0, 0.24);  
 	
 	private MPSoftwarePIDController mpTurnController; // p    i   d     a      v      g    izone
 //	private PIDParams mpTurnPIDParams = new PIDParams(0.07, 0.00002, 0.5, 0.00025, 0.008, 0.0, 100);  // 4 colson wheels
@@ -240,16 +242,11 @@ public class Drive extends Subsystem implements ControlLoopable
 		gyroOffsetDeg = offsetDeg;
 	}
 
-	public void setStraightMotionMagic(double distanceInches, double maxVelocity, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
-		for (CANTalonEncoder motorController : motorControllers) {
-			motorController.setPID(motionMagicStraightPIDParams.kP, motionMagicStraightPIDParams.kI, motionMagicStraightPIDParams.kD);
-			motorController.setF(motionMagicStraightPIDParams.kF);
-			motorController.setMotionMagicCruiseVelocity(400);
-			motorController.setMotionMagicAcceleration(400);
-			motorController.changeControlMode(TalonControlMode.MotionMagic);
-			motorController.set(10);
-		}
-		setControlMode(DriveControlMode.MP_STRAIGHT);
+	public void setStraightMotionMagic(double distanceInches, double maxVelocity, double maxAcceleration, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
+		double yawAngle = useAbsolute ? BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), desiredAbsoluteAngle) : getGyroAngleDeg();
+		mmStraightController.setPID(mmStraightPIDParams);
+		mmStraightController.setMMStraightTarget(0, distanceInches, maxVelocity, maxAcceleration, useGyroLock, yawAngle, true); 
+		setControlMode(DriveControlMode.MOTION_MAGIC);
 	}
 	
 	public void setStraightMP(double distanceInches, double maxVelocity, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
@@ -354,6 +351,9 @@ public class Drive extends Subsystem implements ControlLoopable
 			}
 			else if (controlMode == DriveControlMode.MP_PATH) {
 				isFinished = mpPathController.controlLoopUpdate(getGyroAngleDeg()); 
+			}
+			else if (controlMode == DriveControlMode.MOTION_MAGIC) {
+				isFinished = mpStraightController.controlLoopUpdate(getGyroAngleDeg()); 
 			}
 		}
 	}
@@ -555,6 +555,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	
 	@Override
 	public void setPeriodMs(long periodMs) {
+		mmStraightController = new MMTalonPIDController(periodMs, mmStraightPIDParams, motorControllers);
 		mpStraightController = new MPTalonPIDController(periodMs, mpStraightPIDParams, motorControllers);
 		mpTurnController = new MPSoftwarePIDController(periodMs, mpTurnPIDParams, motorControllers);
 		pidTurnController = new SoftwarePIDController(pidTurnPIDParams, motorControllers);

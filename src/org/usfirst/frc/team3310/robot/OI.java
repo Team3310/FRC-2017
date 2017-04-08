@@ -153,7 +153,7 @@ public class OI {
 		SmartDashboard.putData("Drive Straight", driveMP);
 
 		Button driveMM = new InternalButton();
-		driveMM.whenPressed(new DriveStraightMM(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
+		driveMM.whenPressed(new DriveStraightMM(96, 450, 450, true, false, 0));
 		SmartDashboard.putData("Drive StraightMM", driveMM);
 		
 		Button turnRelativePID = new InternalButton();
