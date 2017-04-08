@@ -1,65 +1,42 @@
 package org.usfirst.frc.team3310.robot;
 
-import org.usfirst.frc.team3310.buttons.GearSensorAnalogSwitch;
-import org.usfirst.frc.team3310.buttons.LogitechDPadTriggerButton;
 import org.usfirst.frc.team3310.buttons.XBoxDPadTriggerButton;
 import org.usfirst.frc.team3310.buttons.XBoxTriggerButton;
 import org.usfirst.frc.team3310.controller.IHandController;
-import org.usfirst.frc.team3310.controller.LogitechController;
 import org.usfirst.frc.team3310.controller.XboxController;
 import org.usfirst.frc.team3310.robot.commands.CameraIncrementOffset;
-import org.usfirst.frc.team3310.robot.commands.CameraReadAndProcessImage;
-import org.usfirst.frc.team3310.robot.commands.CameraReadImageTurnToBestTarget;
 import org.usfirst.frc.team3310.robot.commands.CameraSaveImage;
 import org.usfirst.frc.team3310.robot.commands.CameraTurnToBestTarget;
 import org.usfirst.frc.team3310.robot.commands.CameraUpdateBestTarget;
 import org.usfirst.frc.team3310.robot.commands.CameraUpdateDashboard;
-import org.usfirst.frc.team3310.robot.commands.ClimberSetMaxAmps;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
-import org.usfirst.frc.team3310.robot.commands.DrivePathMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
+import org.usfirst.frc.team3310.robot.commands.DriveStraightMM;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeRollerSetSpeed;
-import org.usfirst.frc.team3310.robot.commands.GearIntakeSetPosition;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
-import org.usfirst.frc.team3310.robot.commands.LEDLightsSet;
 import org.usfirst.frc.team3310.robot.commands.ShootOff;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;
-import org.usfirst.frc.team3310.robot.commands.ShooterAllOff;
-import org.usfirst.frc.team3310.robot.commands.ShooterAllOn;
-import org.usfirst.frc.team3310.robot.commands.ShooterFeedSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetHopperPosition;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetHopperShake;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetRpmDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
-import org.usfirst.frc.team3310.robot.commands.ShooterSetSpeedDashboard;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetToggle;
-import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetRpmDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterStage1SetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetRpmDashboard;
-import org.usfirst.frc.team3310.robot.commands.ShooterStage2SetSpeed;
-import org.usfirst.frc.team3310.robot.commands.ZarkerFeedSetSpeed;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
-import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
+import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
-import org.usfirst.frc.team3310.utility.PathGenerator;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Waypoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -174,6 +151,10 @@ public class OI {
 		Button driveMP = new InternalButton();
 		driveMP.whenPressed(new DriveStraightMP(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
 		SmartDashboard.putData("Drive Straight", driveMP);
+
+		Button driveMM = new InternalButton();
+		driveMM.whenPressed(new DriveStraightMM(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
+		SmartDashboard.putData("Drive StraightMM", driveMM);
 		
 		Button turnRelativePID = new InternalButton();
 		turnRelativePID.whenPressed(new DriveRelativeTurnPID(10, MPSoftwareTurnType.TANK));

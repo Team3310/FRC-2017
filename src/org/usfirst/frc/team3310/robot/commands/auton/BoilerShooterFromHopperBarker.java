@@ -40,7 +40,7 @@ public class BoilerShooterFromHopperBarker extends CommandGroup {
     	addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
      	addSequential(new WaitCommand(0.2));
-        addSequential(new DriveRelativeTurnPID(-7, MPSoftwareTurnType.TANK));
+//        addSequential(new DriveRelativeTurnPID(-7, MPSoftwareTurnType.TANK));
         addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, true));
      	addSequential(new WaitCommand(1.2));
         addSequential(new ShooterSetHopperShake(0, 11, 5));
