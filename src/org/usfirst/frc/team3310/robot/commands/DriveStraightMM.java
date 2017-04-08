@@ -21,7 +21,7 @@ public class DriveStraightMM extends Command
 	}
 
 	protected void initialize() {
-		Robot.drive.setStraightMotionMagic(distanceInches, maxVelocityInchesPerSec, maxAccelerationInchesPerSec2, useGyroLock, useAbsolute, desiredAbsoluteAngle);
+		Robot.drive.setStraightMM(distanceInches, maxVelocityInchesPerSec, maxAccelerationInchesPerSec2, useGyroLock, useAbsolute, desiredAbsoluteAngle);
 	}
 
 	protected void execute() {

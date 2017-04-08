@@ -13,6 +13,7 @@ import org.usfirst.frc.team3310.utility.MPSoftwarePIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 import org.usfirst.frc.team3310.utility.MPTalonPIDController;
 import org.usfirst.frc.team3310.utility.MPTalonPIDPathController;
+import org.usfirst.frc.team3310.utility.MPTalonPIDPathVelocityController;
 import org.usfirst.frc.team3310.utility.MotionProfilePoint;
 import org.usfirst.frc.team3310.utility.PIDParams;
 import org.usfirst.frc.team3310.utility.PathGenerator;
@@ -31,7 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements ControlLoopable
 {
-	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH, MOTION_MAGIC };
+	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH, MP_PATH_VELOCITY, MOTION_MAGIC };
 	public static enum SpeedShiftState { HI, LO };
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
@@ -129,6 +130,9 @@ public class Drive extends Subsystem implements ControlLoopable
 
 	private MPTalonPIDPathController mpPathController;
 	private PIDParams mpPathPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.28, 100);  // 4 omni   g=.3
+
+	private MPTalonPIDPathVelocityController mpPathVelocityController;
+	private PIDParams mpPathVelocityPIDParams = new PIDParams(0.5, 0.001, 5, 0.44); 
 
 	private PigeonImu gyroPigeon;
 	private double[] yprPigeon = new double[3];
@@ -242,7 +246,7 @@ public class Drive extends Subsystem implements ControlLoopable
 		gyroOffsetDeg = offsetDeg;
 	}
 
-	public void setStraightMotionMagic(double distanceInches, double maxVelocity, double maxAcceleration, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
+	public void setStraightMM(double distanceInches, double maxVelocity, double maxAcceleration, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
 		double yawAngle = useAbsolute ? BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), desiredAbsoluteAngle) : getGyroAngleDeg();
 		mmStraightController.setPID(mmStraightPIDParams);
 		mmStraightController.setMMStraightTarget(0, distanceInches, maxVelocity, maxAcceleration, useGyroLock, yawAngle, true); 
@@ -300,6 +304,12 @@ public class Drive extends Subsystem implements ControlLoopable
 		setControlMode(DriveControlMode.MP_PATH);
 	}
 	
+	public void setPathVelocityMP(PathGenerator path) {
+		mpPathVelocityController.setPID(mpPathPIDParams);
+		mpPathVelocityController.setMPPathTarget(path); 
+		setControlMode(DriveControlMode.MP_PATH_VELOCITY);
+	}
+	
 	public void setDriveHold(boolean status) {
 		if (status) {
 			setControlMode(DriveControlMode.HOLD);
@@ -351,6 +361,9 @@ public class Drive extends Subsystem implements ControlLoopable
 			}
 			else if (controlMode == DriveControlMode.MP_PATH) {
 				isFinished = mpPathController.controlLoopUpdate(getGyroAngleDeg()); 
+			}
+			else if (controlMode == DriveControlMode.MP_PATH_VELOCITY) {
+				isFinished = mpPathVelocityController.controlLoopUpdate(getGyroAngleDeg()); 
 			}
 			else if (controlMode == DriveControlMode.MOTION_MAGIC) {
 				isFinished = mpStraightController.controlLoopUpdate(getGyroAngleDeg()); 
@@ -560,6 +573,7 @@ public class Drive extends Subsystem implements ControlLoopable
 		mpTurnController = new MPSoftwarePIDController(periodMs, mpTurnPIDParams, motorControllers);
 		pidTurnController = new SoftwarePIDController(pidTurnPIDParams, motorControllers);
 		mpPathController = new MPTalonPIDPathController(periodMs, mpPathPIDParams, motorControllers);
+		mpPathVelocityController = new MPTalonPIDPathVelocityController(periodMs, mpPathVelocityPIDParams, motorControllers);
 		this.periodMs = periodMs;
 	}
 	

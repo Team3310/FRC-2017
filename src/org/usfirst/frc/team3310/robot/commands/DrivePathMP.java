@@ -16,7 +16,7 @@ public class DrivePathMP extends Command
 	}
 
 	protected void initialize() {
-		Robot.drive.setPathMP(path);
+		Robot.drive.setPathVelocityMP(path);
 	}
 
 	protected void execute() {

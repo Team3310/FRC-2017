@@ -12,6 +12,7 @@ import org.usfirst.frc.team3310.robot.commands.CameraUpdateDashboard;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
+import org.usfirst.frc.team3310.robot.commands.DrivePathMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveSpeedShift;
@@ -32,11 +33,14 @@ import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
+import org.usfirst.frc.team3310.utility.PathGenerator;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Waypoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -153,7 +157,7 @@ public class OI {
 		SmartDashboard.putData("Drive Straight", driveMP);
 
 		Button driveMM = new InternalButton();
-		driveMM.whenPressed(new DriveStraightMM(96, 450, 450, true, false, 0));
+		driveMM.whenPressed(new DriveStraightMM(10, 450, 450, true, false, 0));
 		SmartDashboard.putData("Drive StraightMM", driveMM);
 		
 		Button turnRelativePID = new InternalButton();
@@ -326,17 +330,17 @@ public class OI {
 //		climberSetMaxAmps.whenPressed(new ClimberSetMaxAmps(0.8, 20));
 //		SmartDashboard.putData("Climber Max Amps", climberSetMaxAmps);
 //		
-//        Waypoint[] points = new Waypoint[] {
-//                new Waypoint(0, 0, 0),
-//                new Waypoint(-90, -8, Pathfinder.d2r(-27))
-//        };
-//
-//        PathGenerator path = new PathGenerator(points, 0.01, 160, 200.0, 700.0);		
-//		
-//		Button pathTest = new InternalButton();
-//		pathTest.whenPressed(new DrivePathMP(path));
-//		SmartDashboard.putData("Path Test", pathTest);
-//
+        Waypoint[] points = new Waypoint[] {
+                new Waypoint(0, 0, 0),
+                new Waypoint(-90, -16, Pathfinder.d2r(-45))
+        };
+
+        PathGenerator path = new PathGenerator(points, 0.01, 160, 200.0, 700.0);		
+		
+		Button pathTest = new InternalButton();
+		pathTest.whenPressed(new DrivePathMP(path));
+		SmartDashboard.putData("Path Test", pathTest);
+
 //		Button ledsOn = new InternalButton();
 //		ledsOn.whenPressed(new LEDLightsSet(true));
 //		SmartDashboard.putData("LEDs On", ledsOn);
