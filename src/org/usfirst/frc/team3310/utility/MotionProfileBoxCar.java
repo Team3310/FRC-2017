@@ -8,9 +8,20 @@ public class MotionProfileBoxCar
 	private double startDistance;  // any distance unit
 	private double targetDistance;  // any distance unit
 	private double maxVelocity;		// velocity unit consistent with targetDistance
-	private double itp;	  			// millisecond
-	private double t1 = DEFAULT_T1;
-	private double t2 = DEFAULT_T2;
+	
+	// Accel profile
+	//
+	//  0 T2   T1
+	//  | |    |
+	//     _____
+	//    /     \
+	//   /       \___
+	//               \      /
+	//                \____/   
+			
+	private double itp;	  			// time between points millisecond
+	private double t1 = DEFAULT_T1; // time when accel starts back to 0.  millisecond  (typically use t1 = 2 * t2)
+	private double t2 = DEFAULT_T2; // time when accel = max accel.  millisecond  
 	
 	private double t4;
 	private int numFilter1Boxes;
