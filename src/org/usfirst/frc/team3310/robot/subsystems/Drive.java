@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements ControlLoopable
 {
-	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH };
+	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH, MOTION_MAGIC };
 	public static enum SpeedShiftState { HI, LO };
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
@@ -115,6 +115,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
 	private PIDParams mpHoldPIDParams = new PIDParams(1, 0, 0, 0.0, 0.0, 0.0); 
 
+	private PIDParams motionMagicStraightPIDParams = new PIDParams(0.1, 0, 0, 0.005, 0.03, 0.03);  // 4 omni
+	
 	private MPSoftwarePIDController mpTurnController; // p    i   d     a      v      g    izone
 //	private PIDParams mpTurnPIDParams = new PIDParams(0.07, 0.00002, 0.5, 0.00025, 0.008, 0.0, 100);  // 4 colson wheels
 	private PIDParams mpTurnPIDParams = new PIDParams(0.03, 0.00002, 0.4, 0.0004, 0.0030, 0.0, 100);  // 4 omni
@@ -238,6 +240,18 @@ public class Drive extends Subsystem implements ControlLoopable
 		gyroOffsetDeg = offsetDeg;
 	}
 
+	public void setStraightMotionMagic(double distanceInches, double maxVelocity, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
+		for (CANTalonEncoder motorController : motorControllers) {
+			motorController.setPID(motionMagicStraightPIDParams.kP, motionMagicStraightPIDParams.kI, motionMagicStraightPIDParams.kD);
+			motorController.setF(motionMagicStraightPIDParams.kF);
+			motorController.setMotionMagicCruiseVelocity(400);
+			motorController.setMotionMagicAcceleration(400);
+			motorController.changeControlMode(TalonControlMode.MotionMagic);
+			motorController.set(10);
+		}
+		setControlMode(DriveControlMode.MP_STRAIGHT);
+	}
+	
 	public void setStraightMP(double distanceInches, double maxVelocity, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
 		double yawAngle = useAbsolute ? BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), desiredAbsoluteAngle) : getGyroAngleDeg();
 		mpStraightController.setPID(mpStraightPIDParams);
