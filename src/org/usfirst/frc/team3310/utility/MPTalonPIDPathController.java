@@ -2,9 +2,6 @@ package org.usfirst.frc.team3310.utility;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team3310.utility.MPTalonPIDController.MPControlMode;
-import org.usfirst.frc.team3310.utility.MPTalonPIDController.MPTalonTurnType;
-
 import com.ctre.CANTalon.TalonControlMode;
 
 import jaci.pathfinder.Trajectory.Segment;

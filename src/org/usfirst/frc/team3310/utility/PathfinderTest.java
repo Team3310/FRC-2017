@@ -2,7 +2,6 @@ package org.usfirst.frc.team3310.utility;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.ArrayList;
 
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 

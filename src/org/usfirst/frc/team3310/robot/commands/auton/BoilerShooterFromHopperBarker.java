@@ -2,7 +2,6 @@ package org.usfirst.frc.team3310.robot.commands.auton;
 
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
-import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeSetOuterPosition;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;

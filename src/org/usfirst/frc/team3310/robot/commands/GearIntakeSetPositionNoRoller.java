@@ -2,7 +2,6 @@ package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
-import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 

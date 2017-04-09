@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3310.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *

@@ -1,30 +1,23 @@
 
 package org.usfirst.frc.team3310.robot;
 
-import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopper;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopper;
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
-import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarkerPath;
 import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAutonFarShot;
 import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.GearLoadingSideAuton;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.LedLights;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
+import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.robot.subsystems.ZarkerFeed;
-import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.utility.ControlLooper;
 import org.usfirst.frc.team3310.utility.MotionProfileCache;
-import org.usfirst.frc.team3310.utility.PathGenerator;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -34,8 +27,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Waypoint;
 
 
 /**

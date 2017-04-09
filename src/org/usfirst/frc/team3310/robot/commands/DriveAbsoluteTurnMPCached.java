@@ -3,8 +3,8 @@ package org.usfirst.frc.team3310.robot.commands;
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Drive.DriveControlMode;
-import org.usfirst.frc.team3310.utility.MotionProfileCache;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
+import org.usfirst.frc.team3310.utility.MotionProfileCache;
 
 import edu.wpi.first.wpilibj.command.Command;
 

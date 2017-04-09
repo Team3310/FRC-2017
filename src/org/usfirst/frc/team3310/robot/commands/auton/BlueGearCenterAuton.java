@@ -1,19 +1,13 @@
 package org.usfirst.frc.team3310.robot.commands.auton;
 
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeedTimer;
-import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMPCached;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
-import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.DriveStraightMPCached;
-import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
-import org.usfirst.frc.team3310.robot.subsystems.Shooter;
-import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *

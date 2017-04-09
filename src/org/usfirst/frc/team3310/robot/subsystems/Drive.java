@@ -2,6 +2,7 @@ package org.usfirst.frc.team3310.robot.subsystems;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team3310.robot.Constants;
 import org.usfirst.frc.team3310.robot.OI;
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
@@ -589,6 +590,22 @@ public class Drive extends Subsystem implements ControlLoopable
 		isRed = status;
 	}
 	
+	public static double rotationsToInches(double rotations) {
+        return rotations * (Constants.kDriveWheelDiameterInches * Math.PI);
+    }
+
+    public static double rpmToInchesPerSecond(double rpm) {
+        return rotationsToInches(rpm) / 60;
+    }
+
+    public static double inchesToRotations(double inches) {
+        return inches / (Constants.kDriveWheelDiameterInches * Math.PI);
+    }
+
+    public static double inchesPerSecondToRpm(double inches_per_second) {
+        return inchesToRotations(inches_per_second) * 60;
+    }
+
 	public void updateStatus(Robot.OperationMode operationMode) {
 		if (operationMode == Robot.OperationMode.TEST) {
 			try {
