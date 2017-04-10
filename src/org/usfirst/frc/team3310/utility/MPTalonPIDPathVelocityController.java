@@ -77,16 +77,16 @@ public class MPTalonPIDPathVelocityController
 		}
 		
 		// Calculate the motion profile feed forward and gyro feedback terms
-		double rightRevs = rightPoint.velocity * 100;
-		double leftRevs = leftPoint.velocity * 100;
+		double rightVelocity = rightPoint.velocity;
+		double leftVelocity = leftPoint.velocity;
 		
 		// Update the controllers Kf and set point.
 		for (CANTalonEncoder motorController : motorControllers) {
 			if (motorController.isRight()) {
-				motorController.set(rightRevs);
+				motorController.setVelocityWorld(rightVelocity);
 			}
 			else {
-				motorController.set(leftRevs);
+				motorController.setVelocityWorld(leftVelocity);
 			}
 		}
 		

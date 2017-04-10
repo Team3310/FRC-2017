@@ -1,7 +1,14 @@
 package org.usfirst.frc.team3310.utility;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
+
+import org.usfirst.frc.team3310.robot.Constants;
+
+import com.ctre.CANTalon.TalonControlMode;
+
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Implements an adaptive pure pursuit controller. See:
@@ -25,15 +32,48 @@ public class AdaptivePurePursuitController {
     boolean mReversed;
     double mPathCompletionTolerance;
 
-    public AdaptivePurePursuitController(double fixed_lookahead, double max_accel, double nominal_dt, Path path,
+	protected ArrayList<CANTalonEncoder> motorControllers;	
+	protected long periodMs;
+	protected PIDParams pidParams;	
+	protected double startGyroAngle;
+	protected double targetGyroAngle;
+	protected double trackDistance;
+	
+	public AdaptivePurePursuitController(long periodMs, PIDParams pidParams, ArrayList<CANTalonEncoder> motorControllers) 
+	{
+		this.motorControllers = motorControllers;
+		this.periodMs = periodMs;
+		setPID(pidParams);
+	}
+    
+	public void setPID(PIDParams pidParams) {
+		this.pidParams = pidParams;
+		
+		for (CANTalonEncoder motorController : motorControllers) {
+			motorController.setPID(pidParams.kP, pidParams.kI, pidParams.kD);
+			motorController.setF(pidParams.kF);
+			motorController.configNominalOutputVoltage(+0.0f, -0.0f);
+			motorController.configPeakOutputVoltage(+12.0f, -12.0f);
+			motorController.setProfile(0);
+		}
+	}
+	
+    public void setPath(double fixed_lookahead, double max_accel, Path path,
             boolean reversed, double path_completion_tolerance) {
         mFixedLookahead = fixed_lookahead;
         mMaxAccel = max_accel;
         mPath = path;
-        mDt = nominal_dt;
+        mDt = periodMs;
         mLastCommand = null;
         mReversed = reversed;
         mPathCompletionTolerance = path_completion_tolerance;
+
+        // Set up the motion profile 
+		for (CANTalonEncoder motorController : motorControllers) {
+			motorController.setPosition(0);
+			motorController.set(0);
+			motorController.changeControlMode(TalonControlMode.Speed);
+		}
     }
 
     public boolean isDone() {
@@ -41,7 +81,33 @@ public class AdaptivePurePursuitController {
         return remainingLength <= mPathCompletionTolerance;
     }
 
-    public RigidTransform2d.Delta update(RigidTransform2d robot_pose, double now) {
+	public boolean controlLoopUpdate(RigidTransform2d robot_pose) {
+        RigidTransform2d.Delta command = update(robot_pose, Timer.getFPGATimestamp());
+        Kinematics.DriveVelocity setpoint = Kinematics.inverseKinematics(command);
+
+        // Scale the command to respect the max velocity limits
+        double max_vel = 0.0;
+        max_vel = Math.max(max_vel, Math.abs(setpoint.left));
+        max_vel = Math.max(max_vel, Math.abs(setpoint.right));
+        if (max_vel > Constants.kPathFollowingMaxVel) {
+            double scaling = Constants.kPathFollowingMaxVel / max_vel;
+            setpoint = new Kinematics.DriveVelocity(setpoint.left * scaling, setpoint.right * scaling);
+        }
+
+        // Update the controllers Kf and set point.
+		for (CANTalonEncoder motorController : motorControllers) {
+			if (motorController.isRight()) {
+				motorController.setVelocityWorld(-setpoint.right);
+			}
+			else {
+				motorController.setVelocityWorld(-setpoint.left);
+			}
+		}
+		
+		return isDone();
+	}
+
+	public RigidTransform2d.Delta update(RigidTransform2d robot_pose, double now) {
         RigidTransform2d pose = robot_pose;
         if (mReversed) {
             pose = new RigidTransform2d(robot_pose.getTranslation(),

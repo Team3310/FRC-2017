@@ -6,9 +6,11 @@ import org.usfirst.frc.team3310.robot.Constants;
 import org.usfirst.frc.team3310.robot.OI;
 import org.usfirst.frc.team3310.robot.Robot;
 import org.usfirst.frc.team3310.robot.RobotMap;
+import org.usfirst.frc.team3310.utility.AdaptivePurePursuitController;
 import org.usfirst.frc.team3310.utility.BHRMathUtils;
 import org.usfirst.frc.team3310.utility.CANTalonEncoder;
 import org.usfirst.frc.team3310.utility.ControlLoopable;
+import org.usfirst.frc.team3310.utility.Kinematics;
 import org.usfirst.frc.team3310.utility.MMTalonPIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
@@ -17,8 +19,12 @@ import org.usfirst.frc.team3310.utility.MPTalonPIDPathController;
 import org.usfirst.frc.team3310.utility.MPTalonPIDPathVelocityController;
 import org.usfirst.frc.team3310.utility.MotionProfilePoint;
 import org.usfirst.frc.team3310.utility.PIDParams;
+import org.usfirst.frc.team3310.utility.Path;
 import org.usfirst.frc.team3310.utility.PathGenerator;
+import org.usfirst.frc.team3310.utility.RigidTransform2d;
+import org.usfirst.frc.team3310.utility.Rotation2d;
 import org.usfirst.frc.team3310.utility.SoftwarePIDController;
+import org.usfirst.frc.team3310.utility.Translation2d;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -28,12 +34,13 @@ import com.ctre.PigeonImu.CalibrationMode;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem implements ControlLoopable
 {
-	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH, MP_PATH_VELOCITY, MOTION_MAGIC };
+	public static enum DriveControlMode { JOYSTICK, MP_STRAIGHT, MP_TURN, PID_TURN, HOLD, MANUAL, CLIMB, MP_PATH, MP_PATH_VELOCITY, MOTION_MAGIC, ADAPTIVE_PURSUIT };
 	public static enum SpeedShiftState { HI, LO };
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
@@ -134,6 +141,15 @@ public class Drive extends Subsystem implements ControlLoopable
 
 	private MPTalonPIDPathVelocityController mpPathVelocityController;
 	private PIDParams mpPathVelocityPIDParams = new PIDParams(0.5, 0.001, 5, 0.44); 
+
+	private AdaptivePurePursuitController adaptivePursuitController;
+	private PIDParams adaptivePursuitPIDParams = new PIDParams(0.4, 0.001, 10, 0.44); 
+	
+	private RigidTransform2d zeroPose = new RigidTransform2d(new Translation2d(0,0), Rotation2d.fromDegrees(0));
+	private RigidTransform2d currentPose = zeroPose;
+	private RigidTransform2d lastPose = zeroPose;
+    private double left_encoder_prev_distance_ = 0;
+    private double right_encoder_prev_distance_ = 0;
 
 	private PigeonImu gyroPigeon;
 	private double[] yprPigeon = new double[3];
@@ -311,7 +327,17 @@ public class Drive extends Subsystem implements ControlLoopable
 		setControlMode(DriveControlMode.MP_PATH_VELOCITY);
 	}
 	
-	public void setDriveHold(boolean status) {
+    public void setPathAdaptivePursuit(Path path, boolean reversed) {
+    	currentPose = zeroPose;
+    	lastPose = zeroPose;
+        left_encoder_prev_distance_ = 0;
+        right_encoder_prev_distance_ = 0;
+        adaptivePursuitController.setPID(adaptivePursuitPIDParams);
+    	adaptivePursuitController.setPath(Constants.kPathFollowingLookahead, Constants.kPathFollowingMaxAccel, path, reversed, 0.25); 
+		setControlMode(DriveControlMode.ADAPTIVE_PURSUIT);
+    }
+
+    public void setDriveHold(boolean status) {
 		if (status) {
 			setControlMode(DriveControlMode.HOLD);
 		}
@@ -319,6 +345,20 @@ public class Drive extends Subsystem implements ControlLoopable
 			setControlMode(DriveControlMode.JOYSTICK);
 		}
 	}
+    
+    public void updatePose() {
+        double left_distance = leftDrive1.getPositionWorld();
+        double right_distance = rightDrive1.getPositionWorld();
+        Rotation2d gyro_angle = Rotation2d.fromDegrees(-getGyroAngleDeg());
+        lastPose = currentPose;
+        currentPose = generateOdometryFromSensors(left_distance - left_encoder_prev_distance_, right_distance - right_encoder_prev_distance_, gyro_angle);
+        left_encoder_prev_distance_ = left_distance;
+        right_encoder_prev_distance_ = right_distance;
+    }
+    
+    public RigidTransform2d generateOdometryFromSensors(double left_encoder_delta_distance, double right_encoder_delta_distance, Rotation2d current_gyro_angle) {
+        return Kinematics.integrateForwardKinematics(lastPose, left_encoder_delta_distance, right_encoder_delta_distance, current_gyro_angle);
+    }
 	
 	public void setControlMode(DriveControlMode controlMode) {
  		this.controlMode = controlMode;
@@ -368,6 +408,10 @@ public class Drive extends Subsystem implements ControlLoopable
 			}
 			else if (controlMode == DriveControlMode.MOTION_MAGIC) {
 				isFinished = mpStraightController.controlLoopUpdate(getGyroAngleDeg()); 
+			}
+			else if (controlMode == DriveControlMode.ADAPTIVE_PURSUIT) {
+				updatePose();
+				isFinished = adaptivePursuitController.controlLoopUpdate(currentPose); 
 			}
 		}
 	}
@@ -575,6 +619,7 @@ public class Drive extends Subsystem implements ControlLoopable
 		pidTurnController = new SoftwarePIDController(pidTurnPIDParams, motorControllers);
 		mpPathController = new MPTalonPIDPathController(periodMs, mpPathPIDParams, motorControllers);
 		mpPathVelocityController = new MPTalonPIDPathVelocityController(periodMs, mpPathVelocityPIDParams, motorControllers);
+		adaptivePursuitController = new AdaptivePurePursuitController(periodMs, adaptivePursuitPIDParams, motorControllers);
 		this.periodMs = periodMs;
 	}
 	

@@ -46,7 +46,11 @@ public class CANTalonEncoder extends CANTalon
     	return convertEncoderTicksToWorld(this.getPosition());
     }
     
+    public void setVelocityWorld(double worldValue) {
+    	this.set(convertEncoderWorldToTicks(worldValue) * 0.1);
+    }
+    
     public double getVelocityWorld() {
-    	return convertEncoderTicksToWorld(this.getSpeed() * 0.1);
+    	return convertEncoderTicksToWorld(this.getSpeed() / 0.1);
     }
 }

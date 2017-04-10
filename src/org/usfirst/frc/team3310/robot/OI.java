@@ -1,5 +1,8 @@
 package org.usfirst.frc.team3310.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.usfirst.frc.team3310.buttons.XBoxDPadTriggerButton;
 import org.usfirst.frc.team3310.buttons.XBoxTriggerButton;
 import org.usfirst.frc.team3310.controller.IHandController;
@@ -12,6 +15,7 @@ import org.usfirst.frc.team3310.robot.commands.CameraUpdateDashboard;
 import org.usfirst.frc.team3310.robot.commands.ClimberSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.DriveAbsoluteTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
+import org.usfirst.frc.team3310.robot.commands.DrivePathAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.DrivePathMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
@@ -33,14 +37,16 @@ import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
 import org.usfirst.frc.team3310.robot.subsystems.ShooterFeed;
 import org.usfirst.frc.team3310.utility.MPSoftwarePIDController.MPSoftwareTurnType;
+import org.usfirst.frc.team3310.utility.Path;
+import org.usfirst.frc.team3310.utility.Path.Waypoint;
 import org.usfirst.frc.team3310.utility.PathGenerator;
+import org.usfirst.frc.team3310.utility.Translation2d;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Waypoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -155,6 +161,15 @@ public class OI {
 		Button driveMP = new InternalButton();
 		driveMP.whenPressed(new DriveStraightMP(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
 		SmartDashboard.putData("Drive Straight", driveMP);
+
+        List<Waypoint> waypoints = new ArrayList<>();
+        waypoints.add(new Waypoint(new Translation2d(0, 0), 25.0));
+        waypoints.add(new Waypoint(new Translation2d(-60, 0), 25.0));
+        waypoints.add(new Waypoint(new Translation2d(-60, -60), 25.0));
+		
+		Button driveAP = new InternalButton();
+		driveAP.whenPressed(new DrivePathAdaptivePursuit(new Path(waypoints), true));
+		SmartDashboard.putData("Drive Adaptive Pursuit", driveAP);
 
 		Button driveMM = new InternalButton();
 		driveMM.whenPressed(new DriveStraightMM(10, 450, 450, true, false, 0));
@@ -330,9 +345,9 @@ public class OI {
 //		climberSetMaxAmps.whenPressed(new ClimberSetMaxAmps(0.8, 20));
 //		SmartDashboard.putData("Climber Max Amps", climberSetMaxAmps);
 //		
-        Waypoint[] points = new Waypoint[] {
-                new Waypoint(0, 0, 0),
-                new Waypoint(-90, -16, Pathfinder.d2r(-45))
+        jaci.pathfinder.Waypoint[] points = new jaci.pathfinder.Waypoint[] {
+                new jaci.pathfinder.Waypoint(0, 0, 0),
+                new jaci.pathfinder.Waypoint(-90, -16, Pathfinder.d2r(-45))
         };
 
         PathGenerator path = new PathGenerator(points, 0.01, 160, 200.0, 700.0);		
