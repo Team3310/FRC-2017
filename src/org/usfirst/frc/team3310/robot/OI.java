@@ -163,9 +163,18 @@ public class OI {
 		SmartDashboard.putData("Drive Straight", driveMP);
 
         List<Waypoint> waypoints = new ArrayList<>();
-        waypoints.add(new Waypoint(new Translation2d(0, 0), 25.0));
-        waypoints.add(new Waypoint(new Translation2d(-60, 0), 25.0));
-        waypoints.add(new Waypoint(new Translation2d(-60, -60), 25.0));
+        waypoints.add(new Waypoint(new Translation2d(0, 0), 35.0));
+//        waypoints.add(new Waypoint(new Translation2d(-96, 0), 50.0));
+//        waypoints.add(new Waypoint(new Translation2d(-61, 0), 50.0));
+//        waypoints.add(new Waypoint(new Translation2d(-84.93, -10.16), 50.0));
+        
+//        waypoints.add(new Waypoint(new Translation2d(-41, 0), 35.0));
+//         waypoints.add(new Waypoint(new Translation2d(-65, -23), 35.0));
+//      waypoints.add(new Waypoint(new Translation2d(-70, -39), 35.0));
+        
+        waypoints.add(new Waypoint(new Translation2d(-30, 0), 35.0));
+        Path.addCircleArc(waypoints, -20.0, 23.0, 10);
+        waypoints.add(new Waypoint(new Translation2d(-65, -23), 35.0));
 		
 		Button driveAP = new InternalButton();
 		driveAP.whenPressed(new DrivePathAdaptivePursuit(new Path(waypoints), true));

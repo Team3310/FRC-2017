@@ -45,7 +45,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static enum ClimberState { DEPLOYED, RETRACTED };
 
 	public static final double TRACK_WIDTH_INCHES = 26.937;
-	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (3.70 * Math.PI); //3.70
+	public static final double ENCODER_TICKS_TO_INCHES = 4096 / (4.0 * Math.PI); //3.70
 	public static final double CLIMB_SPEED = 0.45;
 	
 	public static final double VOLTAGE_RAMP_RATE = 150;  // Volts per second
@@ -143,7 +143,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpPathVelocityPIDParams = new PIDParams(0.5, 0.001, 5, 0.44); 
 
 	private AdaptivePurePursuitController adaptivePursuitController;
-	private PIDParams adaptivePursuitPIDParams = new PIDParams(0.4, 0.001, 10, 0.44); 
+	private PIDParams adaptivePursuitPIDParams = new PIDParams(0.1, 0.00, 0, 0.44); 
 	
 	private RigidTransform2d zeroPose = new RigidTransform2d(new Translation2d(0,0), Rotation2d.fromDegrees(0));
 	private RigidTransform2d currentPose = zeroPose;

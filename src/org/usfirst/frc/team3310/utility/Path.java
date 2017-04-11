@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.usfirst.frc.team3310.utility.Path.Waypoint;
+
 /**
  * A Path is a recording of the path that the robot takes. Path objects consist
  * of a List of Waypoints that the robot passes by. Using multiple Waypoints in
@@ -216,4 +218,35 @@ public class Path {
             }
         }
     }
+    
+    public static void addCircleArc(List<Waypoint> waypoints, double radius, double angleDeg, int numPoints ) {
+    	Waypoint last = waypoints.get(waypoints.size() - 1);
+    	
+    	double centerX = last.position.x_;
+    	double centerY = radius;
+    	
+    	double deltaAngle = angleDeg / numPoints;
+    	double currentAngle = deltaAngle;
+    	for (int i = 0; i < numPoints; i++ ) {
+    		double x = radius * Math.sin(Math.toRadians(currentAngle)) + centerX;
+    		double y = centerY - radius * Math.cos(Math.toRadians(currentAngle)) ;
+    		Waypoint point = new Waypoint(new Translation2d(x, y), last.speed);
+    		waypoints.add(point);
+    		
+    		currentAngle += deltaAngle;
+    	}
+    }
+    
+	public static void main(String[] args) {
+		
+        List<Waypoint> waypoints = new ArrayList<>();
+        waypoints.add(new Waypoint(new Translation2d(0, 0), 35.0));
+        waypoints.add(new Waypoint(new Translation2d(-10, 0), 35.0));
+        Path.addCircleArc(waypoints, -10.0, 90.0, 2);
+        
+        for (int i = 0; i < waypoints.size(); i++) {
+        	Waypoint curPoint = waypoints.get(i);
+        	System.out.println("x = " + curPoint.position.x_ + ", y = " + curPoint.position.y_);
+        }
+	}
 }
