@@ -172,9 +172,9 @@ public class OI {
 //         waypoints.add(new Waypoint(new Translation2d(-65, -23), 35.0));
 //      waypoints.add(new Waypoint(new Translation2d(-70, -39), 35.0));
         
-        waypoints.add(new Waypoint(new Translation2d(-30, 0), 35.0));
-        Path.addCircleArc(waypoints, -20.0, 23.0, 10);
-        waypoints.add(new Waypoint(new Translation2d(-65, -23), 35.0));
+        waypoints.add(new Waypoint(new Translation2d(-29, 0), 40.0));
+        Path.addCircleArc(waypoints, -30.0, 45.0, 10, null);
+        waypoints.add(new Waypoint(new Translation2d(-68.6, -26.5), 40.0));
 		
 		Button driveAP = new InternalButton();
 		driveAP.whenPressed(new DrivePathAdaptivePursuit(new Path(waypoints), true));

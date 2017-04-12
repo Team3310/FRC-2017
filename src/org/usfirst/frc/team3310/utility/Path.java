@@ -219,7 +219,7 @@ public class Path {
         }
     }
     
-    public static void addCircleArc(List<Waypoint> waypoints, double radius, double angleDeg, int numPoints ) {
+    public static void addCircleArc(List<Waypoint> waypoints, double radius, double angleDeg, int numPoints, String endMarker ) {
     	Waypoint last = waypoints.get(waypoints.size() - 1);
     	
     	double centerX = last.position.x_;
@@ -229,9 +229,16 @@ public class Path {
     	double currentAngle = deltaAngle;
     	for (int i = 0; i < numPoints; i++ ) {
     		double x = radius * Math.sin(Math.toRadians(currentAngle)) + centerX;
-    		double y = centerY - radius * Math.cos(Math.toRadians(currentAngle)) ;
-    		Waypoint point = new Waypoint(new Translation2d(x, y), last.speed);
-    		waypoints.add(point);
+    		double y = centerY - radius * Math.cos(Math.toRadians(currentAngle));
+    		
+    		if (i == numPoints - 1 && endMarker != null) {
+    			Waypoint point = new Waypoint(new Translation2d(x, y), last.speed, endMarker);
+    			waypoints.add(point);
+    		}
+    		else {
+    			Waypoint point = new Waypoint(new Translation2d(x, y), last.speed);
+    			waypoints.add(point);
+    		}
     		
     		currentAngle += deltaAngle;
     	}
@@ -240,9 +247,9 @@ public class Path {
 	public static void main(String[] args) {
 		
         List<Waypoint> waypoints = new ArrayList<>();
-        waypoints.add(new Waypoint(new Translation2d(0, 0), 35.0));
-        waypoints.add(new Waypoint(new Translation2d(-10, 0), 35.0));
-        Path.addCircleArc(waypoints, -10.0, 90.0, 2);
+        waypoints.add(new Waypoint(new Translation2d(-29, 0), 40.0));
+        Path.addCircleArc(waypoints, -30.0, 45.0, 10, null);
+        waypoints.add(new Waypoint(new Translation2d(-65, -23), 40.0));
         
         for (int i = 0; i < waypoints.size(); i++) {
         	Waypoint curPoint = waypoints.get(i);

@@ -162,7 +162,8 @@ public class Camera extends Subsystem
 		lastTargetValid = false;
     	try {
 			long startTime = System.currentTimeMillis();
-    		getImageFromCamera();        
+    		getImageFromCamera();   
+    		
 			bestTarget = imageProcessor.findBestTarget(currentImageMat, true);
 			if (bestTarget != null) {
 				bestTarget.angleToTargetDeg += offsetAngleDeg;

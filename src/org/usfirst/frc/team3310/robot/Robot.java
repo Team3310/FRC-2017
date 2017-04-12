@@ -4,6 +4,7 @@ package org.usfirst.frc.team3310.robot;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
@@ -95,6 +96,7 @@ public class Robot extends IterativeRobot {
 		autonTaskChooser.addObject("Blue Gear Center", new BlueGearCenterAuton());
 //		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
 //		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
+		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Adaptive Pursuit", new BoilerShooterFromHopperAdaptivePursuit());
 		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Barker", new BoilerShooterFromHopperBarker());
 		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper Barker", new BlueBoilerShooterFromHopperBarker());
 //		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker Path", new BoilerShooterFromHopperBarkerPath(boilerPath));

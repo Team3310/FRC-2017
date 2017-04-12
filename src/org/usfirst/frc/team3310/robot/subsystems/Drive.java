@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3310.robot.subsystems;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.usfirst.frc.team3310.robot.Constants;
 import org.usfirst.frc.team3310.robot.OI;
@@ -32,9 +33,10 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.PigeonImu;
 import com.ctre.PigeonImu.CalibrationMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -78,6 +80,8 @@ public class Drive extends Subsystem implements ControlLoopable
 	private CANTalon rightDrive3;
 
 	private RobotDrive m_drive;
+
+	private DigitalInput hopperSensor;
 	
 	private double climbSpeed;
 	
@@ -143,7 +147,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	private PIDParams mpPathVelocityPIDParams = new PIDParams(0.5, 0.001, 5, 0.44); 
 
 	private AdaptivePurePursuitController adaptivePursuitController;
-	private PIDParams adaptivePursuitPIDParams = new PIDParams(0.1, 0.00, 0, 0.44); 
+	private PIDParams adaptivePursuitPIDParams = new PIDParams(0.1, 0.00, 1, 0.44); 
 	
 	private RigidTransform2d zeroPose = new RigidTransform2d(new Translation2d(0,0), Rotation2d.fromDegrees(0));
 	private RigidTransform2d currentPose = zeroPose;
@@ -170,6 +174,8 @@ public class Drive extends Subsystem implements ControlLoopable
 			rightDrive3 = new CANTalon(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID);
 			
 			gyroPigeon = new PigeonImu(leftDrive2);
+			
+			hopperSensor = new DigitalInput(RobotMap.HOPPER_SENSOR_DIO_ID);
 			
 			leftDrive1.clearStickyFaults();
 			leftDrive1.reverseSensor(true);
@@ -261,6 +267,10 @@ public class Drive extends Subsystem implements ControlLoopable
 	
 	public void setGyroOffset(double offsetDeg) {
 		gyroOffsetDeg = offsetDeg;
+	}
+	
+	public boolean isHopperSensorOn() {
+		return hopperSensor.get();
 	}
 
 	public void setStraightMM(double distanceInches, double maxVelocity, double maxAcceleration, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
@@ -360,7 +370,22 @@ public class Drive extends Subsystem implements ControlLoopable
         return Kinematics.integrateForwardKinematics(lastPose, left_encoder_delta_distance, right_encoder_delta_distance, current_gyro_angle);
     }
 	
-	public void setControlMode(DriveControlMode controlMode) {
+    /**
+     * Path Markers are an optional functionality that name the various
+     * Waypoints in a Path with a String. This can make defining set locations
+     * much easier.
+     * 
+     * @return Set of Strings with Path Markers that the robot has crossed.
+     */
+    public synchronized Set<String> getPathMarkersCrossed() {
+        if (controlMode != DriveControlMode.ADAPTIVE_PURSUIT) {
+            return null;
+        } else {
+            return adaptivePursuitController.getMarkersCrossed();
+        }
+    }
+
+    public synchronized void setControlMode(DriveControlMode controlMode) {
  		this.controlMode = controlMode;
 		if (controlMode == DriveControlMode.JOYSTICK) {
 			leftDrive1.changeControlMode(TalonControlMode.PercentVbus);
@@ -386,7 +411,7 @@ public class Drive extends Subsystem implements ControlLoopable
 		isFinished = false;
 	}
 	
-	public void controlLoopUpdate() {
+	public synchronized void controlLoopUpdate() {
 		if (controlMode == DriveControlMode.JOYSTICK || controlMode == DriveControlMode.CLIMB) {
 			driveWithJoystick();
 		}
@@ -603,11 +628,11 @@ public class Drive extends Subsystem implements ControlLoopable
 		}
 	}
 
-	public boolean isFinished() {
+	public synchronized boolean isFinished() {
 		return isFinished;
 	}
 	
-	public void setFinished(boolean isFinished) {
+	public synchronized void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
 	
@@ -664,6 +689,7 @@ public class Drive extends Subsystem implements ControlLoopable
 				SmartDashboard.putNumber("Right 1 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR1_CAN_ID));
 				SmartDashboard.putNumber("Right 2 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID));
 				SmartDashboard.putNumber("Right 3 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID));
+				SmartDashboard.putBoolean("Hopper Sensor", isHopperSensorOn());
 				SmartDashboard.putBoolean("Drive Hold", controlMode == DriveControlMode.HOLD);
 				SmartDashboard.putNumber("Yaw Angle Pigeon Deg", getGyroPigeonAngleDeg());
 				MotionProfilePoint mpPoint = mpTurnController.getCurrentPoint(); 
