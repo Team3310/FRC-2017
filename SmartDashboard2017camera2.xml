@@ -1,5 +1,131 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Shooter Far Shot" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="591" y="214"/>
+	</widget>
+	<widget field="Intake Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="591" y="174"/>
+	</widget>
+	<widget field="Shooter Feed 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="591" y="150"/>
+	</widget>
+	<widget field="Hopper Open" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="591" y="87"/>
+	</widget>
+	<widget field="Magic Carpet Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="482" y="780"/>
+	</widget>
+	<widget field="Intake 0.4" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="756"/>
+	</widget>
+	<widget field="Gear Intake Clean Off Speed" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="591" y="21"/>
+	</widget>
+	<widget field="LEDs On" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="471"/>
+	</widget>
+	<widget field="Shooter Stage 2 - 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="523" y="698"/>
+	</widget>
+	<widget field="Shooter Target VBus" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="591" y="0"/>
+	</widget>
+	<widget field="Shooter All On" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="482" y="732"/>
+	</widget>
+	<widget field="Shooter Stage 1 Target RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="315" y="126"/>
+	</widget>
+	<widget field="Gear Intake Clean Speed" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="541" y="282"/>
+	</widget>
+	<widget field="Intake 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="402"/>
+	</widget>
+	<widget field="Shooter Stage 2 - 0.6" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="378"/>
+	</widget>
+	<widget field="Shooter Feed 1.0" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="354"/>
+	</widget>
+	<widget field="LEDs Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="330"/>
+	</widget>
+	<widget field="Shooter Stage 1 Dash RPM" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="548" y="126"/>
+	</widget>
+	<widget field="Shooter Stage 2 Dash RPM" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="499" y="63"/>
+	</widget>
+	<widget field="Climber Max Amps" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="306"/>
+	</widget>
+	<widget field="Climber 0.8" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="282"/>
+	</widget>
+	<widget field="Magic Carpet 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="258"/>
+	</widget>
+	<widget field="Shooter Stage 2 - 0.7" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="234"/>
+	</widget>
+	<widget field="Shooter Stage 2 - 1.0" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="210"/>
+	</widget>
+	<widget field="Shooter Stage 1 - Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="453" y="0"/>
+	</widget>
+	<widget field="Shooter Both Dash VBus" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="780"/>
+	</widget>
+	<widget field="Shooter Stage 2 - 0.8" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="756"/>
+	</widget>
+	<widget field="Intake 1.0" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="732"/>
+	</widget>
+	<widget field="Camera Read" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="471"/>
+	</widget>
+	<widget field="Shooter Both Dash RPM" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="334" y="447"/>
+	</widget>
+	<widget field="Shooter Target RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="315" y="84"/>
+	</widget>
+	<widget field="Intake 0.8" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="334" y="423"/>
+	</widget>
+	<widget field="Camera Read Turn" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="399"/>
+	</widget>
+	<widget field="Shooter Stage 2 - 0.9" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="375"/>
+	</widget>
+	<widget field="Shooter All Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="351"/>
+	</widget>
+	<widget field="Shooter Feed Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="162" y="567"/>
+	</widget>
+	<widget field="Shooter Stage 1 - 0.5" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="327"/>
+	</widget>
+	<widget field="Shooter Close Shot" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="162" y="507"/>
+	</widget>
+	<widget field="Shooter Stage 2 Target RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Shooter Stage 2 - Off" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="315" y="0"/>
+	</widget>
+	<widget field="Hopper Closed" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="Hopper Sensor" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1254" y="199"/>
+	</widget>
 	<widget field="Drive Adaptive Pursuit" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="708" y="45"/>
 	</widget>
@@ -36,7 +162,7 @@
 		<location x="222" y="441"/>
 	</widget>
 	<widget field="Auton Task" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="361" y="370"/>
+		<location x="289" y="504"/>
 	</widget>
 	<widget field="Camera Turn To Best" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="162" y="483"/>

@@ -17,13 +17,13 @@ public class ClimberSetSpeedTimer extends Command {
     public ClimberSetSpeedTimer(double speed, double time) {
     	this.speed = speed;
     	this.time = time;
-        requires(Robot.climber);
+        requires(Robot.shooterFeed);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	this.setTimeout(time);
-    	Robot.climber.setSpeed(speed);
+    	Robot.shooterFeed.setClimberSpeed(speed);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,7 +37,7 @@ public class ClimberSetSpeedTimer extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.climber.setSpeed(0.0);
+    	Robot.shooterFeed.setClimberSpeed(0.0);
     }
 
     // Called when another command which requires one or more of the same

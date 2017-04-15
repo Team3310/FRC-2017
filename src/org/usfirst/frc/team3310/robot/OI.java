@@ -29,7 +29,6 @@ import org.usfirst.frc.team3310.robot.commands.ShootOff;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetHopperPosition;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetToggle;
-import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
@@ -94,7 +93,7 @@ public class OI {
         gearIntakeDeploy.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
         
         XBoxDPadTriggerButton climberForward = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.UP);
-        climberForward.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, Drive.CLIMB_SPEED));
+        climberForward.whenPressed(new ClimberSetSpeed(ShooterFeed.CLIMB_SPEED, Drive.CLIMB_SPEED));
         climberForward.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton climberReverse = new XBoxDPadTriggerButton(m_driverXbox, XBoxDPadTriggerButton.DOWN);
@@ -137,7 +136,7 @@ public class OI {
         gearIntakeDeployOperator.whenPressed(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
         
         XBoxDPadTriggerButton climberForwardOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.UP);
-        climberForwardOperator.whenPressed(new ClimberSetSpeed(Climber.CLIMB_SPEED, 0.0));
+        climberForwardOperator.whenPressed(new ClimberSetSpeed(ShooterFeed.CLIMB_SPEED, 0.0));
         climberForwardOperator.whenReleased(new ClimberSetSpeed(0.0, 0.0));
         
         XBoxDPadTriggerButton climberReverseOperator = new XBoxDPadTriggerButton(m_operatorXbox, XBoxDPadTriggerButton.DOWN);

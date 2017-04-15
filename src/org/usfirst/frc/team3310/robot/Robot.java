@@ -9,7 +9,6 @@ import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBark
 import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
-import org.usfirst.frc.team3310.robot.subsystems.Climber;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
 import org.usfirst.frc.team3310.robot.subsystems.LedLights;
@@ -46,7 +45,6 @@ public class Robot extends IterativeRobot {
 	public static final ShooterFeed shooterFeed = new ShooterFeed();
 	public static final GearIntake gearIntake = new GearIntake();
 	public static final ZarkerFeed zarkerFeed = new ZarkerFeed();
-	public static final Climber climber = new Climber();
 	public static final LedLights ledLights = new LedLights();
 	public static final Camera camera = new Camera();
 	
@@ -206,7 +204,6 @@ public class Robot extends IterativeRobot {
     	shooter.updateStatus(operationMode);
     	shooterFeed.updateStatus(operationMode);
     	zarkerFeed.updateStatus(operationMode);
-    	climber.updateStatus(operationMode);
     	camera.updateStatus(operationMode);
    }
 

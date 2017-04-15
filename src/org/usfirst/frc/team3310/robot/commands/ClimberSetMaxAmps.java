@@ -17,12 +17,12 @@ public class ClimberSetMaxAmps extends Command {
     public ClimberSetMaxAmps(double speed, double maxAmps) {
     	this.speed = speed;
     	this.maxAmps = maxAmps;
-        requires(Robot.climber);
+        requires(Robot.shooterFeed);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.climber.setSpeed(speed);
+    	Robot.shooterFeed.setClimberSpeed(speed);
      	
     }
 
@@ -32,12 +32,12 @@ public class ClimberSetMaxAmps extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.climber.getLeftAmps() > this.maxAmps;
+        return Robot.shooterFeed.getLeftAmps() > this.maxAmps;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.climber.setSpeed(0);
+    	Robot.shooterFeed.setClimberSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

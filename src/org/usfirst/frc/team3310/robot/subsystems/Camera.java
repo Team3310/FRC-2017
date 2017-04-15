@@ -33,6 +33,8 @@ public class Camera extends Subsystem
 	private double offsetAngleDeg = 0;
 	private boolean lastTargetValid = false;
 	private boolean alignmentFinished = false;
+	
+	private boolean isValidImage;
 
     public Camera() {
     }
@@ -91,9 +93,11 @@ public class Camera extends Subsystem
 	private void getImageFromCamera() {
 		// Tell the CvSink to grab a frame from the camera and put it
 		// in the source mat.  If there is an error notify the output.
+		isValidImage = true;
 		if (cvSink.grabFrame(currentImageMat) == 0) {
 			// Send the output the error.
 			DriverStation.reportError("Error getting image: " + cvSink.getError(), false);		
+			isValidImage = false;
 		}
 	}
 	
@@ -133,6 +137,11 @@ public class Camera extends Subsystem
 	public void saveCameraImage(ImageOutput output) {
     	try {
 			getImageFromCamera();        
+ 
+			if (isValidImage == false) {
+    			return;
+    		}
+    		
 			saveImage(output);
     	}
 		catch (Exception e) {
@@ -163,6 +172,10 @@ public class Camera extends Subsystem
     	try {
 			long startTime = System.currentTimeMillis();
     		getImageFromCamera();   
+    		
+    		if (isValidImage == false) {
+    			return null;
+    		}
     		
 			bestTarget = imageProcessor.findBestTarget(currentImageMat, true);
 			if (bestTarget != null) {

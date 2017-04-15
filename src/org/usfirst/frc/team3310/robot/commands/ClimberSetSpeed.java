@@ -17,12 +17,12 @@ public class ClimberSetSpeed extends Command {
     public ClimberSetSpeed(double climbSpeed, double driveSpeed) {
     	this.climbSpeed = climbSpeed;
     	this.driveSpeed = driveSpeed;
-        requires(Robot.climber);
+        requires(Robot.shooterFeed);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.climber.setSpeed(climbSpeed);
+    	Robot.shooterFeed.setClimberSpeed(climbSpeed);
     	Robot.drive.setClimbSpeed(driveSpeed);
     }
 
