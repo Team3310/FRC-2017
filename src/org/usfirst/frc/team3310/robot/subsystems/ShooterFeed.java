@@ -16,6 +16,7 @@ public class ShooterFeed extends Subsystem {
     
 	private CANTalon rollerLeft;
 	private CANTalon rollerRight;
+	private CANTalon oldClimber;
 	
 	public static final double SHOOTER_FEED_SHOOT_FAR_SPEED = 0.7;
 	public static final double SHOOTER_FEED_SHOOT_CLOSE_SPEED = 0.6;
@@ -35,6 +36,9 @@ public class ShooterFeed extends Subsystem {
 			rollerRight.clearStickyFaults();
 			rollerRight.setSafetyEnabled(false);
 
+			oldClimber = new CANTalon(RobotMap.CLIMBER_MOTOR_lEFT_CAN_ID);
+			oldClimber.clearStickyFaults();
+			oldClimber.setSafetyEnabled(false);
 		} 
 		catch (Exception e) {
 			System.err.println("An error occurred in the Shooter Lift/Climber Subsystem constructor");
@@ -49,6 +53,7 @@ public class ShooterFeed extends Subsystem {
 	public void setClimberSpeed(double speed) {
 		rollerLeft.set(speed);
 		rollerRight.set(-speed);
+		oldClimber.set(speed);
 	}
 
 	public double getLeftAmps() {
