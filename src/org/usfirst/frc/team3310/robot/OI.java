@@ -163,17 +163,24 @@ public class OI {
 
         List<Waypoint> waypoints = new ArrayList<>();
         waypoints.add(new Waypoint(new Translation2d(0, 0), 35.0));
+        waypoints.add(new Waypoint(new Translation2d(-35, 0), 35.0));
+        Path.addCircleArc(waypoints, -30.0, 45.0, 10, "hopperSensorOn");
+        waypoints.add(new Waypoint(new Translation2d(-85, -30), 35.0));
+
+//        List<Waypoint> waypoints = new ArrayList<>();
+//        waypoints.add(new Waypoint(new Translation2d(-96, 0), 50.0));
+//        waypoints.add(new Waypoint(new Translation2d(0, 0), 35.0));
 //        waypoints.add(new Waypoint(new Translation2d(-96, 0), 50.0));
 //        waypoints.add(new Waypoint(new Translation2d(-61, 0), 50.0));
 //        waypoints.add(new Waypoint(new Translation2d(-84.93, -10.16), 50.0));
         
 //        waypoints.add(new Waypoint(new Translation2d(-41, 0), 35.0));
-//         waypoints.add(new Waypoint(new Translation2d(-65, -23), 35.0));
-//      waypoints.add(new Waypoint(new Translation2d(-70, -39), 35.0));
+//        waypoints.add(new Waypoint(new Translation2d(-65, -23), 35.0));
+//        waypoints.add(new Waypoint(new Translation2d(-70, -39), 35.0));
         
-        waypoints.add(new Waypoint(new Translation2d(-29, 0), 40.0));
-        Path.addCircleArc(waypoints, -30.0, 45.0, 10, null);
-        waypoints.add(new Waypoint(new Translation2d(-68.6, -26.5), 40.0));
+//        waypoints.add(new Waypoint(new Translation2d(-29, 0), 40.0));
+//        Path.addCircleArc(waypoints, -30.0, 45.0, 10, null);
+//        waypoints.add(new Waypoint(new Translation2d(-68.6, -26.5), 40.0));
 		
 		Button driveAP = new InternalButton();
 		driveAP.whenPressed(new DrivePathAdaptivePursuit(new Path(waypoints), true));
@@ -188,11 +195,11 @@ public class OI {
 		SmartDashboard.putData("Turn Relative 10 PID", turnRelativePID);
 		
 		Button turnRelativeMP = new InternalButton();
-		turnRelativeMP.whenPressed(new DriveRelativeTurnMP(90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+		turnRelativeMP.whenPressed(new DriveRelativeTurnMP(45, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY ));
 		SmartDashboard.putData("Turn Relative 90", turnRelativeMP);
 		
 		Button turnAbsoluteMP = new InternalButton();
-		turnAbsoluteMP.whenPressed(new DriveAbsoluteTurnMP(90, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
+		turnAbsoluteMP.whenPressed(new DriveAbsoluteTurnMP(45, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY));
 		SmartDashboard.putData("Turn Absolute 90", turnAbsoluteMP);
 
 		Button gyroReset = new InternalButton();

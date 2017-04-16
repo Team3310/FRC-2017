@@ -12,7 +12,7 @@ public class Constants extends ConstantsBase {
     public static double kTrackLengthInches = 25;
     public static double kTrackWidthInches = 26.937;
     public static double kTrackEffectiveDiameter = (kTrackWidthInches * kTrackWidthInches + kTrackLengthInches * kTrackLengthInches) / kTrackWidthInches;
-    public static double kTrackScrubFactor = 0.5;
+    public static double kTrackScrubFactor = 0.75;
 
     // Drive constants
     public static double kDriveLowGearMaxSpeedInchesPerSec = 12.0 * 5.0;

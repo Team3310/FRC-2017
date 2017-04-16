@@ -8,6 +8,7 @@ import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperAdap
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.GearCenterForwardAuton;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
@@ -90,6 +91,7 @@ public class Robot extends IterativeRobot {
 		autonTaskChooser = new SendableChooser<Command>();
 //		autonTaskChooser.addObject("Red Gear Loading Side", new GearLoadingSideAuton());
 //		autonTaskChooser.addObject("Blue Gear Loading Side", new BlueGearLoadingSideAuton());
+		autonTaskChooser.addObject("Red Gear Forward Center", new GearCenterForwardAuton());
 		autonTaskChooser.addObject("Red Gear Center", new GearCenterAuton());
 		autonTaskChooser.addObject("Blue Gear Center", new BlueGearCenterAuton());
 //		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());

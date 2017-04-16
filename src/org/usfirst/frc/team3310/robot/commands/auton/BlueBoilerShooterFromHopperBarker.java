@@ -32,7 +32,7 @@ public class BlueBoilerShooterFromHopperBarker extends CommandGroup {
     	addSequential(new DriveGyroReset());
       	addSequential(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR + 200, Shooter.SHOOTER_STAGE2_RPM_FAR + 200));
     	addSequential(new DriveStraightMP(-61, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0)); //greenville -61
-        addSequential(new DriveAbsoluteTurnMP(21.5, Drive.MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY)); //greenville 30
+        addSequential(new DriveAbsoluteTurnMP(21.5, Drive.MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.RIGHT_SIDE_ONLY)); //greenville 30
  //       addParallel(new GearIntakeRollerSetDeployAuton(1.0));
         addSequential(new GearIntakeSetOuterPosition(GearPositionState.DOWN));
         addSequential(new DriveStraightMP(-36, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 21.5)); //greenville -23

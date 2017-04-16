@@ -14,7 +14,7 @@ public class CameraUpdateBestTarget extends Command
 
 	@Override
 	protected void initialize() {
-		Robot.camera.getBestTarget(ImageOutput.DASHBOARD);
+		Robot.camera.getBestTarget(ImageOutput.DASHBOARD, true);
 	}
 
 	protected void execute() {

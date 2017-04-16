@@ -42,33 +42,34 @@ public class Camera extends Subsystem
     public void initialize() {
 		try {
 			
-			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 0);
-			boilerCamera.setResolution(640, 480);
-			boilerCamera.setExposureManual(0);
-			boilerCamera.setBrightness(30);
+			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
+			frontCamera.setResolution(320, 240);
+			frontCamera.setFPS(25);
+			frontCamera.setExposureAuto();
 
 			// Use http://172.22.11.2:1181/ or http://roborio-3310-frc.local:1181/ to view camera settings
 			
 			// Logitech C920 auto focus on=1, off=0
-			VideoProperty autofocus = boilerCamera.getProperty("focus_auto");
-			autofocus.set(0);
+//			VideoProperty autofocus = boilerCamera.getProperty("focus_auto");
+//			autofocus.set(0);
 			
 			// Logitech C920 focus range 0-250.  0 = far away, 250 = very close.  
-			VideoProperty focus = boilerCamera.getProperty("focus_absolute");
-			focus.set(10);
+//			VideoProperty focus = boilerCamera.getProperty("focus_absolute");
+//			focus.set(10);
 		
 			// Logitech C920 white balance range 2000-6000.  2000 more blue, 6000 more green.  
-			VideoProperty whiteBalanceAuto = boilerCamera.getProperty("white_balance_temperature_auto");
-			whiteBalanceAuto.set(0);
-			VideoProperty whiteBalanceTemp = boilerCamera.getProperty("white_balance_temperature");
-			whiteBalanceTemp.set(6000);
+//			VideoProperty whiteBalanceAuto = boilerCamera.getProperty("white_balance_temperature_auto");
+//			whiteBalanceAuto.set(0);
+//			VideoProperty whiteBalanceTemp = boilerCamera.getProperty("white_balance_temperature");
+//			whiteBalanceTemp.set(6000);
 
-//			Thread.sleep(1000);
+			Thread.sleep(1000);
+
+			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 1);
+			boilerCamera.setResolution(640, 480);
+			boilerCamera.setExposureManual(0);
+			boilerCamera.setBrightness(40);
 			
-//			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
-//			frontCamera.setResolution(640, 480);
-//			frontCamera.setExposureAuto();
-
 			// Get a CvSink. This will capture Mats from the camera
 			cvSink = CameraServer.getInstance().getVideo(boilerCamera);
 			// Setup a CvSource. This will send images back to the Dashboard
@@ -96,7 +97,7 @@ public class Camera extends Subsystem
 		isValidImage = true;
 		if (cvSink.grabFrame(currentImageMat) == 0) {
 			// Send the output the error.
-			DriverStation.reportError("Error getting image: " + cvSink.getError(), false);		
+			DriverStation.reportError("Error getting valid image: " + cvSink.getError(), false);		
 			isValidImage = false;
 		}
 	}
@@ -167,15 +168,17 @@ public class Camera extends Subsystem
 		}
 	}
 	
-	public TargetInfo getBestTarget(ImageOutput output) {
+	public TargetInfo getBestTarget(ImageOutput output, boolean captureNewPicture) {
 		lastTargetValid = false;
     	try {
 			long startTime = System.currentTimeMillis();
-    		getImageFromCamera();   
-    		
-    		if (isValidImage == false) {
-    			return null;
-    		}
+			
+			if (captureNewPicture) {
+	    		getImageFromCamera();     		
+	    		if (isValidImage == false) {
+	    			return null;
+	    		}
+			}
     		
 			bestTarget = imageProcessor.findBestTarget(currentImageMat, true);
 			if (bestTarget != null) {

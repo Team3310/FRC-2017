@@ -21,7 +21,7 @@ public class CameraTurnToBestTarget extends Command
 
 	@Override
 	protected void initialize() {
-		TargetInfo bestTarget = Robot.camera.getBestTarget(ImageOutput.DASHBOARD);
+		TargetInfo bestTarget = Robot.camera.getBestTarget(ImageOutput.DASHBOARD, true);
 		if (bestTarget != null) {
 			if(bestTarget.angleToTargetDeg > 15) {
 				Robot.drive.setRelativeTurnMP(bestTarget.angleToTargetDeg, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK);			
