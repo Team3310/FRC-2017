@@ -6,7 +6,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 public class MPSoftwarePIDController
 {	
-	public static enum MPSoftwareTurnType { TANK, LEFT_SIDE_ONLY, RIGHT_SIDE_ONLY };
+	public static enum MPSoftwareTurnType { TANK, LEFT_SIDE_ONLY, RIGHT_SIDE_ONLY, LEFT_ARC, RIGHT_ARC };
 
 	protected ArrayList<CANTalonEncoder> motorControllers;	
 	protected long periodMs;
@@ -113,6 +113,26 @@ public class MPSoftwarePIDController
 				}
 				else {
 					motorController.set(0);					
+				}
+			}
+		}
+		else if (turnType == MPSoftwareTurnType.LEFT_ARC) {
+			for (CANTalonEncoder motorController : motorControllers) {
+				if (motorController.isRight()) {
+					motorController.set(1.0 * output);
+				}
+				else {
+					motorController.set(2.0 * output);					
+				}
+			}
+		}
+		else if (turnType == MPSoftwareTurnType.RIGHT_ARC) {
+			for (CANTalonEncoder motorController : motorControllers) {
+				if (motorController.isRight()) {
+					motorController.set(2.0 * output);
+				}
+				else {
+					motorController.set(1.0 * output);					
 				}
 			}
 		}
