@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GearBoilerSideAutonFarShot extends CommandGroup {
+public class RedGearBoilerSideFarShotReverseAuton extends CommandGroup {
     
-    public GearBoilerSideAutonFarShot() {
+    public RedGearBoilerSideFarShotReverseAuton() {
     	addSequential(new ShooterSetVoltageRampRate(Shooter.AUTON_VOLTAGE_RAMP_RATE));
         addParallel(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR, Shooter.SHOOTER_STAGE2_RPM_FAR));
     	addSequential(new DriveGyroReset());

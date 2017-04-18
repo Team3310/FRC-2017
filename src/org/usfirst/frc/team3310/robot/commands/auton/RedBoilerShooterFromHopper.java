@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class BoilerShooterFromHopper extends CommandGroup {
+public class RedBoilerShooterFromHopper extends CommandGroup {
     
-    public BoilerShooterFromHopper() {
+    public RedBoilerShooterFromHopper() {
     	addSequential(new DriveGyroReset());
         addSequential(new DriveStraightMP(-81, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));
     	addParallel(new IntakeSetPosition(IntakePosition.SHOOT));

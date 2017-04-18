@@ -30,8 +30,8 @@ public class BlueShootFirstGearBoilerSideForwardAuton extends CommandGroup {
         addSequential(new DriveGyroReset());
     	addSequential(new ShooterSetVoltageRampRate(Shooter.AUTON_VOLTAGE_RAMP_RATE));
         addParallel(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_FAR + 200, Shooter.SHOOTER_STAGE2_RPM_FAR + 200));
-//        addSequential(new DriveStraightMP(-12, Drive.MP_GEAR_DEPLOY_FASTER_VELOCITY_INCHES_PER_SEC, true, true, 0));
-    	addSequential(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
+
+        addSequential(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
         addSequential(new WaitCommand(1.0));
        	addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
         addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, false));      
@@ -53,7 +53,5 @@ public class BlueShootFirstGearBoilerSideForwardAuton extends CommandGroup {
         addSequential(new DriveAbsoluteTurnMP(20, Drive.MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addSequential(new DriveSpeedShift(SpeedShiftState.HI));
         addSequential(new DriveStraightMP(300, Drive.MP_AUTON_MAX_HIGH_GEAR_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 20));
-//        addSequential(new DriveAbsoluteTurnMP(0, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
-//       addSequential(new DriveStraightMP(214, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0)); 
     }
 }

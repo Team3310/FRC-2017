@@ -2,16 +2,13 @@
 package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperAdaptivePursuit;
-import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperBarker;
-import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideForwardAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueShootFirstGearBoilerSideForwardAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperAdaptivePursuit;
-import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
-import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.GearCenterAuton;
-import org.usfirst.frc.team3310.robot.commands.auton.GearCenterForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedBoilerShooterFromHopperAdaptivePursuit;
+import org.usfirst.frc.team3310.robot.commands.auton.RedGearBoilerSideForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake;
@@ -92,24 +89,21 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Operation Mode", operationModeChooser);
 		
 		autonTaskChooser = new SendableChooser<Command>();
-//		autonTaskChooser.addObject("Red Gear Loading Side", new GearLoadingSideAuton());
-//		autonTaskChooser.addObject("Blue Gear Loading Side", new BlueGearLoadingSideAuton());
-		autonTaskChooser.addObject("Red Gear Forward Center", new GearCenterForwardAuton());
-		autonTaskChooser.addObject("Red Gear Center", new GearCenterAuton());
-		autonTaskChooser.addObject("Blue Gear Center", new BlueGearCenterAuton());
-//		autonTaskChooser.addObject("Red Boiler Shooter From Hopper", new BoilerShooterFromHopper());
-//		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper", new BlueBoilerShooterFromHopper());
-		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Adaptive Pursuit", new BoilerShooterFromHopperAdaptivePursuit());
-		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Barker", new BoilerShooterFromHopperBarker());
-		autonTaskChooser.addObject("Blue Boiler Shooter From Hopper Barker", new BlueBoilerShooterFromHopperBarker());
-//		autonTaskChooser.addObject("Red Boiler Shooter From Hopper Barker Path", new BoilerShooterFromHopperBarkerPath(boilerPath));
-		autonTaskChooser.addObject("Red Gear Boiler Side", new GearBoilerSideAuton());
-//		autonTaskChooser.addObject("Red Gear Boiler Side Far Shot", new GearBoilerSideAutonFarShot());
-		autonTaskChooser.addObject("Blue Gear Boiler Side", new BlueGearBoilerSideAuton());
-		autonTaskChooser.addObject("Blue Gear Boiler Side Forward", new BlueGearBoilerSideForwardAuton());
-		autonTaskChooser.addObject("Blue Shoot First Gear Boiler Side Forward", new BlueShootFirstGearBoilerSideForwardAuton());
+
+		autonTaskChooser.addObject("Red Gear Loading Side Forward", new BlueGearLoadingSideForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Loading Side Forward", new BlueGearLoadingSideForwardAuton());
+
+		autonTaskChooser.addObject("Red Gear Forward Center", new RedGearCenterForwardAuton());
+		autonTaskChooser.addObject("Red Gear Forward Center", new RedGearCenterForwardAuton());
+
+		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Adaptive Pursuit", new RedBoilerShooterFromHopperAdaptivePursuit());
 		autonTaskChooser.addDefault("Blue Boiler Shooter From Hopper Adaptive Pursuit", new BlueBoilerShooterFromHopperAdaptivePursuit());
 
+		autonTaskChooser.addObject("Red Gear Boiler Side Forward", new RedGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Boiler Side Forward", new BlueGearBoilerSideForwardAuton());
+
+		autonTaskChooser.addObject("Blue Shoot First Gear Boiler Side Forward", new BlueShootFirstGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Red Shoot First Gear Boiler Side Forward", new RedShootFirstGearBoilerSideForwardAuton());
 
 
 		SmartDashboard.putData("Auton Task", autonTaskChooser);

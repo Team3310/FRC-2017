@@ -19,9 +19,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class BoilerShooterFromHopperBarkerPath extends CommandGroup {
+public class RedBoilerShooterFromHopperBarkerPath extends CommandGroup {
     
-    public BoilerShooterFromHopperBarkerPath(PathGenerator path) {
+    public RedBoilerShooterFromHopperBarkerPath(PathGenerator path) {
     	addSequential(new ShooterSetShotPosition(ShotState.FAR));
     	addSequential(new DriveGyroReset());
         addSequential(new DrivePathMP(path));

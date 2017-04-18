@@ -32,9 +32,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class BoilerShooterFromHopperAdaptivePursuit extends CommandGroup {
+public class RedBoilerShooterFromHopperAdaptivePursuit extends CommandGroup {
     
-    public BoilerShooterFromHopperAdaptivePursuit() {
+    public RedBoilerShooterFromHopperAdaptivePursuit() {
     	addSequential(new ShooterSetVoltageRampRate(Shooter.AUTON_VOLTAGE_RAMP_RATE));
     	addSequential(new ShooterSetShotPosition(ShotState.FAR));
     	addSequential(new DriveGyroReset());
