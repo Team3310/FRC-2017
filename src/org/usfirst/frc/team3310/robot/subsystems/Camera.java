@@ -67,8 +67,8 @@ public class Camera extends Subsystem
 
 			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 1);
 			boilerCamera.setResolution(640, 480);
-			boilerCamera.setExposureManual(0);
-			boilerCamera.setBrightness(40);
+			boilerCamera.setExposureManual(1);
+			boilerCamera.setBrightness(20);
 			
 			// Get a CvSink. This will capture Mats from the camera
 			cvSink = CameraServer.getInstance().getVideo(boilerCamera);

@@ -56,6 +56,7 @@ public class Drive extends Subsystem implements ControlLoopable
 	public static final double MAX_TURN_RATE_DEG_PER_SEC = 320;
 	public static final double MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC =  120;  //72;
 	public static final double MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC =  200;  //72;
+	public static final double MP_AUTON_MAX_HIGH_GEAR_STRAIGHT_VELOCITY_INCHES_PER_SEC =  400;  //72;
 	public static final double MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC =  270;
 	public static final double MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC =  400;
 	public static final double MP_GEAR_DEPLOY_VELOCITY_INCHES_PER_SEC = 25;
@@ -81,7 +82,9 @@ public class Drive extends Subsystem implements ControlLoopable
 
 	private RobotDrive m_drive;
 
-	private DigitalInput hopperSensor;
+	private DigitalInput hopperSensorRed;
+	private DigitalInput hopperSensorBlue;
+
 	
 	private double climbSpeed;
 	
@@ -175,8 +178,9 @@ public class Drive extends Subsystem implements ControlLoopable
 			
 			gyroPigeon = new PigeonImu(leftDrive2);
 			
-			hopperSensor = new DigitalInput(RobotMap.HOPPER_SENSOR_DIO_ID);
-			
+			hopperSensorRed = new DigitalInput(RobotMap.HOPPER_SENSOR_RED_DIO_ID);
+			hopperSensorBlue = new DigitalInput(RobotMap.HOPPER_SENSOR_BLUE_DIO_ID);
+	
 			leftDrive1.clearStickyFaults();
 			leftDrive1.reverseSensor(true);
 			leftDrive1.reverseOutput(true);
@@ -269,8 +273,12 @@ public class Drive extends Subsystem implements ControlLoopable
 		gyroOffsetDeg = offsetDeg;
 	}
 	
-	public boolean isHopperSensorOn() {
-		return hopperSensor.get();
+	public boolean isHopperSensorRedOn() {
+		return hopperSensorRed.get();
+	}
+
+	public boolean isHopperSensorBlueOn() {
+		return hopperSensorBlue.get();
 	}
 
 	public void setStraightMM(double distanceInches, double maxVelocity, double maxAcceleration, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
@@ -689,7 +697,8 @@ public class Drive extends Subsystem implements ControlLoopable
 				SmartDashboard.putNumber("Right 1 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR1_CAN_ID));
 				SmartDashboard.putNumber("Right 2 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR2_CAN_ID));
 				SmartDashboard.putNumber("Right 3 Amps", Robot.pdp.getCurrent(RobotMap.DRIVETRAIN_RIGHT_MOTOR3_CAN_ID));
-				SmartDashboard.putBoolean("Hopper Sensor", isHopperSensorOn());
+				SmartDashboard.putBoolean("Hopper Sensor Red", isHopperSensorRedOn());
+				SmartDashboard.putBoolean("Hopper Sensor Blue", isHopperSensorBlueOn());
 				SmartDashboard.putBoolean("Drive Hold", controlMode == DriveControlMode.HOLD);
 				SmartDashboard.putNumber("Yaw Angle Pigeon Deg", getGyroPigeonAngleDeg());
 				MotionProfilePoint mpPoint = mpTurnController.getCurrentPoint(); 

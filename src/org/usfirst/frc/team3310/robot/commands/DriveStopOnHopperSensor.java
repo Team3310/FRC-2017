@@ -20,7 +20,7 @@ public class DriveStopOnHopperSensor extends Command
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.drive.isHopperSensorOn();
+		return Robot.drive.isHopperSensorRedOn();
 	}
 
 	@Override

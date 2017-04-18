@@ -1,9 +1,12 @@
 
 package org.usfirst.frc.team3310.robot;
 
+import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.auton.BoilerShooterFromHopperBarker;
 import org.usfirst.frc.team3310.robot.commands.auton.GearBoilerSideAuton;
@@ -103,6 +106,12 @@ public class Robot extends IterativeRobot {
 		autonTaskChooser.addObject("Red Gear Boiler Side", new GearBoilerSideAuton());
 //		autonTaskChooser.addObject("Red Gear Boiler Side Far Shot", new GearBoilerSideAutonFarShot());
 		autonTaskChooser.addObject("Blue Gear Boiler Side", new BlueGearBoilerSideAuton());
+		autonTaskChooser.addObject("Blue Gear Boiler Side Forward", new BlueGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Blue Shoot First Gear Boiler Side Forward", new BlueShootFirstGearBoilerSideForwardAuton());
+		autonTaskChooser.addDefault("Blue Boiler Shooter From Hopper Adaptive Pursuit", new BlueBoilerShooterFromHopperAdaptivePursuit());
+
+
+
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 
 //		SmartDashboard.putNumber("Shooter Stage 2 Target RPM", shooterStage2RpmDashboard);

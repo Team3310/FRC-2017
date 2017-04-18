@@ -247,9 +247,10 @@ public class Path {
 	public static void main(String[] args) {
 		
         List<Waypoint> waypoints = new ArrayList<>();
-        waypoints.add(new Waypoint(new Translation2d(-29, 0), 40.0));
-        Path.addCircleArc(waypoints, -30.0, 45.0, 10, null);
-        waypoints.add(new Waypoint(new Translation2d(-65, -23), 40.0));
+        waypoints.add(new Waypoint(new Translation2d(0, 0), 40.0));
+        waypoints.add(new Waypoint(new Translation2d(-35, 0), 40.0));
+        Path.addCircleArc(waypoints, 30.0, -45.0, 10, "hopperSensorOn");
+        waypoints.add(new Waypoint(new Translation2d(-85, 30), 40.0));
         
         for (int i = 0; i < waypoints.size(); i++) {
         	Waypoint curPoint = waypoints.get(i);
