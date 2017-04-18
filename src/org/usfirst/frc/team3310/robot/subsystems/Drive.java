@@ -280,6 +280,15 @@ public class Drive extends Subsystem implements ControlLoopable
 	public boolean isHopperSensorBlueOn() {
 		return hopperSensorBlue.get();
 	}
+	
+	public boolean isHopperSensorOn() {
+		if (isRed() == true) {
+			return isHopperSensorRedOn();
+		}		
+		else {
+			return isHopperSensorBlueOn();
+		}
+	}
 
 	public void setStraightMM(double distanceInches, double maxVelocity, double maxAcceleration, boolean useGyroLock, boolean useAbsolute, double desiredAbsoluteAngle) {
 		double yawAngle = useAbsolute ? BHRMathUtils.adjustAccumAngleToDesired(getGyroAngleDeg(), desiredAbsoluteAngle) : getGyroAngleDeg();

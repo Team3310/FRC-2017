@@ -42,10 +42,10 @@ public class Camera extends Subsystem
     public void initialize() {
 		try {
 			
-			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
-			frontCamera.setResolution(320, 240);
-			frontCamera.setFPS(25);
-			frontCamera.setExposureAuto();
+//			frontCamera = CameraServer.getInstance().startAutomaticCapture("FrontCamera", 0);
+//			frontCamera.setResolution(320, 240);
+//			frontCamera.setFPS(25);
+//			frontCamera.setExposureAuto();
 
 			// Use http://172.22.11.2:1181/ or http://roborio-3310-frc.local:1181/ to view camera settings
 			
@@ -65,7 +65,7 @@ public class Camera extends Subsystem
 
 			Thread.sleep(1000);
 
-			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 1);
+			boilerCamera = CameraServer.getInstance().startAutomaticCapture("BoilerCamera", 0);
 			boilerCamera.setResolution(640, 480);
 			boilerCamera.setExposureManual(1);
 			boilerCamera.setBrightness(20);
