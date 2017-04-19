@@ -48,6 +48,13 @@ public class RedBoilerShooterFromHopperAdaptivePursuit extends CommandGroup {
         Path.addCircleArc(waypoints, -30.0, 45.0, 10, "hopperSensorOn");
         waypoints.add(new Waypoint(new Translation2d(-85, -30), 40.0));
         addSequential(new DrivePathAdaptivePursuit(new Path(waypoints), true));
+
+//        List<Waypoint> waypoints = new ArrayList<>();
+//        waypoints.add(new Waypoint(new Translation2d(0, 0), 40.0));
+//        waypoints.add(new Waypoint(new Translation2d(-35, 0), 40.0));
+//        Path.addCircleArc(waypoints, -30.0, 45.0, 10, "hopperSensorOn");
+//        waypoints.add(new Waypoint(new Translation2d(-85, -30), 40.0));
+//        addSequential(new DrivePathAdaptivePursuit(new Path(waypoints), true));
       	   	
       	addSequential(new GearIntakeSetOuterPosition(GearPositionState.DOWN));
    	    addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));

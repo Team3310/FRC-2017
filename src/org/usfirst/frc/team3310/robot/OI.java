@@ -158,7 +158,7 @@ public class OI {
         
         // SmartDashboard
 		Button driveMP = new InternalButton();
-		driveMP.whenPressed(new DriveStraightMP(96, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
+		driveMP.whenPressed(new DriveStraightMP(322, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, false, 0));
 		SmartDashboard.putData("Drive Straight", driveMP);
 
         List<Waypoint> waypoints = new ArrayList<>();

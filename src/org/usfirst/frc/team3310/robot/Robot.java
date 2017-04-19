@@ -3,11 +3,16 @@ package org.usfirst.frc.team3310.robot;
 
 import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopperAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterForwardFastAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedBoilerShooterFromHopperAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.auton.RedGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterForwardFastAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterShootForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedGearLoadingSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
@@ -90,11 +95,14 @@ public class Robot extends IterativeRobot {
 		
 		autonTaskChooser = new SendableChooser<Command>();
 
-		autonTaskChooser.addObject("Red Gear Loading Side Forward", new BlueGearLoadingSideForwardAuton());
+		autonTaskChooser.addObject("Red Gear Loading Side Forward", new RedGearLoadingSideForwardAuton());
 		autonTaskChooser.addObject("Blue Gear Loading Side Forward", new BlueGearLoadingSideForwardAuton());
 
 		autonTaskChooser.addObject("Red Gear Forward Center", new RedGearCenterForwardAuton());
-		autonTaskChooser.addObject("Red Gear Forward Center", new RedGearCenterForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Forward Center", new BlueGearCenterForwardAuton());
+
+		autonTaskChooser.addObject("Red Gear Forward Center Fast", new RedGearCenterForwardFastAuton());
+		autonTaskChooser.addObject("Blue Gear Forward Center Fast", new BlueGearCenterForwardFastAuton());
 
 		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Adaptive Pursuit", new RedBoilerShooterFromHopperAdaptivePursuit());
 		autonTaskChooser.addDefault("Blue Boiler Shooter From Hopper Adaptive Pursuit", new BlueBoilerShooterFromHopperAdaptivePursuit());
@@ -104,6 +112,9 @@ public class Robot extends IterativeRobot {
 
 		autonTaskChooser.addObject("Blue Shoot First Gear Boiler Side Forward", new BlueShootFirstGearBoilerSideForwardAuton());
 		autonTaskChooser.addObject("Red Shoot First Gear Boiler Side Forward", new RedShootFirstGearBoilerSideForwardAuton());
+		
+		autonTaskChooser.addObject("Red Gear Center Shoot Forward Auton", new RedGearCenterShootForwardAuton());
+
 
 
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
