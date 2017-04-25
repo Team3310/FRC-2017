@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ZarkerFeed extends Subsystem {
     
-	public static final double ZARKER_FEED_SHOOT_SPEED = 0.5;
+	public static final double ZARKER_FEED_SHOOT_SPEED = 1.0;
 	public static final double ZARKER_FEED_EJECT_SPEED = -0.8;
 	public static final double ZARKER_FEED_OFF_SPEED = 0.0;
 
