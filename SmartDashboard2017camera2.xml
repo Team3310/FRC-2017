@@ -1,9 +1,15 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Turn Relative 10" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="502" y="213"/>
+	</widget>
+	<widget field="Turn Relative 7 PID" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
+		<location x="497" y="265"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="1056" y="370"/>
-		<width>495</width>
-		<height>367</height>
+		<location x="1051" y="371"/>
+		<width>440</width>
+		<height>385</height>
 		<property name="Camera Choice" value="Rectangle"/>
 	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
@@ -28,7 +34,7 @@
 		<location x="315" y="279"/>
 	</widget>
 	<widget field="Turn Relative 10 PID" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
-		<location x="315" y="255"/>
+		<location x="496" y="240"/>
 	</widget>
 	<widget field="Drive StraightMM" type="Button" class="edu.wpi.first.smartdashboard.gui.elements.Button">
 		<location x="327" y="231"/>
@@ -130,7 +136,7 @@
 		<location x="0" y="693"/>
 	</widget>
 	<widget field="Image Counter" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="651"/>
+		<location x="961" y="296"/>
 	</widget>
 	<widget field="Barker Feed Right Amps" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="630"/>
@@ -213,5 +219,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="ClosedLoopError R"/>
 </xml>

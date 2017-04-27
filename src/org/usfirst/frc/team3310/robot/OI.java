@@ -191,12 +191,16 @@ public class OI {
 		SmartDashboard.putData("Drive StraightMM", driveMM);
 		
 		Button turnRelativePID = new InternalButton();
-		turnRelativePID.whenPressed(new DriveRelativeTurnPID(10, MPSoftwareTurnType.TANK));
+		turnRelativePID.whenPressed(new DriveRelativeTurnPID(-10, MPSoftwareTurnType.RIGHT_SIDE_ONLY));
 		SmartDashboard.putData("Turn Relative 10 PID", turnRelativePID);
 		
+		Button turnRelativePID7 = new InternalButton();
+		turnRelativePID7.whenPressed(new DriveRelativeTurnPID(7, MPSoftwareTurnType.LEFT_SIDE_ONLY));
+		SmartDashboard.putData("Turn Relative 7 PID", turnRelativePID7);
+		
 		Button turnRelativeMP = new InternalButton();
-		turnRelativeMP.whenPressed(new DriveRelativeTurnMP(45, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY ));
-		SmartDashboard.putData("Turn Relative 90", turnRelativeMP);
+		turnRelativeMP.whenPressed(new DriveRelativeTurnMP(10, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY ));
+		SmartDashboard.putData("Turn Relative 10", turnRelativeMP);
 		
 		Button turnAbsoluteMP = new InternalButton();
 		turnAbsoluteMP.whenPressed(new DriveAbsoluteTurnMP(45, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY));

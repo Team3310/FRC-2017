@@ -5,6 +5,7 @@ import org.usfirst.frc.team3310.robot.commands.auton.BlueBoilerShooterFromHopper
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterForwardFastAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterShootForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedBoilerShooterFromHopperAdaptivePursuit;
@@ -95,27 +96,26 @@ public class Robot extends IterativeRobot {
 		
 		autonTaskChooser = new SendableChooser<Command>();
 
-		autonTaskChooser.addObject("Red Gear Loading Side Forward", new RedGearLoadingSideForwardAuton());
-		autonTaskChooser.addObject("Blue Gear Loading Side Forward", new BlueGearLoadingSideForwardAuton());
+		autonTaskChooser.addObject("Red Gear Loading Side Plus Travel Forward", new RedGearLoadingSideForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Loading Side Plus Travel Forward", new BlueGearLoadingSideForwardAuton());
 
-		autonTaskChooser.addObject("Red Gear Forward Center", new RedGearCenterForwardAuton());
-		autonTaskChooser.addObject("Blue Gear Forward Center", new BlueGearCenterForwardAuton());
+		autonTaskChooser.addObject("Red Gear Center Forward", new RedGearCenterForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Center Forward", new BlueGearCenterForwardAuton());
 
-		autonTaskChooser.addObject("Red Gear Forward Center Fast", new RedGearCenterForwardFastAuton());
-		autonTaskChooser.addObject("Blue Gear Forward Center Fast", new BlueGearCenterForwardFastAuton());
+		autonTaskChooser.addObject("Red Gear Center Fast Forward", new RedGearCenterForwardFastAuton());
+		autonTaskChooser.addObject("Blue Gear Center Fast Forward", new BlueGearCenterForwardFastAuton());
 
-		autonTaskChooser.addDefault("Red Boiler Shooter From Hopper Adaptive Pursuit", new RedBoilerShooterFromHopperAdaptivePursuit());
-		autonTaskChooser.addDefault("Blue Boiler Shooter From Hopper Adaptive Pursuit", new BlueBoilerShooterFromHopperAdaptivePursuit());
+		autonTaskChooser.addDefault("Red Boiler Shoot From Hopper Adaptive Pursuit", new RedBoilerShooterFromHopperAdaptivePursuit());
+		autonTaskChooser.addDefault("Blue Boiler Shoot From Hopper Adaptive Pursuit", new BlueBoilerShooterFromHopperAdaptivePursuit());
 
-		autonTaskChooser.addObject("Red Gear Boiler Side Forward", new RedGearBoilerSideForwardAuton());
-		autonTaskChooser.addObject("Blue Gear Boiler Side Forward", new BlueGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Red Gear Plus 10 Boiler Side Forward", new RedGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Plus 10 Boiler Side Forward", new BlueGearBoilerSideForwardAuton());
 
-		autonTaskChooser.addObject("Blue Shoot First Gear Boiler Side Forward", new BlueShootFirstGearBoilerSideForwardAuton());
-		autonTaskChooser.addObject("Red Shoot First Gear Boiler Side Forward", new RedShootFirstGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Red 10 Plus Gear Boiler Side Forward", new RedShootFirstGearBoilerSideForwardAuton());
+		autonTaskChooser.addObject("Blue 10 Plus Gear Boiler Side Forward", new BlueShootFirstGearBoilerSideForwardAuton());
 		
-		autonTaskChooser.addObject("Red Gear Center Shoot Forward Auton", new RedGearCenterShootForwardAuton());
-
-
+		autonTaskChooser.addObject("Red Gear Center Plus 10 Forward", new RedGearCenterShootForwardAuton());
+		autonTaskChooser.addObject("Blue Gear Center Plus 10 Forward", new BlueGearCenterShootForwardAuton());
 
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 

@@ -6,6 +6,7 @@ import java.util.List;
 import org.usfirst.frc.team3310.robot.commands.CameraTurnToBestTarget;
 import org.usfirst.frc.team3310.robot.commands.DriveGyroReset;
 import org.usfirst.frc.team3310.robot.commands.DrivePathAdaptivePursuit;
+import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnMP;
 import org.usfirst.frc.team3310.robot.commands.DriveRelativeTurnPID;
 import org.usfirst.frc.team3310.robot.commands.DriveStopOnHopperSensor;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeSetOuterPosition;
@@ -17,6 +18,7 @@ import org.usfirst.frc.team3310.robot.commands.ShooterSetRpm;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetShotPosition;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetVoltageRampRate;
 import org.usfirst.frc.team3310.robot.subsystems.GearIntake.GearPositionState;
+import org.usfirst.frc.team3310.robot.subsystems.Drive;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.HopperState;
 import org.usfirst.frc.team3310.robot.subsystems.Shooter.ShotState;
@@ -52,8 +54,9 @@ public class BlueBoilerShooterFromHopperAdaptivePursuit extends CommandGroup {
       	addSequential(new GearIntakeSetOuterPosition(GearPositionState.DOWN));
    	    addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
-        addSequential(new DriveRelativeTurnPID(11, MPSoftwareTurnType.LEFT_SIDE_ONLY));
-        addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, false));
+//        addSequential(new DriveRelativeTurnPID(7, MPSoftwareTurnType.LEFT_SIDE_ONLY));
+     	addSequential(new DriveRelativeTurnMP(8, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY ));
+     	addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, false));
         addSequential(new CameraTurnToBestTarget());
         addSequential(new ShooterSetHopperShake(0, 11, 3));
     }

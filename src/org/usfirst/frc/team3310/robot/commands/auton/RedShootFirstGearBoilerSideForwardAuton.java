@@ -41,7 +41,7 @@ public class RedShootFirstGearBoilerSideForwardAuton extends CommandGroup {
         addSequential(new WaitCommand(0.3));        
         addSequential(new DriveGyroReset());
         
-        addSequential(new DriveStraightMP(91, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0)); 
+        addSequential(new DriveStraightMP(89, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));  // 91" for 112" greenville
         addSequential(new DriveAbsoluteTurnMP(-60, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addSequential(new DriveStraightMP(21, Drive.MP_GEAR_DEPLOY_FASTER_VELOCITY_INCHES_PER_SEC, true, true, -60));
         addSequential(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));

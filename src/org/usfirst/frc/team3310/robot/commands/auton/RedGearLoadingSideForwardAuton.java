@@ -25,7 +25,7 @@ public class RedGearLoadingSideForwardAuton extends CommandGroup {
     	addSequential(new DriveGyroReset());
     	addSequential(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
 
-    	addSequential(new DriveStraightMP(95, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0)); 
+    	addSequential(new DriveStraightMP(93, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));  // 95 for 112" greenville
         addSequential(new DriveAbsoluteTurnMP(60, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addSequential(new DriveStraightMP(22, Drive.MP_GEAR_DEPLOY_FASTER_VELOCITY_INCHES_PER_SEC, true, true, 60));
         addSequential(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
