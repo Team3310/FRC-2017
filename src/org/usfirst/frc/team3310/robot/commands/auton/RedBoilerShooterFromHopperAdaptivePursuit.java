@@ -59,7 +59,7 @@ public class RedBoilerShooterFromHopperAdaptivePursuit extends CommandGroup {
       	addSequential(new GearIntakeSetOuterPosition(GearPositionState.DOWN));
    	    addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
-        addSequential(new DriveRelativeTurnPID(-9, MPSoftwareTurnType.RIGHT_SIDE_ONLY));
+        addSequential(new DriveRelativeTurnPID(-11, MPSoftwareTurnType.RIGHT_SIDE_ONLY));
         addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, false));
         addSequential(new CameraTurnToBestTarget());
         addSequential(new ShooterSetHopperShake(0, 11, 3));
