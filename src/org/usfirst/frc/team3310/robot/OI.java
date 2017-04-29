@@ -25,6 +25,7 @@ import org.usfirst.frc.team3310.robot.commands.DriveStraightMP;
 import org.usfirst.frc.team3310.robot.commands.GearIntakeRollerSetSpeed;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition;
 import org.usfirst.frc.team3310.robot.commands.IntakeSetPosition.IntakePosition;
+import org.usfirst.frc.team3310.robot.commands.IntakeSetPositionWithBlip;
 import org.usfirst.frc.team3310.robot.commands.ShootOff;
 import org.usfirst.frc.team3310.robot.commands.ShootOn;
 import org.usfirst.frc.team3310.robot.commands.ShooterSetHopperPosition;

@@ -22,8 +22,8 @@ public class Shooter extends Subsystem {
 	public static enum HopperState { OPEN, CLOSE };
 	public static final int ENCODER_TICKS_PER_REV = 1024;
 
-	public static final double SHOOTER_STAGE1_RPM_FAR = 2835; // 2875
-	public static final double SHOOTER_STAGE2_RPM_FAR = 2835;  // 2875
+	public static final double SHOOTER_STAGE1_RPM_FAR = 2845; // 2875  // 2835 thurs worked
+	public static final double SHOOTER_STAGE2_RPM_FAR = 2845;  // 2875 // 2835
 	public static final double SHOOTER_STAGE1_RPM_CLOSE = 2680;
 	public static final double SHOOTER_STAGE2_RPM_CLOSE = 2680;
 	public static final double SHOOTER_STAGE1_OFF = 0.0;

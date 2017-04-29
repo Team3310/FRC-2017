@@ -10,7 +10,7 @@ public class GearIntakeSetOuterPosition extends Command
 	private GearPositionState position;
 	
 	public GearIntakeSetOuterPosition(GearPositionState position) {
-		requires(Robot.gearIntake);
+//		requires(Robot.gearIntake);
 		this.position = position;
 	}
 
