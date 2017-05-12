@@ -29,7 +29,7 @@ public class BlueGearBoilerSideForwardAuton extends CommandGroup {
         addParallel(new ShooterSetRpm(Shooter.SHOOTER_STAGE1_RPM_CLOSE, Shooter.SHOOTER_STAGE2_RPM_CLOSE));
     	addSequential(new DriveGyroReset());
     	addSequential(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
-        addSequential(new DriveStraightMP(89, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));  // 91 for 112"
+        addSequential(new DriveStraightMP(91, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));  // 91 for 112"
         addSequential(new DriveAbsoluteTurnMP(60, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addSequential(new DriveStraightMP(22, Drive.MP_GEAR_DEPLOY_FASTER_VELOCITY_INCHES_PER_SEC, true, true, 60));
         addSequential(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));

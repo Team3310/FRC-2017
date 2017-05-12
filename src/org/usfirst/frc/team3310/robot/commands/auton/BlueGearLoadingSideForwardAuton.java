@@ -36,6 +36,6 @@ public class BlueGearLoadingSideForwardAuton extends CommandGroup {
         addSequential(new DriveStraightMP(-20, Drive.MP_AUTON_MAX_BOILER_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -60));
         addSequential(new DriveAbsoluteTurnMP(-173, Drive.MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
 //        addSequential(new DriveSpeedShift(SpeedShiftState.HI));
-        addSequential(new DriveStraightMP(-394, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -173));
+        addSequential(new DriveStraightMP(-254, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, -173));
     }
 }
