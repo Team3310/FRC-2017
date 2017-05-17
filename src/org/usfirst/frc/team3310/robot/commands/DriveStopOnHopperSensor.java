@@ -2,6 +2,7 @@ package org.usfirst.frc.team3310.robot.commands;
 
 import org.usfirst.frc.team3310.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveStopOnHopperSensor extends Command
@@ -25,6 +26,7 @@ public class DriveStopOnHopperSensor extends Command
 
 	@Override
 	protected void end() {
+		DriverStation.reportWarning("Triggered Hopper", false);
 		Robot.drive.setFinished(true);
 	}
 

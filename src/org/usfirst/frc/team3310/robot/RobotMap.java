@@ -38,7 +38,7 @@ public class RobotMap {
 	
 	// DIO
 	public static final int HOPPER_SENSOR_RED_DIO_ID = 0;
-	public static final int HOPPER_SENSOR_BLUE_DIO_ID = 1;
+	public static final int HOPPER_SENSOR_BLUE_DIO_ID = 2;
 
 	// Analog
 	public static final int GEAR_SENSOR_ANALOG_ID = 0;

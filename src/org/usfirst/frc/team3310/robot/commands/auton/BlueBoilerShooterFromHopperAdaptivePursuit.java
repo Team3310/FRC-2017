@@ -55,7 +55,7 @@ public class BlueBoilerShooterFromHopperAdaptivePursuit extends CommandGroup {
    	    addSequential(new ShooterSetVoltageRampRate(Shooter.SHOOT_VOLTAGE_RAMP_RATE));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
 //        addSequential(new DriveRelativeTurnPID(7, MPSoftwareTurnType.LEFT_SIDE_ONLY));
-     	addSequential(new DriveRelativeTurnMP(8, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY ));
+     	addSequential(new DriveRelativeTurnMP(10, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.LEFT_SIDE_ONLY ));
      	addSequential(new ShootOn(ShotState.FAR, ShooterFeed.SHOOTER_FEED_SHOOT_FAR_SPEED, false));
         addSequential(new CameraTurnToBestTarget());
         addSequential(new ShooterSetHopperShake(0, 11, 3));
