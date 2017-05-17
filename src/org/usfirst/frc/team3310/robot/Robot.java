@@ -7,6 +7,7 @@ import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterForwardFastAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearCenterShootForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.BlueGearLoadingSideForwardWithHopperAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.BlueShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedBoilerShooterFromHopperAdaptivePursuit;
 import org.usfirst.frc.team3310.robot.commands.auton.RedGearBoilerSideForwardAuton;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterForwardFastAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedGearCenterShootForwardAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedGearLoadingSideForwardAuton;
+import org.usfirst.frc.team3310.robot.commands.auton.RedGearLoadingSideForwardWithHopperAuton;
 import org.usfirst.frc.team3310.robot.commands.auton.RedShootFirstGearBoilerSideForwardAuton;
 import org.usfirst.frc.team3310.robot.subsystems.Camera;
 import org.usfirst.frc.team3310.robot.subsystems.Drive;
@@ -116,6 +118,9 @@ public class Robot extends IterativeRobot {
 		
 		autonTaskChooser.addObject("Red Gear Center Plus 10 Forward", new RedGearCenterShootForwardAuton());
 		autonTaskChooser.addObject("Blue Gear Center Plus 10 Forward", new BlueGearCenterShootForwardAuton());
+		
+		autonTaskChooser.addObject("Red Gear Loading Side Plus GET TO THE HOPPA", new RedGearLoadingSideForwardWithHopperAuton());
+		autonTaskChooser.addObject("Blue Gear Loading Side Plus GET TO THE HOPPA", new BlueGearLoadingSideForwardWithHopperAuton());
 
 		SmartDashboard.putData("Auton Task", autonTaskChooser);
 
