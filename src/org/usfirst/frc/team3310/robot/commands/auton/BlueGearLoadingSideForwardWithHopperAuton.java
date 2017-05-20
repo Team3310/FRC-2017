@@ -29,7 +29,7 @@ public class BlueGearLoadingSideForwardWithHopperAuton extends CommandGroup {
     	addSequential(new DriveGyroReset());
     	addSequential(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
 
-    	addSequential(new DriveStraightMP(93, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));  // 95 for 112" greenville
+    	addSequential(new DriveStraightMP(95, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 0));  // 95 for 112" greenville
         addSequential(new DriveAbsoluteTurnMP(-60, Drive.MP_AUTON_MAX_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
         addSequential(new DriveStraightMP(22, Drive.MP_GEAR_DEPLOY_FASTER_VELOCITY_INCHES_PER_SEC, true, true, -60));
         addSequential(new IntakeSetPosition(IntakePosition.GEAR_DEPLOY));
@@ -41,7 +41,7 @@ public class BlueGearLoadingSideForwardWithHopperAuton extends CommandGroup {
         addSequential(new DriveAbsoluteTurnMP(85, Drive.MP_AUTON_MAX_BOILER_TURN_RATE_DEG_PER_SEC, MPSoftwareTurnType.TANK));
      	addSequential(new ShooterSetHopperPosition(HopperState.OPEN));
 //    	addSequential(new IntakeSetPosition(IntakePosition.GEAR_PRESENT));
-        addSequential(new DriveStraightMP(24, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 85));
+        addSequential(new DriveStraightMP(28, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 85));
         addSequential(new WaitCommand(3.0)); 
         addSequential(new DriveStraightMP(-80, Drive.MP_AUTON_MAX_STRAIGHT_VELOCITY_INCHES_PER_SEC, true, true, 85));        
 //        addSequential(new DriveSpeedShift(SpeedShiftState.HI));
