@@ -22,8 +22,10 @@ public class ShooterFeed extends Subsystem {
 	public static final double SHOOTER_FEED_SHOOT_CLOSE_SPEED = 0.6;
 	public static final double SHOOTER_FEED_BALL_INTAKE_SPEED = -0.5;
 	public static final double SHOOT_FEED_OFF_SPEED = 0.0;
+	public enum RobotType {COMP, PRACTICE};
 
 	public static final double CLIMB_SPEED = 1.0;
+	public static RobotType robotType = RobotType.PRACTICE;
 	
 	public ShooterFeed() {
 		try {
@@ -46,15 +48,25 @@ public class ShooterFeed extends Subsystem {
 	}
 	
 	public void setSpeed(double speed) {
-		rollerLeft.set(speed);
-		rollerRight.set(-speed);
-		oldClimber.set(speed);
+		if (robotType == RobotType.COMP) {
+			rollerLeft.set(speed);
+			rollerRight.set(-speed);
+			oldClimber.set(speed);
+		}
+		else {
+			oldClimber.set(speed);
+		}
 	}
 	
 	public void setClimberSpeed(double speed) {
-		rollerLeft.set(speed);
-		rollerRight.set(-speed);
-		oldClimber.set(speed);
+		if (robotType == RobotType.COMP) {
+			rollerLeft.set(speed);
+			rollerRight.set(-speed);
+			oldClimber.set(speed);
+		}
+		else {
+			rollerLeft.set(speed);
+		}
 	}
 
 	public double getLeftAmps() {
